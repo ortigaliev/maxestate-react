@@ -1,0 +1,81 @@
+.format {
+  width: 1320px;
+}
+
+.home_navbar {
+  position: relative;
+  width: 100%;
+  height: 773px;
+  display: flex;
+  background-image: url("../../public/images/home/home_bg.jpg");
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 28, 31, 0.4);
+}
+
+.home_navbar .navbar_config {
+  width: 1300px;
+  height: 72px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.home_navbar .navbar_links {
+  width: 800px;
+  height: 72px;
+}
+
+.home_navbar a {
+  text-decoration: none;
+}
+
+.hover-line a {
+  position: relative;
+  display: inline-block;
+  font-size: 18px;
+  padding: 10px 10px;
+  font-weight: 600;
+  font-family: "Nunito Sans", sans-serif;
+  color: #fff;
+}
+
+.home_navbar .underline {
+  display: block;
+  content: "";
+  border-bottom: solid 2px #ff5a3c;
+}
+
+.home_navbar .hover-line::after {
+  display: block;
+  content: "";
+  border-bottom: solid 2px #ff5a3c;
+  transform: scaleX(0);
+  transition: transform 250ms ease-in-out;
+}
+
+.home_navbar .hover-line:hover:after {
+  transform: scaleX(1);
+}
+
+.btn {
+  box-sizing: border-box;
+  cursor: pointer;
+  color: #fff;
+  background-color: #ff5a3c;
+}
+
+.header_btn {
+  box-sizing: border-box;
+  cursor: pointer;
+  color: #fff;
+  background-color: #ff5a3c;
+}

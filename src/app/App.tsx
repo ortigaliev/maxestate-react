@@ -1,7 +1,7 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import React from "react";
 import "../css/App.css";
-/* import { RippleBadge } from "./MaterialTheme/styled"; */
+import { RippleBadge } from "./MaterialTheme/styled";
 
 /* REACT ROUTER DOM */
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -11,11 +11,25 @@ import { BlogPage } from "./screens/BlogPage"; //Community
 import { ContactPage } from "./screens/ContactPage";
 import { HomePage } from "./screens/HomePage";
 import { LoginPage } from "./screens/LoginPage";
+import { NavbarHome } from "./components/headers";
+import { NavbarAgency } from "./components/headers/agency";
+import { NavbarOthers } from "./components/headers/others";
+import { useState } from "react";
 
 function App() {
+  const [path, setPath] = useState();
+  const main_path = window.location.pathname;
   return (
     <Router>
-      <nav>
+      {main_path == "/" ? (
+        <NavbarHome setPath={setPath} />
+      ) : main_path.includes("/agency") ? (
+        <NavbarAgency setPath={setPath} />
+      ) : (
+        <NavbarOthers setPath={setPath} />
+      )}
+
+      {/* <nav>
         <ul>
           <li>
             <Link to={"/agency"}>Agency</Link>
@@ -36,7 +50,7 @@ function App() {
             <Link to={"/"}>Home</Link>
           </li>
         </ul>
-      </nav>
+      </nav> */}
 
       <Switch>
         <Route path="/agency">
