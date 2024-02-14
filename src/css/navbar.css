@@ -1,4 +1,5 @@
 .format {
+  background-image: url("../../public/images/home/home_bg.jpg");
   width: 1320px;
 }
 
@@ -7,7 +8,7 @@
   width: 100%;
   height: 773px;
   display: flex;
-  background-image: url("../../public/images/home/home_bg.jpg");
+
   background-size: cover;
   position: relative;
   overflow: hidden;
@@ -21,12 +22,15 @@
   height: 100%;
   background: rgba(7, 28, 31, 0.4);
 }
-
-.home_navbar .navbar_config {
+.navbar_config {
   width: 1300px;
   height: 72px;
   margin-top: 25px;
   margin-bottom: 25px;
+}
+
+.home_navbar .agency_navbar_config {
+  /* background-color: #fff; */
 }
 
 .home_navbar .navbar_links {
@@ -48,13 +52,13 @@
   color: #fff;
 }
 
-.home_navbar .underline {
+.underline {
   display: block;
   content: "";
   border-bottom: solid 2px #ff5a3c;
 }
 
-.home_navbar .hover-line::after {
+.hover-line::after {
   display: block;
   content: "";
   border-bottom: solid 2px #ff5a3c;
@@ -62,7 +66,7 @@
   transition: transform 250ms ease-in-out;
 }
 
-.home_navbar .hover-line:hover:after {
+.hover-line:hover:after {
   transform: scaleX(1);
 }
 
@@ -78,4 +82,73 @@
   cursor: pointer;
   color: #fff;
   background-color: #ff5a3c;
+}
+
+/* AGENCY PAGE */
+
+.format_agency {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: 800px;
+  display: flex;
+}
+
+.format_agency_img {
+  position: relative;
+  width: 100%;
+  height: 800px;
+  display: flex;
+  background-image: url("../../public/images/home/agency_bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  background-position: center;
+}
+
+.agency_hover-line a {
+  position: relative;
+  display: inline-block;
+  font-size: 18px;
+  padding: 10px 10px;
+  font-weight: 600;
+  font-family: "Nunito Sans", sans-serif;
+  color: #000;
+  text-decoration: none;
+}
+
+/* OTHERS PAGE */
+
+.format_others {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: 442px;
+  display: flex;
+  background-color: #fff;
+}
+
+.format_others_img {
+  position: relative;
+  width: 100%;
+  height: 326px;
+  display: flex;
+  background-image: url("../../public/images/home/others_bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  background-position: center;
+}
+
+.others_hover-line a {
+  position: relative;
+  display: inline-block;
+  font-size: 18px;
+  padding: 10px 10px;
+  font-weight: 600;
+  font-family: "Nunito Sans", sans-serif;
+  color: #000;
+  text-decoration: none;
 }
