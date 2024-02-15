@@ -1,8 +1,102 @@
-.lates_frame_card_title {
+.latest_frame {
+  background-color: #fff;
+}
+
+.latest_frame_wrapper .card_tite {
+  color: #212529;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.latest_frame_wrapper .card_sub_title {
+  color: #ff5a3c;
+  width: 106px;
+  font-weight: 700;
+  background-color: rgb(255, 90, 60, 0.2);
+  text-align: center;
+  padding: 6px 20px;
+  border-radius: 50px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.main_focus_wrapper {
+  background: #f2f6f7;
+}
+
+.service_frame .card_tite {
+  color: #212529;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.service_frame .card_sub_title {
+  color: #ff5a3c;
+  font-weight: 700;
+  background-color: rgb(255, 90, 60, 0.2);
+  text-align: center;
+  padding: 6px 20px;
+  border-radius: 50px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.main_focus_icon_box {
   margin: 0;
   padding: 0;
+  margin-bottom: 20px;
+  width: 280px;
+  height: 140px;
+}
+
+.main_focus_img {
+}
+
+.main_focus_card .main_focus_title {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
   margin-bottom: 15px;
-  color: #ff5a3c;
-  font-size: 16px;
-  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+}
+
+.main_focus_card .main_focus_title a {
+  text-decoration: none;
+  color: #071c1f;
+}
+
+.main_focus_card .main_focus_text {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 15px;
+  font-family: "Poppins", sans-serif;
+  color: #5c727d;
+  line-height: 33px;
+  margin-bottom: 25px;
+}
+
+.main_focus_card .main_focus_link {
+  text-decoration: none;
+  color: #8cb2b2;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
 }
