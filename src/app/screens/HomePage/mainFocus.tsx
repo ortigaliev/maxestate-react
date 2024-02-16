@@ -45,7 +45,7 @@ export function MainFocus() {
                     <Typography className="main_focus_title">
                       <Link href={"#"}>Buy a home</Link>
                     </Typography>
-                    <Typography className="main_focus_text" width={"227px"}>
+                    <Typography className="main_focus_text">
                       over 1 million+ homes for sale available on the website,
                       we can match you with a house you will want to call home.
                     </Typography>
@@ -84,7 +84,7 @@ export function MainFocus() {
                     <Typography className="main_focus_title">
                       <Link href={"#"}>Buy a home</Link>
                     </Typography>
-                    <Typography className="main_focus_text" width={"227px"}>
+                    <Typography className="main_focus_text">
                       over 1 million+ homes for sale available on the website,
                       we can match you with a house you will want to call home.
                     </Typography>
@@ -123,7 +123,7 @@ export function MainFocus() {
                     <Typography className="main_focus_title">
                       <Link href={"#"}>Buy a home</Link>
                     </Typography>
-                    <Typography className="main_focus_text" width={"227px"}>
+                    <Typography className="main_focus_text">
                       over 1 million+ homes for sale available on the website,
                       we can match you with a house you will want to call home.
                     </Typography>
