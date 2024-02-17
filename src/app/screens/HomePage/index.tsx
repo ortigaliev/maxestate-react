@@ -9,6 +9,7 @@ import { BuildingFacility } from "./buildingFacility";
 import { Feedback } from "./feedback";
 import { LatestNews } from "./latestNews";
 import "../../../css/home.css";
+import "swiper/css";
 
 export function HomePage() {
   return (

@@ -51,7 +51,11 @@ export function FeaturedList() {
                 justifyContent={"flex-start"}
               >
                 {/* CARD 1 */}
-                <Card variant="outlined" sx={{ width: 410, mr: 3 }}>
+                <Card
+                  className="featured_card_item"
+                  variant="outlined"
+                  sx={{ width: 410, mr: 3 }}
+                >
                   <CardOverflow>
                     <AspectRatio ratio="1.3">
                       <img
@@ -282,7 +286,11 @@ export function FeaturedList() {
                 </Card>
 
                 {/* CARD 2 */}
-                <Card variant="outlined" sx={{ width: 410, mr: 3 }}>
+                <Card
+                  className="featured_card_item"
+                  variant="outlined"
+                  sx={{ width: 410, mr: 3 }}
+                >
                   <CardOverflow>
                     <AspectRatio ratio="1.3">
                       <img
@@ -513,7 +521,11 @@ export function FeaturedList() {
                 </Card>
 
                 {/* CARD 3 */}
-                <Card variant="outlined" sx={{ width: 410, mr: 3 }}>
+                <Card
+                  className="featured_card_item"
+                  variant="outlined"
+                  sx={{ width: 410, mr: 3 }}
+                >
                   <CardOverflow>
                     <AspectRatio ratio="1.3">
                       <img
@@ -744,7 +756,11 @@ export function FeaturedList() {
                 </Card>
 
                 {/* CARD 4 */}
-                <Card variant="outlined" sx={{ width: 410, mr: 3 }}>
+                <Card
+                  className="featured_card_item"
+                  variant="outlined"
+                  sx={{ width: 410, mr: 3 }}
+                >
                   <CardOverflow>
                     <AspectRatio ratio="1.3">
                       <img
