@@ -189,10 +189,35 @@
   margin-right: 10px;
 }
 
+/* APPARTMENT PLAN STYLE */
+.plan_frame .card_tite {
+  color: #212529;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 700;
+  line-height: 1.3;
+  font-size: 44px;
+  font-family: "Poppins", sans-serif;
+}
+
+.plan_frame .card_sub_title {
+  color: #ff5a3c;
+  width: 180px;
+  font-weight: 700;
+  background-color: rgb(255, 90, 60, 0.2);
+  text-align: center;
+  padding: 6px 20px;
+  border-radius: 50px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
 .swiper {
   width: 100%;
   height: 800px;
-  padding-top: 10px;
   .swiper-slide {
     background: #fff;
     display: flex;
@@ -200,4 +225,49 @@
     align-items: center;
     font-size: 60px;
   }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ff5a3c;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 30px;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ff5a3c !important;
+}
+
+.plan_tite_wrapper {
+  font-size: 24px;
+  padding-top: 30px;
+}
+.plan_title {
+  color: #ff5a3c;
+  border-bottom: 1px solid #ff5a3c;
+  font-size: 26px;
+}
+
+/* BUILDING FACILITY STYLE */
+.facility_icon_box {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: #fff2f0;
+  padding: 25px 0;
+  border-radius: 50%;
+}
+
+.icon_arrow_box {
+  position: absolute;
+  bottom: 0;
+  width: 45px;
+  height: 45px;
+  background-color: #fff;
+  padding: 25px 0;
+  border-radius: 100%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
 }
