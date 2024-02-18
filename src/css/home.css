@@ -320,3 +320,33 @@
   text-align: justify;
   font-family: "Nunito Sans" sans-serif;
 }
+
+/* NEWS SECTION */
+.lates_new_farme_wrapper .card_tite {
+  color: #212529;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 700;
+  line-height: 1.3;
+  font-size: 44px;
+  font-family: "Poppins", sans-serif;
+}
+
+.lates_new_farme_wrapper .card_sub_title {
+  color: #ff5a3c;
+  width: 150px;
+  font-weight: 700;
+  background-color: rgb(255, 90, 60, 0.2);
+  text-align: center;
+  padding: 6px 20px;
+  border-radius: 50px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.news_card_item {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
