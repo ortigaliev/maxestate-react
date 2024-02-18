@@ -283,3 +283,40 @@
 .facility_frame .facility_card_link:hover {
   text-decoration: none;
 }
+
+/* FEEDBACK FRAME STYLE */
+.feedback_frame {
+  position: relative;
+  padding-top: 115px;
+  margin-bottom: 90px;
+  background: url("/public/images/home/feedback_bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+}
+
+.feedback_grid_item {
+  flex-grow: 1;
+  box-shadow: 0 5px 20px 0 rgba(23, 44, 82, 0.1);
+}
+
+.feedback_grid {
+  position: relative;
+}
+.choyxona::before {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 4px;
+  background-color: #ff5a3c;
+  transition: all 0.5s ease 0s;
+  opacity: 0;
+  visibility: hidden;
+}
+.feedback_frame .feedback_text {
+  font-size: 18px;
+  text-align: justify;
+  font-family: "Nunito Sans" sans-serif;
+}

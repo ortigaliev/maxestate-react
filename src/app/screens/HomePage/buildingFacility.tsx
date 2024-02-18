@@ -1,15 +1,3 @@
-/* import { Container } from "@mui/material";
-import React from "react";
-
-export function BuildingFacility() {
-  return (
-    <div className="service_frame">
-      <Container>BuildingFacility</Container>
-    </div>
-  );
-}
- */
-
 import React from "react";
 import { Box, Container, Icon, Stack } from "@mui/material";
 import { Card, CardContent, CssVarsProvider, Grid, Typography } from "@mui/joy";

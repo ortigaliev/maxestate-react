@@ -4,7 +4,7 @@ import React from "react";
 export function LatestNews() {
   return (
     <div className="latest_frame">
-      <Container></Container>
+      <Container>LatestNews</Container>
     </div>
   );
 }
