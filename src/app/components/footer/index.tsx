@@ -17,7 +17,7 @@ export function Footer() {
               <Box>
                 <img
                   className="footer_logo"
-                  src="images/home/logo.png"
+                  src="/images/home/logo.png"
                   alt="Footer Logo"
                 />
               </Box>

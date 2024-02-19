@@ -98,13 +98,14 @@
 .format_agency_img {
   position: relative;
   width: 100%;
-  height: 800px;
+  height: 680px;
   display: flex;
   background-image: url("../../public/images/home/agency_bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
   background-position: center;
+  margin-bottom: 200px;
 }
 
 .agency_hover-line a {
