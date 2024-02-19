@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import React from "react";
 import { LatestList } from "./latestList";
-import { MainFocus } from "./mainFocus";
+import { BestAgency } from "./bestAgency";
 import { FeaturedList } from "./featuredList";
 import { AppartmentPlan } from "./appartmentPlan";
 import { Ads } from "./ads";
@@ -15,7 +15,7 @@ export function HomePage() {
   return (
     <div className="homepage">
       <LatestList />
-      <MainFocus />
+      <BestAgency />
       <FeaturedList />
       <AppartmentPlan />
       <Ads />

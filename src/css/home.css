@@ -28,7 +28,7 @@
   margin-bottom: 15px;
 }
 
-.main_focus_wrapper {
+.best_agency_wrapper {
   background: #f2f6f7;
 }
 
@@ -335,7 +335,7 @@
 
 .lates_new_farme_wrapper .card_sub_title {
   color: #ff5a3c;
-  width: 150px;
+  width: 150yapx;
   font-weight: 700;
   background-color: rgb(255, 90, 60, 0.2);
   text-align: center;
