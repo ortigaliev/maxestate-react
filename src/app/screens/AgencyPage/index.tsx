@@ -15,11 +15,11 @@ export function AgencyPage() {
         <Route path={`${agency.path}/property/:property_id`}>
           <ChosenProperty />
         </Route>
+        <Route path={`${agency.path}/:agency_id`}>
+          <OneAgency />
+        </Route>
         <Route path={`${agency.path}`}>
           <AllAgency />
-          <Route path={`${agency.path}/:agency_id`}>
-            <OneAgency />
-          </Route>
         </Route>
       </Switch>
     </div>

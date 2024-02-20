@@ -1,128 +1,195 @@
-import { Container, Stack } from "@mui/material";
 import React from "react";
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import { Container, Divider, Stack } from "@mui/material";
+import {
+  Card,
+  CardActions,
+  CardOverflow,
+  CssVarsProvider,
+  IconButton,
+  Typography,
+} from "@mui/joy";
+import CardContent from "@mui/joy/CardContent";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Link from "@mui/joy/Link";
+import Avatar from "@mui/joy/Avatar";
+import AvatarGroup from "@mui/joy/AvatarGroup";
+import Box from "@mui/joy/Box";
+import Button from "@mui/joy/Button";
+import { FavoriteBorder } from "@mui/icons-material";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
+import Input from "@mui/joy/Input";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
-const buttons = [
-  <Button key="one" style={{ color: "#fff" }}>
-    Best
-  </Button>,
-  <Button key="two" style={{ color: "#fff" }}>
-    Popular
-  </Button>,
-  <Button key="three" style={{ color: "#fff" }}>
-    Trend
-  </Button>,
-  <Button key="three" style={{ color: "#fff" }}>
-    New
-  </Button>,
-];
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export function AllAgency() {
   return (
     <div className="all_agency">
       <Container>
-        <Stack>
-          <Box sx={{ flexGrow: 1, marginBottom: 3 }}>
-            <AppBar position="static" style={{ background: "#171b2a" }}>
-              <Toolbar>
-                <IconButton
-                  size="large"
-                  edge="start"
-                  color="inherit"
-                  aria-label="open drawer"
-                  sx={{ mr: 2 }}
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Typography
-                  variant="h4"
-                  noWrap
-                  component="div"
-                  sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-                >
-                  All Agency
-                </Typography>
-                <Stack
+        <Stack style={{ paddingTop: "50px", paddingBottom: "50px" }}>
+          <CssVarsProvider>
+            {/* NAVBAR SECTION */}
+            <Stack
+              style={{ paddingBottom: "50px" }}
+              flexDirection={"row"}
+              justifyContent={"space-between"}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  flexWrap: "wrap",
+                  color: "#fff",
+                }}
+              >
+                <Button sx={{ bgcolor: "#ff5a3c" }}>BEST</Button>
+                <Button sx={{ bgcolor: "#ff5a3c" }}>POPULAR</Button>
+                <Button sx={{ bgcolor: "#ff5a3c" }}>TREND</Button>
+                <Button sx={{ bgcolor: "#ff5a3c" }}>NEW</Button>
+              </Box>
+              <Box
+                component="form"
+                sx={{
+                  "& .MuiTextField-root": { m: 1, width: "25ch" },
+                }}
+                noValidate
+                autoComplete="off"
+              >
+                <Box
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
                     alignItems: "center",
-                    "& > *": {
-                      m: 1,
-                    },
+                    display: "flex",
+                    width: "500px",
                   }}
                 >
-                  <ButtonGroup
-                    size="large"
-                    aria-label="Large button group"
-                    color="secondary"
-                  >
-                    {buttons}
-                  </ButtonGroup>
-                </Stack>
-                <Search>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase
-                    placeholder="Search…"
-                    inputProps={{ "aria-label": "search" }}
+                  <Input
+                    placeholder="Search"
+                    variant="outlined"
+                    sx={{
+                      alignItems: "center",
+                      width: "70%",
+                      color: "#ff5a3c",
+                    }}
                   />
-                </Search>
-              </Toolbar>
-            </AppBar>
-          </Box>
+                  <Button sx={{ bgcolor: "#ff5a3c", width: "30%" }}>
+                    Search
+                  </Button>
+                </Box>
+              </Box>
+            </Stack>
+            {/* CARD SECTION */}
+            <Stack>
+              {/* NEW CARD 1 */}
+              <Link
+                overlay
+                href="#"
+                underline="none"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "start",
+                }}
+              >
+                <Card
+                  variant="outlined"
+                  sx={{
+                    width: 400,
+                    // to make the card resizable
+                    overflow: "auto",
+                    resize: "horizontal",
+                  }}
+                >
+                  <CardOverflow>
+                    <AspectRatio ratio="1.3">
+                      <img
+                        src="/images/agency/luxhouse.png"
+                        loading="lazy"
+                        alt="news_img"
+                      />
+                    </AspectRatio>
+                  </CardOverflow>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Avatar src="images/home/agent.jpg" size="lg" />
+                    <AvatarGroup size="sm" sx={{ "--Avatar-size": "28px" }}>
+                      <Avatar src="/images/agency/follower2.jpg" />
+                      <Avatar src="/images/agency/follower3.jpg" />
+                      <Avatar src="/images/agency/follower4.jpg" />
+                      <Avatar>+4K</Avatar>
+                    </AvatarGroup>
+                  </Box>
+                  <CardContent>
+                    <Typography level="title-lg" mb={2}>
+                      A&A Realty Co
+                    </Typography>
+                    <Stack sx={{ marginBottom: "15px" }} flexDirection={"row"}>
+                      <LocationOnIcon
+                        sx={{
+                          display: "block",
+                          width: 25,
+                          height: 30,
+                          fontSize: 20,
+                          color: "#ff5a3c",
+                        }}
+                      />
+                      <Typography sx={{ color: "#5c727d" }} level="body-lg">
+                        3, Sejong-ro 2-gil
+                      </Typography>
+                    </Stack>
+                    <Stack sx={{ marginBottom: "15px" }} flexDirection={"row"}>
+                      <LocalPhoneOutlinedIcon
+                        sx={{
+                          display: "block",
+                          width: 25,
+                          height: 30,
+                          fontSize: 20,
+                          color: "#ff5a3c",
+                        }}
+                      />
+                      <Typography sx={{ color: "#5c727d" }} level="body-lg">
+                        01093717177
+                      </Typography>
+                    </Stack>
+                  </CardContent>
+                  <CardOverflow
+                    variant="soft"
+                    sx={{ bgcolor: "background.level1" }}
+                  >
+                    <CardActions buttonFlex="0 0 auto">
+                      <IconButton variant="outlined" color="neutral">
+                        <div>12k</div>
+                        <FavoriteBorder />
+                      </IconButton>
+                      <Divider orientation="vertical" />
+                      <IconButton
+                        variant="outlined"
+                        color="neutral"
+                        sx={{ mr: "auto" }}
+                      >
+                        <div>10k</div>
+                        <RemoveRedEyeOutlinedIcon />
+                      </IconButton>
+                      <Button variant="solid" sx={{ bgcolor: "#ff5a3c" }}>
+                        Follow
+                      </Button>
+                    </CardActions>
+                  </CardOverflow>
+                </Card>
+              </Link>
+            </Stack>
+
+            {/* PAGINATION SECTION */}
+            <Stack></Stack>
+          </CssVarsProvider>
         </Stack>
       </Container>
     </div>
