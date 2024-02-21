@@ -15,7 +15,7 @@ const light = {
     },
     primary: {
       contrastText: "#ffffff",
-      main: "#c40909",
+      main: "#ff5a3c",
     },
     secondary: {
       main: "#0383a3",
