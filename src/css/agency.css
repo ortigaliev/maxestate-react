@@ -2,4 +2,57 @@
   position: relative;
   width: 100%;
   height: auto;
+  background-color: #fff;
+}
+
+.one_agency .card_tite {
+  color: #212529;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.one_agency .card_sub_title {
+  color: #ff5a3c;
+  width: 230px;
+  font-weight: 700;
+  background-color: rgb(255, 90, 60, 0.2);
+  text-align: center;
+  padding: 6px 20px;
+  border-radius: 50px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.swiper .res_swiper {
+}
+
+.swiper {
+  .swiper-slide {
+    background: #ff5a3c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ff5a3c;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 30px;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ff5a3c !important;
 }

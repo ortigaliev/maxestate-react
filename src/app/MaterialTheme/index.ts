@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 import { common } from "@mui/material/colors";
 import shadow from "./shadow";
-import typography from "./typography";
+import typography from "../../../src/app/MaterialTheme/typography";
 
 /**
  * LIGHT THEME (DEFAULT)
@@ -18,7 +18,7 @@ const light = {
       main: "#ff5a3c",
     },
     secondary: {
-      main: "#0383a3",
+      main: "#ff5a3c",
     },
     text: {
       primary: "#172b4d",
