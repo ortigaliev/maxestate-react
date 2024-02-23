@@ -48,7 +48,7 @@ export function JOYMODAL() {
               sx={{
                 maxWidth: 978,
                 borderRadius: "md",
-                p: 3,
+                /*  p: "3 0", */
                 boxShadow: "lg",
               }}
             >

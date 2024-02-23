@@ -43,15 +43,18 @@ console.log(order_one_agency);
 export function OneAgency() {
   return (
     <div className="one_agency">
+      {/* CHOSEN RESTAURANT TITLE */}
+
       <Container>
         <Stack sx={{ pt: 5 }}>
           <Typography className="card_tite">A&A Realty Co Agency</Typography>
           <Typography className="card_sub_title" sx={{ mt: 5 }}>
             Other Trusted Agencies
           </Typography>
-          {/* <Other Agency​/> */}
         </Stack>
       </Container>
+
+      {/* TRUSTED OTHER RESTAURANT IN CHOSEN RESTAURANT SECTION */}
       <Box sx={{ display: "flex", alignItems: "center", pt: 0, pb: 5 }}>
         <Swiper
           // install Swiper modules
@@ -208,6 +211,9 @@ export function OneAgency() {
           })}
         </Swiper>
       </Box>
+
+      {/* OUR FEATURED EXCUSIVE SECTION */}
+
       <Container>
         <Stack sx={{ pt: 5, pb: 10 }}>
           <Typography className="card_tite">Our featured exclusives</Typography>
@@ -225,6 +231,7 @@ export function OneAgency() {
                 /* borderBottom: "2px solid #ff5a3c", */
               }}
             >
+              {/* NAVBAR LINK SECTION */}
               <Link
                 className={"underline"}
                 href="#underline"
@@ -267,6 +274,7 @@ export function OneAgency() {
             </Box>
           </CssVarsProvider>
 
+          {/* OUR FEATURED EXCLUSIVE CARD*/}
           <Stack
             flexDirection={"row"}
             alignItems={"center"}
@@ -274,7 +282,6 @@ export function OneAgency() {
             gap={2}
             paddingTop={5}
           >
-            {/* Our featured exclusives​ */}
             <CssVarsProvider>
               {featured_list.map((ele) => {
                 return (
@@ -308,7 +315,7 @@ export function OneAgency() {
                       <Typography level="title-md">
                         <Link
                           href="#multiple-actions"
-                          overlay
+                          /* overlay */
                           underline="none"
                           sx={{
                             color: "#000",
@@ -394,25 +401,13 @@ export function OneAgency() {
                       {/*  <Divider inset="context" /> */}
                       <Stack
                         flexDirection={"row"}
-                        justifyContent={"space-between"}
                         alignItems={"center"}
+                        justifyContent={"space-between"}
                         py={2}
                       >
                         <Typography level="body-lg">$540000</Typography>
-                        <Button
-                          variant="outlined"
-                          endDecorator={<KeyboardArrowRight />}
-                          sx={{
-                            backgroundColor: "#fff",
-                            color: "#ff5a3c",
-                            "&:hover": {
-                              backgroundColor: "#fff",
-                              color: "#3c52b2",
-                            },
-                          }}
-                        >
-                          View Details
-                        </Button>
+
+                        <JOYMODAL />
                       </Stack>
                     </CardOverflow>
                   </Card>
@@ -422,7 +417,6 @@ export function OneAgency() {
           </Stack>
           <Stack>
             <CssVarsProvider>
-              {" "}
               <JOYMODAL />
             </CssVarsProvider>
           </Stack>
