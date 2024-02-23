@@ -17,5 +17,5 @@
     "jsx": "react-jsx",
     "noImplicitAny": false
   },
-  "include": ["src", "typography.ts"]
+  "include": ["src", "typography.ts", "index.tsx"]
 }

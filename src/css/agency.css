@@ -64,3 +64,37 @@
 .one_agency .underline {
   text-decoration: none;
 }
+
+/* EXPLORE NEW NEIGHBOOR_HOOD STYLE */
+.explore_property .card_tite {
+  color: #212529;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.explore_property .card_sub_title {
+  color: #ff5a3c;
+  width: 138px;
+  font-weight: 700;
+  background-color: rgb(255, 90, 60, 0.2);
+  text-align: center;
+  padding: 6px 20px;
+  border-radius: 50px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.property_category_box {
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+}
