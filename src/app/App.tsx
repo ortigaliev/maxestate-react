@@ -20,6 +20,7 @@ import { NavbarOthers } from "./components/headers/others";
 import { useState } from "react";
 import { Footer } from "./components/footer";
 
+
 function App() {
   const [path, setPath] = useState();
   const main_path = window.location.pathname;

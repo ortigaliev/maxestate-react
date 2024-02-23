@@ -56,3 +56,11 @@
 .swiper-pagination-bullet-active {
   background-color: #ff5a3c !important;
 }
+
+.one_agency .box_underline {
+  color: red;
+  text-decoration: none;
+}
+.one_agency .underline {
+  text-decoration: none;
+}

@@ -13,7 +13,16 @@ import IconButton from "@mui/joy/IconButton";
 import Link from "@mui/joy/Link";
 import Favorite from "@mui/icons-material/Favorite";
 import Visibility from "@mui/icons-material/Visibility";
-import CreateNewFolder from "@mui/icons-material/CreateNewFolder";
+import CardContent from "@mui/joy/CardContent";
+import CardOverflow from "@mui/joy/CardOverflow";
+import Divider from "@mui/joy/Divider";
+
+/* MUI ICONS */
+import BedOutlinedIcon from "@mui/icons-material/BedOutlined";
+import ShowerOutlinedIcon from "@mui/icons-material/ShowerOutlined";
+import SquareFootIcon from "@mui/icons-material/SquareFoot";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import Button from "@mui/joy/Button";
 
 /* SWIPER PACKAGES */
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
@@ -23,12 +32,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { Modal } from "../../components/modal";
+import { JOYMODAL } from "../../components/modal/joymodal";
+import BasicRating from "../../components/rating";
 
 const order_one_agency = Array.from(Array(5).keys());
-const agency_list = Array.from(Array(10).keys());
+const featured_list = Array.from(Array(3).keys());
 console.log(order_one_agency);
 
 export function OneAgency() {
@@ -199,7 +208,226 @@ export function OneAgency() {
           })}
         </Swiper>
       </Box>
-      <Container></Container>
+      <Container>
+        <Stack sx={{ pt: 5, pb: 10 }}>
+          <Typography className="card_tite">Our featured exclusives</Typography>
+          <CssVarsProvider>
+            <Box
+              className="box_underline"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 4,
+                flexWrap: "wrap",
+                pt: 2,
+                pb: 0,
+                /* borderBottom: "2px solid #ff5a3c", */
+              }}
+            >
+              <Link
+                className={"underline"}
+                href="#underline"
+                sx={{
+                  color: "#000000E6",
+                  fontSize: "20px",
+                  "&:hover": {
+                    color: "#ff5a3c",
+                  },
+                }}
+              >
+                All
+              </Link>
+              <Link
+                className={"underline"}
+                href="#underline"
+                sx={{
+                  color: "#000000E6",
+                  fontSize: "20px",
+                  "&:hover": {
+                    color: "#ff5a3c",
+                  },
+                }}
+              >
+                For Rent
+              </Link>
+              <Link
+                className={"underline"}
+                href="#underline"
+                sx={{
+                  color: "#000000E6",
+                  fontSize: "20px",
+                  "&:hover": {
+                    color: "#ff5a3c",
+                  },
+                }}
+              >
+                For Sale
+              </Link>
+            </Box>
+          </CssVarsProvider>
+
+          <Stack
+            flexDirection={"row"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            gap={2}
+            paddingTop={5}
+          >
+            {/* Our featured exclusives​ */}
+            <CssVarsProvider>
+              {featured_list.map((ele) => {
+                return (
+                  <Card variant="outlined" sx={{ width: 320, bgcolor: "#fff" }}>
+                    <CardOverflow>
+                      <AspectRatio ratio="4/3">
+                        <img
+                          src="/images/agency/featured.jpg"
+                          loading="lazy"
+                          alt="Featured"
+                        />
+                      </AspectRatio>
+                      <IconButton
+                        aria-label="Like minimal photography"
+                        size="md"
+                        variant="solid"
+                        color="danger"
+                        sx={{
+                          position: "absolute",
+                          zIndex: 2,
+                          borderRadius: "50%",
+                          right: "1rem",
+                          bottom: 0,
+                          transform: "translateY(50%)",
+                        }}
+                      >
+                        <Favorite />
+                      </IconButton>
+                    </CardOverflow>
+                    <CardContent>
+                      <Typography level="title-md">
+                        <Link
+                          href="#multiple-actions"
+                          overlay
+                          underline="none"
+                          sx={{
+                            color: "#000",
+                            "&:hover": {
+                              color: "#ff5a3c",
+                            },
+                          }}
+                          style={{
+                            fontSize: "22px",
+                            fontWeight: 700,
+                          }}
+                        >
+                          Hillstate Jung-ang APT
+                        </Link>
+                      </Typography>
+                      <Typography level="body-sm">
+                        <Link
+                          href="#multiple-actions"
+                          sx={{
+                            color: "#000",
+                            "&:hover": {
+                              color: "#ff5a3c",
+                            },
+                          }}
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: 400,
+                            marginBottom: "10px",
+                          }}
+                        >
+                          81, Gojan-ro,Danwon-gu Ansan-si
+                        </Link>
+                      </Typography>
+                      <Stack flexDirection={"row"} alignItems={"center"}>
+                        <Typography
+                          level="body-sm"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <BedOutlinedIcon
+                            style={{ marginRight: "5px", color: "#ff5a3c" }}
+                          />{" "}
+                          3
+                        </Typography>
+                        <Divider
+                          orientation="vertical"
+                          style={{ margin: "0 10px" }}
+                        />
+                        <Typography
+                          level="body-sm"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          {" "}
+                          <ShowerOutlinedIcon
+                            style={{ marginRight: "5px", color: "#ff5a3c" }}
+                          />
+                          3
+                        </Typography>
+                        <Divider
+                          orientation="vertical"
+                          style={{ margin: "0 10px" }}
+                        />
+                        <Typography
+                          level="body-sm"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <SquareFootIcon
+                            style={{ marginRight: "5px", color: "#ff5a3c" }}
+                          />
+                          200kv
+                        </Typography>
+                      </Stack>
+                    </CardContent>
+                    <CardOverflow variant="soft" sx={{ background: "#fff" }}>
+                      {/*  <Divider inset="context" /> */}
+                      <Stack
+                        flexDirection={"row"}
+                        justifyContent={"space-between"}
+                        alignItems={"center"}
+                        py={2}
+                      >
+                        <Typography level="body-lg">$540000</Typography>
+                        <Button
+                          variant="outlined"
+                          endDecorator={<KeyboardArrowRight />}
+                          sx={{
+                            backgroundColor: "#fff",
+                            color: "#ff5a3c",
+                            "&:hover": {
+                              backgroundColor: "#fff",
+                              color: "#3c52b2",
+                            },
+                          }}
+                        >
+                          View Details
+                        </Button>
+                      </Stack>
+                    </CardOverflow>
+                  </Card>
+                );
+              })}
+            </CssVarsProvider>
+          </Stack>
+          <Stack>
+            <CssVarsProvider>
+              {" "}
+              <JOYMODAL />
+            </CssVarsProvider>
+          </Stack>
+        </Stack>
+      </Container>
     </div>
   );
 }
