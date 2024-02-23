@@ -15,6 +15,9 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PinchOutlinedIcon from "@mui/icons-material/PinchOutlined";
+import { Modal } from "../../components/modal";
+import { JOYMODAL } from "../../components/modal/joymodal";
+import { HomeModal } from "../../components/modal/home-modal";
 
 export function LatestList() {
   return (
@@ -83,32 +86,15 @@ export function LatestList() {
                         3 Bedrooms 2 Bathrooms 3450 square Ft
                       </Typography>
                       <Stack
-                        className="lates_frame_button_wrapper"
                         flexDirection={"row"}
-                        alignItems={"center"}
-                        justifyContent={"space-between"}
-                        sx={{ width: "132px" }}
+                        gap={1}
+                        className="lates_frame_button_wrapper"
                       >
-                        <IconButton
-                          variant="outlined"
-                          color="neutral"
-                          sx={{ mr: "auto" }}
-                        >
-                          <PinchOutlinedIcon />
-                        </IconButton>
-                        <IconButton
-                          variant="outlined"
-                          color="neutral"
-                          sx={{ mr: "auto" }}
-                        >
+                        <IconButton variant="outlined" color="neutral" sx={{}}>
                           <FavoriteBorder />
                         </IconButton>
-
-                        <IconButton
-                          variant="outlined"
-                          color="neutral"
-                          sx={{ mr: "auto" }}
-                        >
+                        <HomeModal />
+                        <IconButton variant="outlined" color="neutral">
                           <AddCircleOutlineOutlinedIcon />
                         </IconButton>
                       </Stack>
@@ -194,16 +180,10 @@ export function LatestList() {
                           color="neutral"
                           sx={{ mr: "auto" }}
                         >
-                          <PinchOutlinedIcon />
-                        </IconButton>
-                        <IconButton
-                          variant="outlined"
-                          color="neutral"
-                          sx={{ mr: "auto" }}
-                        >
                           <FavoriteBorder />
                         </IconButton>
 
+                        <HomeModal />
                         <IconButton
                           variant="outlined"
                           color="neutral"
@@ -294,15 +274,10 @@ export function LatestList() {
                           color="neutral"
                           sx={{ mr: "auto" }}
                         >
-                          <PinchOutlinedIcon />
-                        </IconButton>
-                        <IconButton
-                          variant="outlined"
-                          color="neutral"
-                          sx={{ mr: "auto" }}
-                        >
                           <FavoriteBorder />
                         </IconButton>
+
+                        <HomeModal />
 
                         <IconButton
                           variant="outlined"
@@ -394,15 +369,10 @@ export function LatestList() {
                           color="neutral"
                           sx={{ mr: "auto" }}
                         >
-                          <PinchOutlinedIcon />
-                        </IconButton>
-                        <IconButton
-                          variant="outlined"
-                          color="neutral"
-                          sx={{ mr: "auto" }}
-                        >
                           <FavoriteBorder />
                         </IconButton>
+
+                        <HomeModal />
 
                         <IconButton
                           variant="outlined"
@@ -494,15 +464,10 @@ export function LatestList() {
                           color="neutral"
                           sx={{ mr: "auto" }}
                         >
-                          <PinchOutlinedIcon />
-                        </IconButton>
-                        <IconButton
-                          variant="outlined"
-                          color="neutral"
-                          sx={{ mr: "auto" }}
-                        >
                           <FavoriteBorder />
                         </IconButton>
+
+                        <HomeModal />
 
                         <IconButton
                           variant="outlined"
@@ -594,15 +559,10 @@ export function LatestList() {
                           color="neutral"
                           sx={{ mr: "auto" }}
                         >
-                          <PinchOutlinedIcon />
-                        </IconButton>
-                        <IconButton
-                          variant="outlined"
-                          color="neutral"
-                          sx={{ mr: "auto" }}
-                        >
                           <FavoriteBorder />
                         </IconButton>
+
+                        <HomeModal />
 
                         <IconButton
                           variant="outlined"

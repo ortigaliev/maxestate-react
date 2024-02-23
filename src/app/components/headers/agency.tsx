@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 
 export function NavbarAgency(props: any) {
   return (
@@ -77,11 +78,7 @@ export function NavbarAgency(props: any) {
               />
               <Badge badgeContent={3} color="secondary">
                 <Box className="agency_hover-line_icon-box">
-                  <img
-                    className="agency_hover-line_icon"
-                    src="/images/home/shopping_cart.svg"
-                    alt="Shopping Cart"
-                  />
+                  <ShoppingCartCheckoutOutlinedIcon />
                 </Box>
               </Badge>
             </Box>

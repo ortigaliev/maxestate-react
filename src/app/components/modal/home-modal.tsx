@@ -13,8 +13,9 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import PinchOutlinedIcon from "@mui/icons-material/PinchOutlined";
 
-export function JOYMODAL() {
+export function HomeModal() {
   const [open, setOpen] = React.useState<boolean>(false);
   const [count, setCount] = useState(0);
 
@@ -30,7 +31,7 @@ export function JOYMODAL() {
             color="neutral"
             onClick={() => setOpen(true)}
           >
-            Open modal
+            <PinchOutlinedIcon />
           </Button>
           <Modal
             aria-labelledby="modal-title"
