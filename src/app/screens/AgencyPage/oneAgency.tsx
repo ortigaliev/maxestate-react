@@ -41,10 +41,12 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { JOYMODAL } from "../../components/modal/joymodal";
 
+import UserComment from "./userComment";
+
 const order_one_agency = Array.from(Array(5).keys());
 const featured_list = Array.from(Array(3).keys());
 console.log(order_one_agency);
-const product_list = Array.from(Array(9).keys());
+const one_product_list = Array.from(Array(8).keys());
 
 export function OneAgency() {
   return (
@@ -73,9 +75,13 @@ export function OneAgency() {
           onSlideChange={() => console.log("slide change")}
           style={{ height: "350px" }}
         >
-          {order_one_agency.map((ele) => {
+          {order_one_agency.map((ele, index) => {
             return (
-              <SwiperSlide className="res_slider" style={{ width: "360px" }}>
+              <SwiperSlide
+                className="res_slider"
+                key="index"
+                style={{ width: "360px" }}
+              >
                 <CssVarsProvider>
                   <Card
                     variant="plain"
@@ -289,9 +295,13 @@ export function OneAgency() {
             paddingTop={5}
           >
             <CssVarsProvider>
-              {featured_list.map((ele) => {
+              {featured_list.map((ele, index) => {
                 return (
-                  <Card variant="outlined" sx={{ width: 320, bgcolor: "#fff" }}>
+                  <Card
+                    variant="outlined"
+                    key="index"
+                    sx={{ width: 320, bgcolor: "#fff" }}
+                  >
                     <CardOverflow>
                       <AspectRatio ratio="4/3">
                         <img
@@ -424,7 +434,7 @@ export function OneAgency() {
 
           {/* EXPLORE NEW NEIGBOOR-HOOD */}
           <CssVarsProvider>
-            <Stack className="explore_property" mt={10}>
+            <Stack className="explore_property" mt={10} position={"relative"}>
               <Typography className="card_sub_title"> Our Service</Typography>
               <Typography className="card_tite">
                 Explore New Neighbourhood
@@ -465,140 +475,177 @@ export function OneAgency() {
               </Box>
 
               {/* PROPERT SECTION */}
-              <Stack>
-                {/* LINKS */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: 3,
-                    flexWrap: "wrap",
-                    justifyContent: "flex-end",
-                  }}
+              <Stack mt={5} flexDirection={"row"} flexWrap={"wrap"} gap={3}>
+                <Stack
+                  height={"512px"}
+                  position={"absolute"}
+                  left={-300}
+                  top={414}
                 >
-                  <Link
-                    href="#"
-                    sx={{ color: "#fff", bgcolor: "#ff5a3c", p: "6px 15px" }}
-                  >
-                    APARTMENT
-                  </Link>
-                  <Link
-                    href="#"
-                    sx={{ color: "#fff", bgcolor: "#ff5a3c", p: "6px 15px" }}
-                  >
-                    SINGLE FAMILY
-                  </Link>
-                  <Link
-                    href="#"
-                    sx={{ color: "#fff", bgcolor: "#ff5a3c", p: "6px 15px" }}
-                  >
-                    VILLA
-                  </Link>
-                  <Link
-                    href="#"
-                    sx={{ color: "#fff", bgcolor: "#ff5a3c", p: "6px 15px" }}
-                  >
-                    BUSINESS
-                  </Link>
-                </Box>
-                {/* PRODUCT CARD */}
-                <Box>
-                  <Card
-                    variant="plain"
+                  {/* LINKS */}
+                  <Box
+                    className="property_category_box"
                     sx={{
-                      width: 300,
-                      bgcolor: "initial",
-                      p: 0,
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      gap: 3,
                     }}
                   >
-                    <Box sx={{ position: "relative" }}>
-                      <AspectRatio ratio="4/3">
-                        <figure>
-                          <img
-                            src="https://images.unsplash.com/photo-1515825838458-f2a94b20105a?auto=format&fit=crop&w=300"
-                            srcSet="https://images.unsplash.com/photo-1515825838458-f2a94b20105a?auto=format&fit=crop&w=300&dpr=2 2x"
-                            loading="lazy"
-                            alt="Yosemite by Casey Horner"
-                          />
-                        </figure>
-                      </AspectRatio>
-                      <CardCover
-                        className="gradient-cover"
+                    <Link
+                      href="#"
+                      sx={{ color: "#fff", bgcolor: "#ff5a3c", p: "6px 15px" }}
+                    >
+                      APARTMENT
+                    </Link>
+                    <Link
+                      href="#"
+                      sx={{ color: "#fff", bgcolor: "#ff5a3c", p: "6px 15px" }}
+                    >
+                      SINGLE FAMILY
+                    </Link>
+                    <Link
+                      href="#"
+                      sx={{ color: "#fff", bgcolor: "#ff5a3c", p: "6px 15px" }}
+                    >
+                      VILLA
+                    </Link>
+                    <Link
+                      href="#"
+                      sx={{ color: "#fff", bgcolor: "#ff5a3c", p: "6px 15px" }}
+                    >
+                      BUSINESS
+                    </Link>
+                  </Box>
+                </Stack>
+                {/* PRODUCT CARD */}
+                {one_product_list.map((ele, index) => {
+                  const estate_owner_enums = "For sale";
+                  return (
+                    <Box>
+                      <Card
+                        variant="plain"
+                        key={index}
                         sx={{
-                          "&:hover, &:focus-within": {
-                            opacity: 1,
-                          },
-                          opacity: 0,
-                          transition: "0.1s ease-in",
-                          background:
-                            "linear-gradient(180deg, transparent 62%, rgba(0,0,0,0.00345888) 63.94%, rgba(0,0,0,0.014204) 65.89%, rgba(0,0,0,0.0326639) 67.83%, rgba(0,0,0,0.0589645) 69.78%, rgba(0,0,0,0.0927099) 71.72%, rgba(0,0,0,0.132754) 73.67%, rgba(0,0,0,0.177076) 75.61%, rgba(0,0,0,0.222924) 77.56%, rgba(0,0,0,0.267246) 79.5%, rgba(0,0,0,0.30729) 81.44%, rgba(0,0,0,0.341035) 83.39%, rgba(0,0,0,0.367336) 85.33%, rgba(0,0,0,0.385796) 87.28%, rgba(0,0,0,0.396541) 89.22%, rgba(0,0,0,0.4) 91.17%)",
+                          width: 300,
+                          bgcolor: "initial",
+                          p: 0,
                         }}
                       >
-                        {/* The first box acts as a container that inherits style from the CardCover */}
-                        <div>
-                          <Stack
-                            flexDirection={"row"}
-                            justifyContent={"space-around"}
-                            alignSelf={"flex-end"}
-                            p={2}
-                            gap={2}
-                            /* sx={{
-                              p: 2,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-around",
-                              alignSelf: "flex-end",
-                            }} */
+                        <Box sx={{ position: "relative" }}>
+                          <AspectRatio ratio="4/3">
+                            <figure>
+                              <img
+                                src="/images/home/h4.jpg"
+                                loading="lazy"
+                                alt="Yosemite by Casey Horner"
+                              />
+                            </figure>
+                          </AspectRatio>
+                          <Box
+                            sx={{
+                              position: "absolute",
+                              top: "15px",
+                              right: "10px",
+                              display: "block",
+                              p: "6px 16px",
+                              backgroundColor: "#ff5a3c",
+                              color: "#fff",
+                            }}
                           >
-                            <Box>
-                              <IconButton
-                                size="sm"
-                                variant="solid"
-                                color="neutral"
-                                sx={{
-                                  ml: "auto",
-                                  bgcolor: "rgba(0 0 0 / 0.2)",
-                                }}
+                            {estate_owner_enums}
+                          </Box>
+                          <CardCover
+                            className="gradient-cover"
+                            sx={{
+                              "&:hover, &:focus-within": {
+                                opacity: 1,
+                              },
+                              opacity: 0,
+                              transition: "0.1s ease-in",
+                              background:
+                                "linear-gradient(180deg, transparent 62%, rgba(0,0,0,0.00345888) 63.94%, rgba(0,0,0,0.014204) 65.89%, rgba(0,0,0,0.0326639) 67.83%, rgba(0,0,0,0.0589645) 69.78%, rgba(0,0,0,0.0927099) 71.72%, rgba(0,0,0,0.132754) 73.67%, rgba(0,0,0,0.177076) 75.61%, rgba(0,0,0,0.222924) 77.56%, rgba(0,0,0,0.267246) 79.5%, rgba(0,0,0,0.30729) 81.44%, rgba(0,0,0,0.341035) 83.39%, rgba(0,0,0,0.367336) 85.33%, rgba(0,0,0,0.385796) 87.28%, rgba(0,0,0,0.396541) 89.22%, rgba(0,0,0,0.4) 91.17%)",
+                            }}
+                          >
+                            {/* The first box acts as a container that inherits style from the CardCover */}
+                            <div>
+                              <Stack
+                                flexDirection={"row"}
+                                justifyContent={"space-around"}
+                                alignSelf={"flex-end"}
+                                p={2}
+                                gap={2}
+                                /* sx={{
+                                p: 2,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-around",
+                                alignSelf: "flex-end",
+                              }} */
                               >
-                                <Badge badgeContent={8} color="primary">
-                                  <Visibility />
-                                </Badge>
-                              </IconButton>
-                            </Box>
+                                <Box>
+                                  <IconButton
+                                    size="sm"
+                                    variant="solid"
+                                    color="neutral"
+                                    id={`${index}`}
+                                    sx={{
+                                      ml: "auto",
+                                      bgcolor: "rgba(0 0 0 / 0.2)",
+                                    }}
+                                  >
+                                    <Badge badgeContent={8} color="primary">
+                                      <Visibility />
+                                    </Badge>
+                                  </IconButton>
+                                </Box>
 
-                            <Box>
-                              <IconButton
-                                size="sm"
-                                variant="solid"
-                                color="neutral"
-                                sx={{
-                                  ml: "auto",
-                                  bgcolor: "rgba(0 0 0 / 0.2)",
-                                }}
-                              >
-                                <ShoppingCartOutlinedIcon />
-                              </IconButton>
-                            </Box>
+                                <Box>
+                                  <IconButton
+                                    size="sm"
+                                    variant="solid"
+                                    color="neutral"
+                                    sx={{
+                                      ml: "auto",
+                                      bgcolor: "rgba(0 0 0 / 0.2)",
+                                    }}
+                                  >
+                                    <ShoppingCartOutlinedIcon />
+                                  </IconButton>
+                                </Box>
 
-                            <Box>
-                              <IconButton
-                                size="sm"
-                                variant="solid"
-                                color="neutral"
-                                sx={{ bgcolor: "rgba(0 0 0 / 0.2)" }}
-                              >
-                                <Favorite />
-                              </IconButton>
-                            </Box>
-                          </Stack>
-                        </div>
-                      </CardCover>
+                                <Box>
+                                  <IconButton
+                                    size="sm"
+                                    variant="solid"
+                                    color="neutral"
+                                    sx={{ bgcolor: "rgba(0 0 0 / 0.2)" }}
+                                  >
+                                    <Favorite />
+                                  </IconButton>
+                                </Box>
+                              </Stack>
+                            </div>
+                          </CardCover>
+                        </Box>
+                      </Card>
                     </Box>
-                  </Card>
-                </Box>
+                  );
+                })}
               </Stack>
             </Stack>
           </CssVarsProvider>
         </Stack>
+
+        {/* COMMENTS RETATED TO THE AGENCY */}
+        <Stack mt={5}>
+          <Typography className="card_sub_title" sx={{ maxWidth: "170px" }}>
+            Our Testimonial
+          </Typography>
+          <Typography className="card_tite">Clients Feedback</Typography>
+        </Stack>
+        <Box>
+          <UserComment />
+        </Box>
       </Container>
     </div>
   );

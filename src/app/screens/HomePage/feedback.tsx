@@ -1,11 +1,4 @@
-import {
-  Container,
-  Grid,
-  Link,
-  Stack,
-  Typography,
-  colors,
-} from "@mui/material";
+import { Container, Grid, Link, Stack, Typography } from "@mui/material";
 import React from "react";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
