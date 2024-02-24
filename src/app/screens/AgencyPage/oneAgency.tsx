@@ -301,15 +301,29 @@ export function OneAgency() {
                   <Card
                     variant="outlined"
                     key="index"
-                    sx={{ width: 320, bgcolor: "#fff" }}
+                    sx={{
+                      width: 320,
+                      bgcolor: "#fff",
+                      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.5)",
+                    }}
                   >
                     <CardOverflow>
                       <AspectRatio ratio="4/3">
-                        <img
-                          src="/images/agency/featured.jpg"
-                          loading="lazy"
-                          alt="Featured"
-                        />
+                        <Box
+                          sx={{
+                            position: "relative",
+                            cursor: "pointer",
+                            transition: "all 1.1s",
+                          }}
+                        >
+                          <img
+                            width="100%"
+                            height="100%"
+                            src="/images/agency/featured.jpg"
+                            loading="lazy"
+                            alt="Featured"
+                          />
+                        </Box>
                       </AspectRatio>
                       <IconButton
                         aria-label="Like minimal photography"
