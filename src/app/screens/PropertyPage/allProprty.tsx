@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Container, Icon, Stack } from "@mui/material";
-import { styled } from "@mui/joy/styles";
+import { Box, Button, Container, Link, Stack } from "@mui/material";
 import Grid from "@mui/joy/Grid";
+import TextField from "@mui/material/TextField";
 
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
@@ -9,14 +9,19 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import Divider from "@mui/joy/Divider";
 import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
-import { AspectRatio, Button, IconButton } from "@mui/joy";
+import { AspectRatio, IconButton } from "@mui/joy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { FavoriteBorder } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import WindowIcon from "@mui/icons-material/Window";
+import ViewListIcon from "@mui/icons-material/ViewList";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { HomeModal } from "../../components/modal/home-modal";
 import { AgencyPagination } from "../AgencyPage/agencyPagination";
 import { AdvancedInfo } from "./advancedInfo";
+import BasicSelect from "./basicSelect";
+import "../../../css/property.css";
 
 const property_list = Array.from(Array(6).keys());
 
@@ -29,6 +34,48 @@ export function AllProperty() {
             className="all_property_grid"
             sx={{ width: "880px", m: "15px 15px" }}
           >
+            {/* MENU BAR AND DEFAULT */}
+            <Stack
+              width="820px"
+              flexDirection={"row"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              mb={5}
+            >
+              <Box sx={{ display: "flax", alignItems: "center", gap: 2 }}>
+                <Link href="#" underline="none">
+                  <WindowIcon sx={{ width: "40px", height: "36px" }} />
+                </Link>
+                <Link href="#" underline="none">
+                  <ViewListIcon sx={{ width: "40px", height: "36px" }} />
+                </Link>
+              </Box>
+              <Box>
+                <BasicSelect />
+              </Box>
+            </Stack>
+
+            {/* Search BAR */}
+            <Box
+              component="form"
+              sx={{
+                "& .MuiTextField-root": { m: "1 0", width: "85ch" },
+                display: "flex",
+                alignItems: "center",
+              }}
+              noValidate
+              autoComplete="off"
+              bgcolor={"#f2f6f7"}
+            >
+              <TextField
+                id="filled-search"
+                label="Search field"
+                type="search"
+              />
+              <Button variant="contained" sx={{ padding: 2, margin: 0 }}>
+                <SearchIcon />
+              </Button>
+            </Box>
             {/* Latest Lists Section */}
             <Box>
               <Grid
@@ -133,10 +180,22 @@ export function AllProperty() {
             </Box>
             {/* ADVANCED INFORMATION */}
             <Stack position={"absolute"} sx={{ top: 0, right: 0 }}>
-              <Typography level="h2" noWrap sx={{ fontSize: "lg" }}>
+              <Typography
+                gutterBottom
+                component="div"
+                fontSize={24}
+                fontWeight={700}
+                mt={2}
+                mb={1}
+              >
                 Advanced Information
               </Typography>
-              <Typography level="h2" noWrap sx={{ fontSize: "lg" }}>
+              <Typography
+                component="div"
+                fontSize={16}
+                fontWeight={400}
+                sx={{ color: "#5c727d" }}
+              >
                 About 1,620 results (0.82 secund)
                 <Box>
                   <AdvancedInfo />
