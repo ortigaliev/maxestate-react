@@ -42,6 +42,7 @@ import "swiper/css/scrollbar";
 import { JOYMODAL } from "../../components/modal/joymodal";
 
 import UserComment from "./userComment";
+import OurAgent from "./ourAgent";
 
 const order_one_agency = Array.from(Array(5).keys());
 const featured_list = Array.from(Array(3).keys());
@@ -646,6 +647,16 @@ export function OneAgency() {
         <Box>
           <UserComment />
         </Box>
+
+        <Stack mt={10}>
+          <Typography className="card_sub_title" sx={{ maxWidth: "136px" }}>
+            Our Service
+          </Typography>
+          <Typography className="card_tite">Our Agents</Typography>
+          <Stack mb={10}>
+            <OurAgent />
+          </Stack>
+        </Stack>
       </Container>
     </div>
   );
