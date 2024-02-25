@@ -62,3 +62,8 @@ theme = createTheme(theme, {
   },
 });
 export default theme;
+
+/* Main color: #ff5a3c,
+paragraph color: #5c727d;
+Rating color: #ffb800,
+Leave your comment bgcolor: #f0f4f7 */

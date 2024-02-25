@@ -2,14 +2,19 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
+  Checkbox,
   Container,
+  Divider,
   ImageList,
   ImageListItem,
   Link,
+  Rating,
+  TextField,
   Typography,
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -32,6 +37,11 @@ import BedOutlinedIcon from "@mui/icons-material/BedOutlined";
 import FormatPaintOutlinedIcon from "@mui/icons-material/FormatPaintOutlined";
 import ConstructionOutlinedIcon from "@mui/icons-material/ConstructionOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+
+const popular_list = Array.from(Array(4).keys());
 
 export function ChosenProperty() {
   return (
@@ -62,8 +72,8 @@ export function ChosenProperty() {
         </Swiper>
       </Stack>
       <Container>
-        <Stack flexDirection={"row"}>
-          <Stack pt={10} pb={10} width="850px">
+        <Stack flexDirection={"row"} pt={10} pb={10}>
+          <Stack width="850px">
             {" "}
             <Box sx={{ display: "flex", alignItems: "center", mb: 8 }}>
               <Typography
@@ -320,7 +330,7 @@ export function ChosenProperty() {
               >
                 From Our Gallery
               </Typography>
-              <Stack flexDirection={"row"} gap={4}>
+              <Stack flexDirection={"row"} gap={4} mt={4}>
                 <Box>
                   <Box mb={2}>
                     <img
@@ -349,8 +359,528 @@ export function ChosenProperty() {
                 </Box>
               </Stack>
             </Box>
+            {/* MAP */}
+            <Box style={{ width: "100%" }}>
+              <Typography
+                className="card_tite"
+                variant="h3"
+                sx={{
+                  pl: 2,
+                  mt: 5,
+                  mb: 3,
+                  fontWeight: 500,
+                  borderLeft: "5px solid #ff5a3c",
+                }}
+              >
+                Location
+              </Typography>
+              <iframe
+                width="100%"
+                height="360"
+                border-width="0"
+                scrolling="no"
+                margin-height="0"
+                margin-width="0"
+                src="https://maps.google.com/maps?width=100%25&amp;height=360&amp;hl=en&amp;q=Ansan-si,%20Gyeonggi-do,Sangnok-gu+(MaxEstate)&amp;t=h&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+              >
+                <a href="https://www.gps.ie/">gps vehicle tracker</a>
+              </iframe>
+            </Box>
+            {/* CUSTOMER REVIEW */}
+            <Box>
+              <Typography
+                className="card_tite"
+                variant="h3"
+                sx={{
+                  pl: 2,
+                  mt: 5,
+                  mb: 3,
+                  fontWeight: 500,
+                  borderLeft: "5px solid #ff5a3c",
+                }}
+              >
+                Customer Review
+              </Typography>
+              <Stack
+                spacing={1}
+                flexDirection={"row"}
+                alignItems={"center"}
+                gap={2}
+              >
+                <Rating name="half-rating" defaultValue={4} precision={0.5} />
+                <Link
+                  rel="stylesheet"
+                  href="#"
+                  underline="none"
+                  sx={{
+                    color: "#ffb800",
+                    "&:hover": {
+                      color: "#ff5a3c",
+                    },
+                    fontSize: "14px",
+                  }}
+                >
+                  (95 Reviews)
+                </Link>
+              </Stack>
+            </Box>
+            {/* CUSTOMER REVIEW CARD */}
+            <Box mt={8}>
+              <Card sx={{ display: "flex", maxWidth: 845, mb: 2 }}>
+                <Box sx={{ pl: 3, pt: 3 }}>
+                  <img
+                    width={"100px"}
+                    height={"100px"}
+                    src="/images/home/user_comment.jpg"
+                    alt="Comment_user"
+                    style={{
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                </Box>
+                <CardContent>
+                  <Stack
+                    flexDirection={"row"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                  >
+                    <Box>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        mb={1.5}
+                      >
+                        Emma Smit
+                      </Typography>
+                      <Rating
+                        name="half-rating"
+                        defaultValue={4}
+                        precision={0.5}
+                      />
+                    </Box>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      sx={{
+                        borderRadius: 20,
+                      }}
+                    >
+                      September 2023
+                    </Button>
+                  </Stack>
+                  <Typography variant="body2" color="text.secondary" mt={1.5}>
+                    Lizards are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+              </Card>
+
+              <Card sx={{ display: "flex", maxWidth: 845, mb: 2 }}>
+                <Box sx={{ pl: 3, pt: 3 }}>
+                  <img
+                    width={"100px"}
+                    height={"100px"}
+                    src="/images/prop/prop_user2.jpg"
+                    alt="Comment_user"
+                    style={{
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                </Box>
+                <CardContent>
+                  <Stack
+                    flexDirection={"row"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                  >
+                    <Box>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        mb={1.5}
+                      >
+                        Smit Adam
+                      </Typography>
+                      <Rating
+                        name="half-rating"
+                        defaultValue={4}
+                        precision={0.5}
+                      />
+                    </Box>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      sx={{
+                        borderRadius: 20,
+                      }}
+                    >
+                      September 2023
+                    </Button>
+                  </Stack>
+                  <Typography variant="body2" color="text.secondary" mt={1.5}>
+                    Lizards are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+              </Card>
+
+              <Card sx={{ display: "flex", maxWidth: 845, mb: 2 }}>
+                <Box sx={{ pl: 3, pt: 3 }}>
+                  <img
+                    width={"100px"}
+                    height={"100px"}
+                    src="/images/agency/user.jpg"
+                    alt="Comment_user"
+                    style={{
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                </Box>
+                <CardContent>
+                  <Stack
+                    flexDirection={"row"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                  >
+                    <Box>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        mb={1.5}
+                      >
+                        Sophia Taylor
+                      </Typography>
+                      <Rating
+                        name="half-rating"
+                        defaultValue={4}
+                        precision={0.5}
+                      />
+                    </Box>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      sx={{
+                        borderRadius: 20,
+                      }}
+                    >
+                      September 2023
+                    </Button>
+                  </Stack>
+                  <Typography variant="body2" color="text.secondary" mt={1.5}>
+                    Lizards are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Box>
+            {/* LEAVE YOUR COMMENT */}
+            <Box mt={3}>
+              <Card
+                sx={{
+                  display: "flex",
+                  maxWidth: 845,
+                  mb: 2,
+                  p: "50px",
+                  background: "#f0f4f7",
+                }}
+              >
+                <CardContent>
+                  <Stack sx={{ pr: "50px" }}>
+                    <Box>
+                      <Typography
+                        gutterBottom
+                        variant="h4"
+                        fontWeight={600}
+                        component="div"
+                        mb={1.5}
+                      >
+                        Add a Review
+                      </Typography>
+                      <Rating
+                        name="half-rating"
+                        defaultValue={4}
+                        precision={0.5}
+                      />
+                      {/* INPUT SECTION */}
+                      <Box
+                        component="form"
+                        position={"relative"}
+                        sx={{
+                          "& .MuiTextField-root": {
+                            m: 1,
+                            width: "710px",
+                            mt: 3,
+                          },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                      >
+                        <TextField
+                          fullWidth
+                          id="standard-multiline-static"
+                          multiline
+                          rows={6}
+                          defaultValue="Type your comment"
+                          variant="standard"
+                          sx={{
+                            background: "#fff",
+                            p: 2,
+                            position: "relative",
+                          }}
+                        />
+                        <ModeEditOutlineOutlinedIcon
+                          style={{
+                            width: "16px",
+                            height: "16px",
+
+                            position: "absolute",
+                            top: 40,
+                            right: 30,
+                            color: "#ff5a3c",
+                          }}
+                        />
+                      </Box>
+                      <Box
+                        component="form"
+                        position={"relative"}
+                        sx={{
+                          "& .MuiTextField-root": {
+                            m: 1,
+                            width: "710px",
+                            mt: 3,
+                          },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                      >
+                        {" "}
+                        <TextField
+                          fullWidth
+                          id="standard-multiline-static"
+                          defaultValue="Type Your Name"
+                          variant="standard"
+                          sx={{
+                            background: "#fff",
+                            p: 2,
+                            position: "relative",
+                          }}
+                        />
+                        <PersonOutlineOutlinedIcon
+                          style={{
+                            width: "16px",
+                            height: "16px",
+
+                            position: "absolute",
+                            top: 40,
+                            right: 30,
+                            color: "#ff5a3c",
+                          }}
+                        />
+                      </Box>
+
+                      <Box
+                        component="form"
+                        position={"relative"}
+                        sx={{
+                          "& .MuiTextField-root": {
+                            m: 1,
+                            width: "710px",
+                            mt: 3,
+                          },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                      >
+                        {" "}
+                        <TextField
+                          fullWidth
+                          id="standard-multiline-static"
+                          defaultValue="Type Your Email"
+                          variant="standard"
+                          sx={{
+                            background: "#fff",
+                            p: 2,
+                            position: "relative",
+                          }}
+                        />
+                        <EmailOutlinedIcon
+                          style={{
+                            width: "16px",
+                            height: "16px",
+
+                            position: "absolute",
+                            top: 40,
+                            right: 30,
+                            color: "#ff5a3c",
+                          }}
+                        />
+                      </Box>
+
+                      {/* CheckBox */}
+                      <Box sx={{ display: "flex", mt: 3, mb: 4 }}>
+                        <Checkbox />
+                        <Typography variant="body2" color="#5c727d" mt={1.5}>
+                          Save my name, email, and website in this browser for
+                          the next time I comment.
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    <Button
+                      size="large"
+                      type="submit"
+                      variant="outlined"
+                      sx={{
+                        width: "140px",
+                        padding: "17px 40px",
+                        color: "#fff",
+                        bgcolor: "#ff5a3c",
+                        "&:hover": {
+                          color: "#ff5a3c",
+                        },
+                      }}
+                    >
+                      Submit
+                    </Button>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Box>
           </Stack>
-          <Stack width="440px">Comment</Stack>
+
+          {/* RIGHT SIGHT CARD */}
+          <Stack width="440px" pl={"25px"} pr={"25px"}>
+            <Box maxHeight="580px" style={{ backgroundColor: "#fff" }}>
+              <Typography
+                className="card_tite"
+                variant="h4"
+                sx={{
+                  pl: 2,
+                  m: 4,
+
+                  fontWeight: 500,
+                  borderLeft: "5px solid #ff5a3c",
+                }}
+              >
+                Popular Proerties
+              </Typography>
+
+              <Swiper
+                spaceBetween={30}
+                loop={true}
+                pagination={{
+                  clickable: true,
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
+                style={{ maxHeight: 472, backgroundColor: "f0f4f7" }}
+              >
+                {popular_list.map((ele, index) => {
+                  return (
+                    <SwiperSlide style={{ maxWidth: "390px", height: "450px" }}>
+                      <Card style={{ maxWidth: "390px", height: "400px" }}>
+                        <CardMedia
+                          component="img"
+                          width="100%"
+                          height="260"
+                          image="/images/home/h2.jpg"
+                          alt="green iguana"
+                        />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h4"
+                            component="div"
+                            style={{ color: "#ff5a3c", marginBottom: 2 }}
+                          >
+                            $ 456.000
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant="h4"
+                            component="div"
+                            style={{ fontWeight: 500, marginBottom: 2 }}
+                          >
+                            Hillstate Apartment
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="#5c727d"
+                            sx={{ display: "flex", gap: 2, marginBottom: 2 }}
+                          >
+                            <LocationOnIcon
+                              sx={{
+                                display: "block",
+                                width: 16,
+                                height: 20,
+                                fontSize: 20,
+                                color: "#ff5a3c",
+                              }}
+                            />
+                            Itaewon, Seoul
+                          </Typography>
+                          <Box sx={{ display: "flex" }}>
+                            <Typography variant="body2" color="text.secondary">
+                              3 Bedroom
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              2 Bathroom
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              345 m Kv
+                            </Typography>
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </Box>
+            <Stack>
+              <Card style={{ maxWidth: "390px" }}>
+                <CardActionArea>
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      Building Price
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                      $578.000
+                    </Typography>
+                    <Button variant="contained">Book now</Button>
+                    <Divider />
+
+                    <Typography gutterBottom variant="h5" component="div">
+                      Request Home Tour
+                    </Typography>
+                    <Box>
+                      <Button variant="contained">In Person</Button>
+                      <Button variant="contained">Virtual</Button>
+                    </Box>
+                    <Box>Select Day </Box>
+                    <Button variant="contained">Request a tour</Button>
+                    <Typography variant="body2" color="text.secondary">
+                      It's free, with no obligation - cancel anytime.
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Stack>
+          </Stack>
+
+          {/* SHOPPING CARD */}
         </Stack>
       </Container>
     </div>
