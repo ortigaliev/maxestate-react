@@ -20,7 +20,6 @@ import { NavbarOthers } from "./components/headers/others";
 import { useState } from "react";
 import { Footer } from "./components/footer";
 
-
 function App() {
   const [path, setPath] = useState();
   const main_path = window.location.pathname;
@@ -50,7 +49,7 @@ function App() {
         <Route path="/login">
           <LoginPage />
         </Route>
-        <Route path="/">
+        <Route path="">
           <HomePage />
         </Route>
       </Switch>

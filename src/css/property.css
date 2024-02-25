@@ -7,3 +7,11 @@
 .search_input_bg {
   background-color: #f2f6f7;
 }
+
+.swiper-button-prev {
+  background: #fff;
+  padding: 10px;
+}
+.swiper-button-next {
+  background: #fff;
+}
