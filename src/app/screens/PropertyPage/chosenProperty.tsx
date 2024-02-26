@@ -40,6 +40,13 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import { CssVarsProvider } from "@mui/joy";
+
+/* Data Picker */
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const popular_list = Array.from(Array(4).keys());
 
@@ -762,7 +769,98 @@ export function ChosenProperty() {
 
           {/* RIGHT SIGHT CARD */}
           <Stack width="440px" pl={"25px"} pr={"25px"}>
-            <Box maxHeight="580px" style={{ backgroundColor: "#fff" }}>
+            <Stack mb={5}>
+              <Card
+                style={{
+                  maxWidth: "390px",
+                  paddingLeft: "25px",
+                  paddingRight: "25px",
+                }}
+              >
+                <CardContent>
+                  <Box sx={{ marginTop: 2, marginBottom: 3 }}>
+                    <Box sx={{ marginBottom: 1 }}>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        style={{ marginBottom: "2px" }}
+                      >
+                        Building Price
+                      </Typography>
+                    </Box>
+                    <Typography
+                      gutterBottom
+                      variant="h2"
+                      component="div"
+                      style={{
+                        color: "#ff5a3c",
+                      }}
+                    >
+                      $578.000
+                    </Typography>
+                  </Box>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    size="large"
+                    style={{ width: "100%" }}
+                  >
+                    Book now
+                  </Button>
+                  <Divider sx={{ mt: 2, mb: 2 }} />
+
+                  <Typography
+                    gutterBottom
+                    variant="h3"
+                    component="div"
+                    style={{ fontWeight: 600 }}
+                  >
+                    Request Home Tour
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      paddingTop: 2,
+                    }}
+                  >
+                    <Button variant="contained">In Person</Button>
+                    <Button variant="contained">Virtual</Button>
+                  </Box>
+                  <Box sx={{ maxWidth: "100%", marginTop: 2, marginBottom: 3 }}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={["DatePicker"]}>
+                        <DatePicker
+                          label="Select date"
+                          slotProps={{ textField: { fullWidth: true } }}
+                        />
+                      </DemoContainer>
+                    </LocalizationProvider>
+                  </Box>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    size="large"
+                    style={{ width: "100%" }}
+                  >
+                    Request a tour
+                  </Button>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mt: 2 }}
+                  >
+                    It's free, with no obligation - cancel anytime.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Stack>
+
+            <Box
+              maxHeight="580px"
+              style={{ backgroundColor: "#fff", marginBottom: 40 }}
+            >
               <Typography
                 className="card_tite"
                 variant="h4"
@@ -849,33 +947,122 @@ export function ChosenProperty() {
                 })}
               </Swiper>
             </Box>
-            <Stack>
-              <Card style={{ maxWidth: "390px" }}>
-                <CardActionArea>
-                  <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                      Building Price
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                      $578.000
-                    </Typography>
-                    <Button variant="contained">Book now</Button>
-                    <Divider />
 
-                    <Typography gutterBottom variant="h5" component="div">
-                      Request Home Tour
-                    </Typography>
-                    <Box>
-                      <Button variant="contained">In Person</Button>
-                      <Button variant="contained">Virtual</Button>
+            <Stack mb={5}>
+              <Card
+                style={{
+                  maxWidth: "390px",
+                  paddingLeft: "25px",
+                  paddingRight: "25px",
+                }}
+              >
+                <CardContent>
+                  <Box sx={{ marginTop: 2, marginBottom: 3 }}>
+                    <Box sx={{ marginBottom: 1 }}>
+                      <Typography
+                        className="card_tite"
+                        variant="h4"
+                        sx={{
+                          pl: 2,
+                          mb: 3,
+                          fontWeight: 500,
+                          borderLeft: "5px solid #ff5a3c",
+                        }}
+                      >
+                        Top Rated Products
+                      </Typography>
                     </Box>
-                    <Box>Select Day </Box>
-                    <Button variant="contained">Request a tour</Button>
-                    <Typography variant="body2" color="text.secondary">
-                      It's free, with no obligation - cancel anytime.
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                      <img
+                        width="90px"
+                        height="65px"
+                        src="/images/home/h3.jpg"
+                        alt="Top Rated Product"
+                      />
+                      <Box sx={{ pl: 3 }}>
+                        <Box>
+                          <Rating
+                            size="small"
+                            name="half-rating"
+                            defaultValue={4.5}
+                            precision={0.5}
+                          />
+                        </Box>
+                        <Box>
+                          <Link
+                            underline="none"
+                            href="#"
+                            sx={{
+                              color: "#071c1f",
+                              "&:hover": {
+                                color: "#ff5a3c",
+                              },
+                            }}
+                          >
+                            Get Best Property On Our
+                          </Link>
+                        </Box>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          style={{
+                            color: "#ff5a3c",
+                          }}
+                        >
+                          $456.989
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+
+                  <Divider sx={{ mt: 2, mb: 2 }} />
+
+                  <Box sx={{ marginTop: 4 }}>
+                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                      <img
+                        width="90px"
+                        height="65px"
+                        src="/images/home/h3.jpg"
+                        alt="Top Rated Product"
+                      />
+                      <Box sx={{ pl: 3 }}>
+                        <Box>
+                          <Rating
+                            size="small"
+                            name="half-rating"
+                            defaultValue={4.5}
+                            precision={0.5}
+                          />
+                        </Box>
+                        <Box>
+                          <Link
+                            underline="none"
+                            href="#"
+                            sx={{
+                              color: "#071c1f",
+                              "&:hover": {
+                                color: "#ff5a3c",
+                              },
+                            }}
+                          >
+                            Get Best Property On Our
+                          </Link>
+                        </Box>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          style={{
+                            color: "#ff5a3c",
+                          }}
+                        >
+                          $456.989
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </CardContent>
               </Card>
             </Stack>
           </Stack>
