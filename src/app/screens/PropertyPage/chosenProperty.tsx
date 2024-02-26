@@ -40,7 +40,12 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import { CssVarsProvider } from "@mui/joy";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import XIcon from "@mui/icons-material/X";
+import FacebookIcon from "@mui/icons-material/Facebook";
 
 /* Data Picker */
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -769,6 +774,7 @@ export function ChosenProperty() {
 
           {/* RIGHT SIGHT CARD */}
           <Stack width="440px" pl={"25px"} pr={"25px"}>
+            {/* Building Price */}
             <Stack mb={5}>
               <Card
                 style={{
@@ -781,9 +787,14 @@ export function ChosenProperty() {
                   <Box sx={{ marginTop: 2, marginBottom: 3 }}>
                     <Box sx={{ marginBottom: 1 }}>
                       <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        style={{ marginBottom: "2px" }}
+                        className="card_tite"
+                        variant="h4"
+                        sx={{
+                          pl: 2,
+                          mb: 3,
+                          fontWeight: 500,
+                          borderLeft: "5px solid #ff5a3c",
+                        }}
                       >
                         Building Price
                       </Typography>
@@ -857,6 +868,7 @@ export function ChosenProperty() {
               </Card>
             </Stack>
 
+            {/* Popular Properties */}
             <Box
               maxHeight="580px"
               style={{ backgroundColor: "#fff", marginBottom: 40 }}
@@ -948,6 +960,7 @@ export function ChosenProperty() {
               </Swiper>
             </Box>
 
+            {/* Top Rated Property */}
             <Stack mb={5}>
               <Card
                 style={{
@@ -969,7 +982,7 @@ export function ChosenProperty() {
                           borderLeft: "5px solid #ff5a3c",
                         }}
                       >
-                        Top Rated Products
+                        Top Rated Properties
                       </Typography>
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -1065,9 +1078,304 @@ export function ChosenProperty() {
                 </CardContent>
               </Card>
             </Stack>
-          </Stack>
 
-          {/* SHOPPING CARD */}
+            {/* Latest Blogs */}
+            <Stack mb={5}>
+              <Card
+                style={{
+                  maxWidth: "390px",
+                  paddingLeft: "25px",
+                  paddingRight: "25px",
+                }}
+              >
+                <CardContent>
+                  <Box sx={{ marginTop: 2, marginBottom: 3 }}>
+                    <Box sx={{ marginBottom: 1 }}>
+                      <Typography
+                        className="card_tite"
+                        variant="h4"
+                        sx={{
+                          pl: 2,
+                          mb: 3,
+                          fontWeight: 500,
+                          borderLeft: "5px solid #ff5a3c",
+                        }}
+                      >
+                        Latest Blogs
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                      <img
+                        width="80px"
+                        height="80px"
+                        src="/images/blogs/blog_user1.jpg"
+                        alt="Blog USer"
+                      />
+                      <Box sx={{ pl: 2 }}>
+                        <Box>
+                          <Link
+                            underline="none"
+                            href="#"
+                            variant="h5"
+                            sx={{
+                              color: "#071c1f",
+                              "&:hover": {
+                                color: "#ff5a3c",
+                              },
+                            }}
+                          >
+                            Renovating a Living Room? Experts Share Their
+                            Secrets
+                          </Link>
+                        </Box>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 2,
+                            color: "#ff5a3c",
+                          }}
+                        >
+                          <CalendarMonthIcon />
+                          June 24 2023
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+
+                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                      <img
+                        width="80px"
+                        height="80px"
+                        src="/images/blogs/blog_user2.jpg"
+                        alt="Blog USer"
+                      />
+                      <Box sx={{ pl: 2 }}>
+                        <Box>
+                          <Link
+                            underline="none"
+                            href="#"
+                            variant="h5"
+                            sx={{
+                              color: "#071c1f",
+                              "&:hover": {
+                                color: "#ff5a3c",
+                              },
+                            }}
+                          >
+                            7 home trends that will shape your house in 2024
+                          </Link>
+                        </Box>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 2,
+                            color: "#ff5a3c",
+                          }}
+                        >
+                          <CalendarMonthIcon />
+                          December 24 2023
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+
+                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                      <img
+                        width="80px"
+                        height="80px"
+                        src="/images/blogs/blog_user3.jpg"
+                        alt="Blog USer"
+                      />
+                      <Box sx={{ pl: 2 }}>
+                        <Box>
+                          <Link
+                            underline="none"
+                            href="#"
+                            variant="h5"
+                            sx={{
+                              color: "#071c1f",
+                              "&:hover": {
+                                color: "#ff5a3c",
+                              },
+                            }}
+                          >
+                            10 Brilliant Ways To Decorate Your Home
+                          </Link>
+                        </Box>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 2,
+                            color: "#ff5a3c",
+                          }}
+                        >
+                          <CalendarMonthIcon />
+                          January 11 2023
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+
+                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                      <img
+                        width="80px"
+                        height="80px"
+                        src="/images/blogs/blog_user4.jpg"
+                        alt="Blog USer"
+                      />
+                      <Box sx={{ pl: 2 }}>
+                        <Box>
+                          <Link
+                            underline="none"
+                            href="#"
+                            variant="h5"
+                            sx={{
+                              color: "#071c1f",
+                              "&:hover": {
+                                color: "#ff5a3c",
+                              },
+                            }}
+                          >
+                            Make Your Bookshelf a Gallery
+                          </Link>
+                        </Box>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 2,
+                            color: "#ff5a3c",
+                          }}
+                        >
+                          <CalendarMonthIcon />
+                          February 10 2024
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Stack>
+
+            {/* Top Rated Property */}
+            <Stack mb={5}>
+              <Card
+                style={{
+                  maxWidth: "390px",
+                  paddingLeft: "25px",
+                  paddingRight: "25px",
+                }}
+              >
+                <CardContent>
+                  <Box sx={{ marginTop: 2, marginBottom: 3 }}>
+                    <Box sx={{ marginBottom: 1 }}>
+                      <Typography
+                        className="card_tite"
+                        variant="h4"
+                        sx={{
+                          pl: 2,
+                          mb: 4,
+                          fontWeight: 500,
+                          borderLeft: "5px solid #ff5a3c",
+                        }}
+                      >
+                        Follow us
+                      </Typography>
+                    </Box>
+                    <Stack flexDirection={"row"} alignItems={"center"} gap={3}>
+                      <Link
+                        href="#"
+                        underline="none"
+                        sx={{
+                          bgcolor: "#f2f6f7",
+                          color: "#5c727d",
+                          padding: 1.2,
+                          display: "flex",
+                          alignItems: "center",
+                          "&:hover": {
+                            color: "#fff",
+                            background: "#ff5a3c",
+                          },
+                        }}
+                      >
+                        <FacebookIcon />
+                      </Link>
+                      <Link
+                        href="#"
+                        underline="none"
+                        sx={{
+                          bgcolor: "#f2f6f7",
+                          color: "#5c727d",
+                          padding: 1.2,
+                          display: "flex",
+                          alignItems: "center",
+                          "&:hover": {
+                            color: "#fff",
+                            background: "#ff5a3c",
+                          },
+                        }}
+                      >
+                        <TwitterIcon />
+                      </Link>
+                      <Link
+                        href="#"
+                        underline="none"
+                        sx={{
+                          bgcolor: "#f2f6f7",
+                          color: "#5c727d",
+                          padding: 1,
+                          display: "flex",
+                          alignItems: "center",
+                          "&:hover": {
+                            color: "#fff",
+                            background: "#ff5a3c",
+                          },
+                        }}
+                      >
+                        <XIcon />
+                      </Link>
+                      <Link
+                        href="#"
+                        underline="none"
+                        sx={{
+                          bgcolor: "#f2f6f7",
+                          color: "#5c727d",
+                          padding: 1.2,
+                          display: "flex",
+                          alignItems: "center",
+                          "&:hover": {
+                            color: "#fff",
+                            background: "#ff5a3c",
+                          },
+                        }}
+                      >
+                        <InstagramIcon />
+                      </Link>
+                    </Stack>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Stack>
+          </Stack>
         </Stack>
       </Container>
     </div>
