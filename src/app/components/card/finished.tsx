@@ -72,7 +72,7 @@ export default function Finished() {
                   fullWidth
                   sx={{ height: "58px" }}
                 >
-                  Continue to Show Propert
+                  Continue to Show Property
                 </Button>
               </Box>
             </Stack>
