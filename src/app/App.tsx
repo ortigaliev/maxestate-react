@@ -7,7 +7,7 @@ import "../css/footer.css";
 import { RippleBadge } from "./MaterialTheme/styled";
 
 /* REACT ROUTER DOM */
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AgencyPage } from "./screens/AgencyPage";
 import { PropertyPage } from "./screens/PropertyPage";
 import { BlogPage } from "./screens/BlogPage"; //Community
@@ -19,6 +19,7 @@ import { NavbarAgency } from "./components/headers/agency";
 import { NavbarOthers } from "./components/headers/others";
 import { useState } from "react";
 import { Footer } from "./components/footer";
+import OrderCard from "./screens/Card";
 
 function App() {
   const [path, setPath] = useState();
@@ -48,6 +49,9 @@ function App() {
         </Route>
         <Route path="/login">
           <LoginPage />
+        </Route>
+        <Route path="/card">
+          <OrderCard />
         </Route>
         <Route path="">
           <HomePage />

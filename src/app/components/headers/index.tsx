@@ -53,26 +53,14 @@ export function NavbarHome(props: any) {
                   Contact
                 </NavLink>
               </Box>
-              {/* Shopping Cart  */}
-              <Box className="hover-line ">
-                <IconButton
-                  aria-label="cart"
-                  id="basic-button"
-                  aria-controls={undefined}
-                  aria-haspopup="true"
-                  aria-expanded={undefined}
-                  //onClick={handleClick}
-                />
+              <Box className="hover-line" onClick={props.setPath}>
                 <Badge badgeContent={3} color="secondary">
-                  <Box className="hover-line_icon-box">
-                    <img
-                      className="hover-line_icon"
-                      src="/images/home/shopping_cart.svg"
-                      alt="Shopping Cart"
-                    />
-                  </Box>
+                  <NavLink to="/card" activeClassName="underline">
+                    Card
+                  </NavLink>
                 </Badge>
               </Box>
+
               <Box>
                 <Button
                   className=" hover-line"

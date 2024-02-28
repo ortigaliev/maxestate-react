@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export function NavbarOthers(props: any) {
   return (
@@ -67,22 +67,19 @@ export function NavbarOthers(props: any) {
                 Contact
               </NavLink>
             </Box>
-            {/* Shopping Cart  */}
-            <Box className="others_hover-line hover-line ">
-              <IconButton
-                aria-label="cart"
-                id="basic-button"
-                aria-controls={undefined}
-                aria-haspopup="true"
-                aria-expanded={undefined}
-                //onClick={handleClick}
-              />
+
+            <Box className="hover-line" onClick={props.setPath}>
               <Badge badgeContent={3} color="secondary">
-                <Box className="others_hover-line_icon-box">
-                  <ShoppingCartCheckoutOutlinedIcon />
-                </Box>
+                <NavLink
+                  to="/card"
+                  activeClassName="underline"
+                  style={{ color: "#000" }}
+                >
+                  <ShoppingCartIcon />
+                </NavLink>
               </Badge>
             </Box>
+
             <Box>
               <Button
                 className=" others_hover-line hover-line"
