@@ -29,8 +29,18 @@ export function TargetArticles(props: any) {
         const art_image_url = "/images/blogs/blog_img1.jpg";
         const art_avatar = "/images/blogs/blog_user1.jpg";
         return (
-          <Link className="all_article_box" sx={{ textDecoration: "none" }}>
-            <Card sx={{ maxWidth: "100%", borderRadius: "15px", mb: 2 }}>
+          <Link
+            className="all_article_box"
+            sx={{ textDecoration: "none", borderRadius: "30px" }}
+          >
+            <Card
+              sx={{
+                maxWidth: "100%",
+                borderRadius: "30px",
+                mb: 2,
+                display: "flex",
+              }}
+            >
               <CardActionArea
                 sx={{ display: "flex", alignItems: "flex-start" }}
               >
@@ -83,7 +93,6 @@ export function TargetArticles(props: any) {
                       >
                         Renovating a Living Room? Experts Share Their Secrets
                       </Typography>
-
                       <Box
                         sx={{
                           display: "flex",
@@ -132,7 +141,6 @@ export function TargetArticles(props: any) {
           </Link>
         );
       })}
-      
     </Stack>
   );
 }

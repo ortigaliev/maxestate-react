@@ -27,39 +27,46 @@ export function BlogPage(props: any) {
     <div className="community_page">
       <div className="community_frame">
         <Container sx={{ mt: "50px", mb: "50px" }}>
-          <Stack>
+          <Stack flexDirection={"row"} gap={4}>
             <BlogChat />
             <Stack
               maxWidth="70%"
               className="community_all_frame"
               inputMode={"text"}
-              style={{ border: "1px solid #ff5a3c" }}
+              style={{ background: "#C5C8C9", borderRadius: "30px" }}
             >
               <TabContext value={value}>
-                <Box className={"article_tabs"}>
-                  <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Box className={"article_tabs"} sx={{ p: 4 }}>
+                  <Box
+                    sx={{
+                      borderBottom: 1,
+                      borderColor: "divider",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
                     <TabList
                       onChange={handleChange}
                       aria-label="lab API tabs example"
-                      style={{ borderColor: "#fff", color: "#ff5a3c" }}
+                      style={{ borderColor: "#E3C08D", color: "#000" }}
                     >
                       <Tab
-                        style={{ color: "#ff5a3c" }}
+                        style={{ color: "#000" }}
                         label="All Articles"
                         value={"1"}
                       />
                       <Tab
-                        style={{ color: "#ff5a3c" }}
+                        style={{ color: "#000" }}
                         label="Celebrity"
                         value={"2"}
                       />
                       <Tab
-                        style={{ color: "#ff5a3c" }}
+                        style={{ color: "#000" }}
                         label="Agency rating"
                         value={"3"}
                       />
                       <Tab
-                        style={{ color: "#ff5a3c" }}
+                        style={{ color: "#000" }}
                         label="Stories"
                         value={"4"}
                       />
@@ -103,7 +110,7 @@ export function BlogPage(props: any) {
                           next: ArrowForwardIcon,
                         }}
                         {...item}
-                        color={"secondary"}
+                        color="secondary"
                       />
                     )}
                     onChange={handlePaginationChange}
