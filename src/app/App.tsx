@@ -20,6 +20,7 @@ import { NavbarOthers } from "./components/headers/others";
 import { useState } from "react";
 import { Footer } from "./components/footer";
 import OrderCard from "./screens/Card";
+import { MemberPage } from "./screens/MemberPage";
 
 function App() {
   const [path, setPath] = useState();
@@ -46,6 +47,9 @@ function App() {
         </Route>
         <Route path="/contact">
           <ContactPage />
+        </Route>
+        <Route path="/member">
+          <MemberPage />
         </Route>
         <Route path="/login">
           <LoginPage />
