@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  CardMedia,
   Chip,
   Container,
   Divider,

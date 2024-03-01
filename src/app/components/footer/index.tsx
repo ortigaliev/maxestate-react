@@ -1,5 +1,4 @@
-import { Button, Input } from "@mui/joy";
-import { Box, Container, Link, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -158,7 +157,7 @@ export function Footer() {
               </Stack>
               <Box className="footer_title text_padding">We Accept</Box>
               <Box className="footer_text" style={{ width: "270px" }}>
-                <a href="#">
+                <a href="/card">
                   <img
                     className="footer_payment_img"
                     src="/images/home/payment.png"

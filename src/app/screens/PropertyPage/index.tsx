@@ -1,4 +1,3 @@
-import { Container, Stack } from "@mui/material";
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { ChosenProperty } from "../PropertyPage/chosenProperty";

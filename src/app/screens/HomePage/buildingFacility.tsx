@@ -1,9 +1,7 @@
 import React from "react";
-import { Box, Container, Icon, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import { Card, CardContent, CssVarsProvider, Grid, Typography } from "@mui/joy";
 import Link from "@mui/joy/Link";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import LocalParkingOutlinedIcon from "@mui/icons-material/LocalParkingOutlined";
 import PoolIcon from "@mui/icons-material/Pool";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import DirectionsCarFilledOutlinedIcon from "@mui/icons-material/DirectionsCarFilledOutlined";

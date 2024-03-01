@@ -1,10 +1,7 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import React from "react";
 import "../css/App.css";
 import "../css/navbar.css";
 import "../css/footer.css";
-
-import { RippleBadge } from "./MaterialTheme/styled";
 
 /* REACT ROUTER DOM */
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -27,7 +24,7 @@ function App() {
   const main_path = window.location.pathname;
   return (
     <Router>
-      {main_path == "/" ? (
+      {main_path === "/" ? (
         <NavbarHome setPath={setPath} />
       ) : main_path.includes("/agency") ? (
         <NavbarAgency setPath={setPath} />

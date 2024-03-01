@@ -1,10 +1,8 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Box, Button, CardActionArea, Divider } from "@mui/material";
-import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
@@ -36,6 +34,7 @@ export default function OurAgent() {
             width="310px"
             height="262px"
             src="https://houzez.co/wp-content/uploads/2024/01/Group-15-1.png"
+            alt="agent"
           />
         </Box>
         <Card
@@ -174,6 +173,7 @@ export default function OurAgent() {
             width="310px"
             height="262px"
             src="https://houzez.co/wp-content/uploads/2024/01/Group-37.png"
+            alt="agent"
           />
         </Box>
         <Card
@@ -312,6 +312,7 @@ export default function OurAgent() {
             width="310px"
             height="262px"
             src="https://houzez.co/wp-content/uploads/2024/01/Group-39-2.png"
+            alt="agent"
           />
         </Box>
         <Card

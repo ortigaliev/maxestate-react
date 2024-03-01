@@ -1,7 +1,5 @@
 import React from "react";
-import { Box, Container, Icon, Stack } from "@mui/material";
-import { styled } from "@mui/joy/styles";
-import Sheet from "@mui/joy/Sheet";
+import { Container, Stack } from "@mui/material";
 import Grid from "@mui/joy/Grid";
 
 import Card from "@mui/joy/Card";
@@ -10,13 +8,10 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import Divider from "@mui/joy/Divider";
 import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
-import { AspectRatio, Button, IconButton } from "@mui/joy";
+import { AspectRatio,IconButton } from "@mui/joy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { FavoriteBorder } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import PinchOutlinedIcon from "@mui/icons-material/PinchOutlined";
-import { Modal } from "../../components/modal";
-import { JOYMODAL } from "../../components/modal/joymodal";
 import { HomeModal } from "../../components/modal/home-modal";
 
 export function LatestList() {

@@ -1,6 +1,5 @@
-import { Box, Container, Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import React from "react";
-import Avatar from "@mui/joy/Avatar";
 import { Button, CssVarsProvider, Link } from "@mui/joy";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Card from "@mui/joy/Card";

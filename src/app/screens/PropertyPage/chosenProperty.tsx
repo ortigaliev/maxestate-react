@@ -10,15 +10,13 @@ import {
   Checkbox,
   Container,
   Divider,
-  ImageList,
-  ImageListItem,
   Link,
   Rating,
   TextField,
   Typography,
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { Navigation, Pagination, Autoplay, FreeMode } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 

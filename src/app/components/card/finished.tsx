@@ -1,31 +1,12 @@
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Link,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Container, Divider, Stack } from "@mui/material";
 
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import ClearIcon from "@mui/icons-material/Clear";
-
 import TabPanel from "@material-ui/lab/TabPanel";
 
-import React, { useState } from "react";
+import React from "react";
 
-const order_card_list = Array.from(Array(4).keys());
 
 export default function Finished() {
-  const [count, setCount] = useState(0);
-  const handleIncrement = () => setCount(count + 1);
-  const handleDecrement = () => setCount(count - 1);
-
   return (
     <div>
       <TabPanel value={"3"}>

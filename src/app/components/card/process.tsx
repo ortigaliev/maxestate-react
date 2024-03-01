@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   Divider,
-  Link,
   Stack,
   TextField,
 } from "@mui/material";
@@ -11,18 +10,11 @@ import {
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import ClearIcon from "@mui/icons-material/Clear";
 import TabPanel from "@material-ui/lab/TabPanel";
 
-import React, { useState } from "react";
-const order_card_list = Array.from(Array(4).keys());
+import React from "react";
 
 export default function Process() {
-  const [count, setCount] = useState(0);
-  const handleIncrement = () => setCount(count + 1);
-  const handleDecrement = () => setCount(count - 1);
 
   return (
     <div>

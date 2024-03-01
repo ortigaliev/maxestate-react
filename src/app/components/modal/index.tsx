@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import "../../../css/modal.css";
-import { ContactEmergency } from "@mui/icons-material";
 import { Box, Button, Container } from "@mui/joy";
 
 export function Modal() {

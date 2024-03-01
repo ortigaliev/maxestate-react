@@ -1,5 +1,5 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Navigation,
   Pagination,

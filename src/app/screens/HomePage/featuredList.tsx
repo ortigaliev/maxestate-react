@@ -1,14 +1,12 @@
 import React from "react";
 import { Box, Container, Link, Stack } from "@mui/material";
 import Card from "@mui/joy/Card";
-import CardCover from "@mui/joy/CardCover";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import { CardOverflow, CssVarsProvider, Divider } from "@mui/joy";
-import { AspectRatio, Button, IconButton } from "@mui/joy";
+import { AspectRatio, IconButton } from "@mui/joy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import PinchOutlinedIcon from "@mui/icons-material/PinchOutlined";
+import { Favorite } from "@mui/icons-material";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import BedOutlinedIcon from "@mui/icons-material/BedOutlined";
 import BathtubOutlinedIcon from "@mui/icons-material/BathtubOutlined";
@@ -18,7 +16,6 @@ import Avatar from "@mui/joy/Avatar";
 import Chip from "@mui/joy/Chip";
 
 import Visibility from "@mui/icons-material/Visibility";
-import CreateNewFolder from "@mui/icons-material/CreateNewFolder";
 
 const iconSx = {
   "&:hover": {

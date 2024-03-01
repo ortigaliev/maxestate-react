@@ -5,16 +5,11 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  CardMedia,
   Chip,
-  Divider,
   Link,
   Stack,
   Typography,
 } from "@mui/material";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -50,7 +45,7 @@ export function TargetArticles(props: any) {
                       width="155px"
                       height="155px"
                       src={art_image_url}
-                      alt="Blog main picture"
+                      alt="Blog main bg"
                       style={{
                         borderTopLeftRadius: "15px",
                         borderBottomLeftRadius: "15px",
