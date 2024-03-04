@@ -24,7 +24,7 @@ function App() {
   const main_path = window.location.pathname;
   return (
     <Router>
-      {main_path === "/" ? (
+      {main_path == "/" ? (
         <NavbarHome setPath={setPath} />
       ) : main_path.includes("/agency") ? (
         <NavbarAgency setPath={setPath} />
@@ -54,7 +54,7 @@ function App() {
         <Route path="/card">
           <OrderCard />
         </Route>
-        <Route path="">
+        <Route path="/">
           <HomePage />
         </Route>
       </Switch>
