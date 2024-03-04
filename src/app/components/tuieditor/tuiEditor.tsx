@@ -19,8 +19,10 @@ export const TuiEditor = (props: any) => {
     <Stack>
       <Stack
         direction={"row"}
-        style={{ margin: "40px" }}
-        justifyContent={"space-evenly"}
+        style={{}}
+        justifyContent={"flex-start"}
+        mb={2}
+        gap={2}
       >
         <Box className={"form_row"} style={{ width: "300px" }}>
           <Typography style={{ color: "#ff5a3c", margin: "10px" }} variant="h3">
@@ -38,18 +40,19 @@ export const TuiEditor = (props: any) => {
               <MenuItem value={"celebrity"}>celebrities</MenuItem>
               <MenuItem value={"evaluation"}>Agency rating</MenuItem>
               <MenuItem value={"story"}>Story</MenuItem>
+              <MenuItem value={"story"}>Expert advice</MenuItem>
             </Select>
           </FormControl>
         </Box>
         <Box className="form_row" style={{ width: "300px" }}>
           <Typography style={{ color: "#ff5a3c", margin: "10px" }} variant="h3">
-            Title
+            Blog Title
           </Typography>
           <TextField
             id="filled-basic"
             label="Title"
-            variant="filled"
-            style={{ width: "300px", background: "" }}
+            variant="outlined"
+            style={{ width: "300px" }}
           />
         </Box>
       </Stack>

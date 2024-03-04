@@ -1,7 +1,7 @@
 import { Container, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 
-export function CreateBlog() {
+export function ChosenBlog() {
   return (
     <div>
       <Container>
@@ -12,7 +12,7 @@ export function CreateBlog() {
             alignItems={"center"}
           >
             <Typography variant="h1" gutterBottom>
-              Create a Blog
+              Chosen Blog
             </Typography>
           </Stack>
           <Divider sx={{ mt: 1, mb: 3 }} />

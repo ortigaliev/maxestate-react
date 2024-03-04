@@ -30,7 +30,7 @@ import TabContext from "@material-ui/lab/TabContext";
 import { TabList } from "@material-ui/lab";
 import Tab from "@mui/material/Tab";
 import { MemberBlog } from "./memberBlog";
-import { MemberFollowers } from "./member.followers";
+import { MemberFollowers } from "./memberfollowers";
 import { MemberFollowing } from "./memberFollowing";
 import { MemberProperty } from "./memberProperty";
 import { FavoriteProperty } from "./favoriteProperty";
@@ -40,6 +40,8 @@ import { MySetting } from "./mySetting";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import TViewer from "../../components/tuieditor/TViewer";
+import { ChosenBlog } from "./chosenBlog";
 
 export function VisitOtherPage(_props: any) {
   //INITIALIZIATION
@@ -107,6 +109,16 @@ export function VisitOtherPage(_props: any) {
                 <TabPanel value={"4"}>
                   <Box className={"menu_content"}>
                     <MemberFollowing actions_enabled={false} />
+                  </Box>
+                </TabPanel>
+
+                {/* Chosen Blog */}
+                <TabPanel value={"5"}>
+                  <Box className={"menu_name"}>
+                    <ChosenBlog />
+                  </Box>
+                  <Box className={"menu_content"}>
+                    <TViewer text={`<h3>Hello Blog</h3>`} />
                   </Box>
                 </TabPanel>
               </Box>
@@ -239,10 +251,14 @@ export function VisitOtherPage(_props: any) {
                 </TabList>
 
                 {/* Chosen Blog */}
-                <TabPanel value={"5"}>
-                  <Box className={"menu_name"}>Chosen Blog</Box>
-                  <Box className={"menu_content"}></Box>
-                </TabPanel>
+                {/* <TabPanel value={"5"}>
+                  <Box className={"menu_name"}>
+                    <ChosenBlog />
+                  </Box>
+                  <Box className={"menu_content"}>
+                    <TViewer text={`<div>Hello Blog<div/>`} />
+                  </Box>
+                </TabPanel> */}
               </List>
             </Stack>
           </TabContext>

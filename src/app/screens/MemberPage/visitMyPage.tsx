@@ -30,7 +30,7 @@ import TabContext from "@material-ui/lab/TabContext";
 import { TabList } from "@material-ui/lab";
 import Tab from "@mui/material/Tab";
 import { MemberBlog } from "./memberBlog";
-import { MemberFollowers } from "./member.followers";
+import { MemberFollowers } from "./memberfollowers";
 import { MemberFollowing } from "./memberFollowing";
 import { MemberProperty } from "./memberProperty";
 import { FavoriteProperty } from "./favoriteProperty";
@@ -41,10 +41,14 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { TuiEditor } from "../../components/tuieditor/tuiEditor";
+import { CreateBlog } from "./createBlog";
+import TViewer from "../../components/tuieditor/TViewer";
+import { ChosenBlog } from "./chosenBlog";
+import { Tv } from "@mui/icons-material";
 
 export function VisitMyPage(props: any) {
   //INITIALIZIATION
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState("8");
 
   // HANDLERS
   const handleChange = (event: any, newValue: string) => {
@@ -99,7 +103,9 @@ export function VisitMyPage(props: any) {
 
                 {/* Create a Blog */}
                 <TabPanel value={"3"}>
-                  <Box className={"menu_name"}>Create a Blog</Box>
+                  <Box className={"menu_name"}>
+                    <CreateBlog />
+                  </Box>
                   <Box className={"write_content"}>
                     <TuiEditor />
                   </Box>
@@ -129,6 +135,16 @@ export function VisitMyPage(props: any) {
                 <TabPanel value={"7"}>
                   <Box className={"menu_content"}>
                     <MySetting />
+                  </Box>
+                </TabPanel>
+
+                {/* Chosen Blog */}
+                <TabPanel value={"8"}>
+                  <Box className={"menu_name"}>
+                    <ChosenBlog />
+                  </Box>
+                  <Box className={"menu_content"}>
+                    <TViewer text={`<h3>Hello Blog</h3>`} />
                   </Box>
                 </TabPanel>
               </Box>
@@ -308,10 +324,10 @@ export function VisitMyPage(props: any) {
                   />
                 </TabList>
                 {/* Chosen Blog */}
-                <TabPanel value={"8"}>
-                  <Box className={"menu_name"}>Chosen Blog</Box>
+                {/*  <TabPanel value={"8"}>
+
                   <Box className={"menu_content"}></Box>
-                </TabPanel>
+                </TabPanel> */}
               </List>
             </Stack>
           </TabContext>
