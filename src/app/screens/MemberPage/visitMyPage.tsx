@@ -40,6 +40,7 @@ import { MySetting } from "./mySetting";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import { TuiEditor } from "../../components/tuieditor/tuiEditor";
 
 export function VisitMyPage(props: any) {
   //INITIALIZIATION
@@ -99,7 +100,9 @@ export function VisitMyPage(props: any) {
                 {/* Create a Blog */}
                 <TabPanel value={"3"}>
                   <Box className={"menu_name"}>Create a Blog</Box>
-                  <Box className={"write_content"}></Box>
+                  <Box className={"write_content"}>
+                    <TuiEditor />
+                  </Box>
                 </TabPanel>
 
                 {/* Favorite Property */}
