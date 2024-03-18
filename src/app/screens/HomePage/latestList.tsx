@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import Grid from "@mui/joy/Grid";
 
 import Card from "@mui/joy/Card";
@@ -8,9 +8,9 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import Divider from "@mui/joy/Divider";
 import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
-import { AspectRatio,IconButton } from "@mui/joy";
+import { AspectRatio, IconButton } from "@mui/joy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { FavoriteBorder } from "@mui/icons-material";
+import { FavoriteBorder, Scale } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { HomeModal } from "../../components/modal/home-modal";
 
@@ -33,15 +33,38 @@ export function LatestList() {
             >
               <Grid>
                 <CssVarsProvider>
-                  <Card variant="outlined" sx={{ width: 410 }}>
-                    <CardOverflow>
+                  <Card
+                    variant="outlined"
+                    sx={{
+                      width: 410,
+                    }}
+                  >
+                    <CardOverflow
+                      sx={{
+                        bgcolor: "yellow",
+                        "&:hover": {
+                          bgcolor: "green",
+                          borderRadius: 50,
+                        },
+                      }}
+                    >
                       <AspectRatio ratio="1.3">
-                        <img
-                          src="/images/home/home.jpg"
-                          loading="lazy"
-                          alt="latestList"
-                          background-size="cover"
-                        />
+                        <Box
+                          sx={{
+                            transition: "1s",
+                            "&:hover": {
+                              borderRadius: 3,
+                              backgroundColor: "#333",
+                            },
+                          }}
+                        >
+                          <img
+                            src="/images/home/home.jpg"
+                            loading="lazy"
+                            alt="latestList"
+                            background-size="cover"
+                          />
+                        </Box>
                       </AspectRatio>
                     </CardOverflow>
                     <CardContent sx={{ padding: "15px" }}>

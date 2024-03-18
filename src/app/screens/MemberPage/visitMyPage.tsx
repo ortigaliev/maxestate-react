@@ -44,11 +44,10 @@ import { TuiEditor } from "../../components/tuieditor/tuiEditor";
 import { CreateBlog } from "./createBlog";
 import TViewer from "../../components/tuieditor/TViewer";
 import { ChosenBlog } from "./chosenBlog";
-import { Tv } from "@mui/icons-material";
 
 export function VisitMyPage(props: any) {
   //INITIALIZIATION
-  const [value, setValue] = useState("8");
+  const [value, setValue] = useState("1");
 
   // HANDLERS
   const handleChange = (event: any, newValue: string) => {

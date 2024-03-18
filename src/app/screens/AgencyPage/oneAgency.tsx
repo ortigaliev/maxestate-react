@@ -1,9 +1,4 @@
-import {
-  AvatarGroup,
-  Badge,
-  CssVarsProvider,
-  Typography,
-} from "@mui/joy";
+import { AvatarGroup, Badge, CssVarsProvider, Typography } from "@mui/joy";
 import { Container, Stack } from "@mui/material";
 import React from "react";
 
@@ -49,7 +44,7 @@ const one_product_list = Array.from(Array(8).keys());
 export function OneAgency() {
   return (
     <div className="one_agency">
-      {/* CHOSEN RESTAURANT TITLE */}
+      {/* CHOSEN Agency TITLE */}
 
       <Container>
         <Stack sx={{ pt: 5 }}>
@@ -60,7 +55,7 @@ export function OneAgency() {
         </Stack>
       </Container>
 
-      {/* TRUSTED OTHER RESTAURANT IN CHOSEN RESTAURANT SECTION */}
+      {/* TRUSTED OTHER Agency IN CHOSEN Agency SECTION */}
       <Box sx={{ display: "flex", alignItems: "center", pt: 0, pb: 5 }}>
         <Swiper
           // install Swiper modules
@@ -684,7 +679,7 @@ export function OneAgency() {
           <Typography className="card_tite">Our Location</Typography>
 
           <iframe
-          title="Our Agency Location"
+            title="Our Agency Location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d282.02780482359873!2d126.8662766!3d37.30405480551333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b6f7c7854053b%3A0xaf8e8c172a1397c7!2z64qY7ZSU7Iqk7YSw65SU7Lm07Y6Y!5e1!3m2!1suz!2skr!4v1708755941819!5m2!1suz!2skr"
             width="1320"
             height="450"
