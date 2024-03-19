@@ -18,6 +18,7 @@ import { useState } from "react";
 import { Footer } from "./components/footer";
 import OrderCard from "./screens/Card";
 import { MemberPage } from "./screens/MemberPage";
+import AuthenticationModal from "./components/auth";
 
 function App() {
   const [path, setPath] = useState();
@@ -60,6 +61,7 @@ function App() {
       </Switch>
 
       <Footer />
+      <AuthenticationModal/>
     </Router>
   );
 }

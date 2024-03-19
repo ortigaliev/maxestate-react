@@ -158,7 +158,7 @@ export function LatestList() {
                                     estate.me_liked &&
                                     estate.me_liked[0]?.my_favorite
                                       ? "red"
-                                      : "white",
+                                      : "black",
                                 }}
                               />
                             </IconButton>
