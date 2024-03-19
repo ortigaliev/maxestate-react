@@ -32,7 +32,7 @@ const ModalImg = styled.img`
 
 export default function AuthenticationModal(props: any) {
   const classes = useStyles();
-  const signUpOpen = true;
+  const signUpOpen = false;
   const loginOpen = false;
 
   return (
@@ -56,7 +56,7 @@ export default function AuthenticationModal(props: any) {
             direction={"row"}
             sx={{ width: "800px" }}
           >
-            <ModalImg src={"/auth/password.jpeg"} alt="camera" />
+            <ModalImg src={"/auth/auth.jpg"} alt="camera" />
             <Stack sx={{ marginLeft: "69px", alignItems: "center" }}>
               <h2>SignUp Form</h2>
               <TextField
@@ -112,7 +112,7 @@ export default function AuthenticationModal(props: any) {
             direction={"row"}
             sx={{ width: "700px" }}
           >
-            <ModalImg src={"/auth/password.jpeg"} alt="camera" />
+            <ModalImg src={"/auth/auth.jpg"} alt="camera" />
             <Stack
               sx={{
                 marginLeft: "65px",
