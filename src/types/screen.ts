@@ -8,7 +8,7 @@ export interface AppRootState {
 
 export interface HomePageState {
   latestEstate: Estate[];
-  bestAgency: Agency[];
+  bestAgencies: Agency[];
   trendEstate: Estate[];
   bestBoBlogs: BoBlog[];
   newsBoBlogs: BoBlog[];
