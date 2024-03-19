@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export function NavbarAgency(props: any) {
   return (
@@ -78,7 +78,7 @@ export function NavbarAgency(props: any) {
               />
               <Badge badgeContent={3} color="secondary">
                 <Box className="agency_hover-line_icon-box">
-                  <ShoppingCartCheckoutOutlinedIcon />
+                  <ShoppingCartIcon />
                 </Box>
               </Badge>
             </Box>
@@ -91,6 +91,7 @@ export function NavbarAgency(props: any) {
                   height: "56px",
                   backgroundColor: "#ff5a3c",
                 }}
+                onClick={props.handleLoginOpen}
               >
                 SIGN IN
               </Button>

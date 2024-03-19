@@ -1,6 +1,8 @@
 import { Container, Stack, Box, Button, Badge } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { sweetTopSuccessAlert } from "../../lib/sweetAlert";
 
 export function NavbarHome(props: any) {
   return (
@@ -26,11 +28,13 @@ export function NavbarHome(props: any) {
                   Home
                 </NavLink>
               </Box>
+
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/agency" activeClassName="underline">
                   Agency
                 </NavLink>
               </Box>
+
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/estate" activeClassName="underline">
                   Property
@@ -49,7 +53,7 @@ export function NavbarHome(props: any) {
               <Box className="hover-line" onClick={props.setPath}>
                 <Badge badgeContent={3} color="secondary">
                   <NavLink to="/card" activeClassName="underline">
-                    Card
+                    <ShoppingCartIcon />
                   </NavLink>
                 </Badge>
               </Box>
@@ -63,6 +67,7 @@ export function NavbarHome(props: any) {
                     height: "56px",
                     backgroundColor: "#ff5a3c",
                   }}
+                  onClick={props.handleLoginOpen}
                 >
                   SIGN IN
                 </Button>

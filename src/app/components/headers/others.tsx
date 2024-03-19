@@ -81,6 +81,7 @@ export function NavbarOthers(props: any) {
                   height: "56px",
                   backgroundColor: "#ff5a3c",
                 }}
+                onClick={props.handleLoginOpen}
               >
                 SIGN IN
               </Button>
