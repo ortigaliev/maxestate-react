@@ -46,7 +46,7 @@ export function NavbarAgency(props: any) {
               className="agency_hover-line hover-line"
               onClick={props.setPath}
             >
-              <NavLink to="/property" activeClassName="underline">
+              <NavLink to="/estate" activeClassName="underline">
                 Property
               </NavLink>
             </Box>

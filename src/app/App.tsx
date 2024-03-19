@@ -36,7 +36,7 @@ function App() {
         <Route path="/agency">
           <AgencyPage />
         </Route>
-        <Route path="/property">
+        <Route path="/estate">
           <PropertyPage />
         </Route>
         <Route path="/blog">

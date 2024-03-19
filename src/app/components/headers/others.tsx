@@ -1,10 +1,4 @@
-import {
-  Badge,
-  Box,
-  Button,
-  Container,
-  Stack,
-} from "@mui/material";
+import { Badge, Box, Button, Container, Stack } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -45,7 +39,7 @@ export function NavbarOthers(props: any) {
               className="agency_hover-line hover-line"
               onClick={props.setPath}
             >
-              <NavLink to="/property" activeClassName="underline">
+              <NavLink to="/estate" activeClassName="underline">
                 Property
               </NavLink>
             </Box>

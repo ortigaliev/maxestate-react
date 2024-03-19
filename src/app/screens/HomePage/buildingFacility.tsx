@@ -33,7 +33,7 @@ export function BuildingFacility() {
             >
               <Grid>
                 <CssVarsProvider>
-                  <Link className={"facility_card_link"} href="/property">
+                  <Link className={"facility_card_link"} href="/estate">
                     <Card
                       className="main_focus_card facility_card"
                       sx={{
@@ -80,7 +80,7 @@ export function BuildingFacility() {
               </Grid>
               <Grid>
                 <CssVarsProvider>
-                  <Link className={"facility_card_link"} href="/property">
+                  <Link className={"facility_card_link"} href="/estate">
                     <Card
                       className="main_focus_card facility_card"
                       sx={{
@@ -127,7 +127,7 @@ export function BuildingFacility() {
               </Grid>
               <Grid>
                 <CssVarsProvider>
-                  <Link className={"facility_card_link"} href="/property">
+                  <Link className={"facility_card_link"} href="/estate">
                     <Card
                       className="main_focus_card facility_card"
                       sx={{
@@ -174,7 +174,7 @@ export function BuildingFacility() {
               </Grid>
               <Grid>
                 <CssVarsProvider>
-                  <Link className={"facility_card_link"} href="/property">
+                  <Link className={"facility_card_link"} href="/estate">
                     <Card
                       className="main_focus_card facility_card"
                       sx={{
@@ -221,7 +221,7 @@ export function BuildingFacility() {
               </Grid>
               <Grid>
                 <CssVarsProvider>
-                  <Link className={"facility_card_link"} href="/property">
+                  <Link className={"facility_card_link"} href="/estate">
                     <Card
                       className="main_focus_card facility_card"
                       sx={{
@@ -268,7 +268,7 @@ export function BuildingFacility() {
               </Grid>
               <Grid>
                 <CssVarsProvider>
-                  <Link className={"facility_card_link"} href="/property">
+                  <Link className={"facility_card_link"} href="/estate">
                     <Card
                       className="main_focus_card facility_card"
                       sx={{
@@ -315,7 +315,7 @@ export function BuildingFacility() {
               </Grid>
               <Grid>
                 <CssVarsProvider>
-                  <Link className={"facility_card_link"} href="/property">
+                  <Link className={"facility_card_link"} href="/estate">
                     <Card
                       className="main_focus_card facility_card"
                       sx={{
@@ -362,7 +362,7 @@ export function BuildingFacility() {
               </Grid>
               <Grid>
                 <CssVarsProvider>
-                  <Link className={"facility_card_link"} href="/property">
+                  <Link className={"facility_card_link"} href="/estate">
                     <Card
                       className="main_focus_card facility_card"
                       sx={{

@@ -1,0 +1,34 @@
+import axios from "axios";
+import assert from "assert";
+
+import { Definer } from "../lib/Definer";
+import { serverApi as serverApi } from "../lib/config";
+import { EstateSearchObj } from "../../types/others";
+import { Estate } from "../../types/estate";
+
+class EstateApiServer {
+  private readonly path: string;
+
+  constructor() {
+    this.path = serverApi;
+  }
+
+  async getTargetEstates(data: EstateSearchObj) {
+    try {
+      const url = "/estate",
+        result = await axios.post(this.path + url, data, {
+          withCredentials: true,
+        });
+      assert.ok(result, Definer.general_err1);
+
+      console.log("state", result.data.state);
+      const estates: Estate[] = result.data.data;
+      return estates;
+    } catch (err: any) {
+      console.log(`ERROR ::: getTargetEstates ${err.message}`);
+      throw err;
+    }
+  }
+}
+
+export default EstateApiServer;

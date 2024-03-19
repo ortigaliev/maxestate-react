@@ -32,7 +32,7 @@ export function NavbarHome(props: any) {
                 </NavLink>
               </Box>
               <Box className="hover-line" onClick={props.setPath}>
-                <NavLink to="/property" activeClassName="underline">
+                <NavLink to="/estate" activeClassName="underline">
                   Property
                 </NavLink>
               </Box>

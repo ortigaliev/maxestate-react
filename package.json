@@ -25,6 +25,8 @@
     "@types/react-dom": "^18.2.19",
     "@types/react-router-dom": "^5.1.9",
     "@types/redux-logger": "^3.0.13",
+    "assert": "^2.1.0",
+    "axios": "^1.6.8",
     "dayjs": "^1.11.10",
     "moment": "^2.30.1",
     "react": "^18.2.0",

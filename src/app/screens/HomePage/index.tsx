@@ -10,41 +10,32 @@ import { Feedback } from "./feedback";
 import { LatestNews } from "./latestNews";
 import "../../../css/home.css";
 import "swiper/css";
-
-//Redux
-import { useDispatch, useSelector } from "react-redux";
+import AgencyApiServer from "../../apiServer/agencyApiServer";
+import { setBestAgencies } from "./slice";
+import { Agency } from "../../../types/user";
 import { Dispatch } from "@reduxjs/toolkit";
-import { createSelector } from "reselect";
-import { setLatestEstate } from "./slice";
-import { retrieveLatestEstate } from "./selector";
-import { Estate } from "../../../types/estate";
-//import RestaurantApiService from "../../apiServices/restaurantApiService";
+import { useDispatch } from "react-redux";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
-  setLatestEstate: (data: Estate[]) => dispach(setLatestEstate(data)),
+  setBestAgencies: (data: Agency[]) => dispach(setBestAgencies(data)),
 });
-// REDUX SELECTOR
-const latestEstateRetriever = createSelector(
-  retrieveLatestEstate,
-  (latestEstate) => ({
-    latestEstate,
-  })
-);
 
 export function HomePage() {
   /* INITIALIZATION */
-  const { setLatestEstate } = actionDispatch(useDispatch());
+  const {setBestAgencies} = actionDispatch(useDispatch());
 
-  //selector: store => data
 
   useEffect(() => {
-    //backend data request => data
-
-    setLatestEstate([]);
-
-    //slice: data => store
+    const agencyServer = new AgencyApiServer();
+    agencyServer
+      .getAgencies({ page: 1, limit: 3, order: "mb_point" })
+      .then((data) => {
+        setBestAgencies(data);
+      })
+      .catch((err) => console.log(err));
   }, []);
+
   return (
     <div className="homepage">
       <LatestList />
