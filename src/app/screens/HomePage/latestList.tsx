@@ -152,7 +152,15 @@ export function LatestList() {
                               color="neutral"
                               sx={{}}
                             >
-                              <FavoriteBorder />
+                              <FavoriteBorder
+                                style={{
+                                  fill:
+                                    estate.me_liked &&
+                                    estate.me_liked[0]?.my_favorite
+                                      ? "red"
+                                      : "white",
+                                }}
+                              />
                             </IconButton>
                             <HomeModal />
                             <IconButton variant="outlined" color="neutral">
