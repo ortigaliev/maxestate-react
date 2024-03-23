@@ -23,8 +23,10 @@ export function TargetArticles(props: any) {
       {props.targetBoArticles?.map((article: any, index: string) => {
         const art_image_url = "/images/blogs/blog_img1.jpg";
         const art_avatar = "/images/blogs/blog_user1.jpg";
+
         return (
           <Link
+            key={index}
             className="all_article_box"
             sx={{ textDecoration: "none", borderRadius: "30px" }}
           >
@@ -106,7 +108,6 @@ export function TargetArticles(props: any) {
                             mr: 2,
                           }}
                         >
-                          {" "}
                           <Box>
                             <Checkbox
                               {...label}

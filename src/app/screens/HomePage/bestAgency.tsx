@@ -52,7 +52,7 @@ export function BestAgency() {
             {bestAgencies.map((ele: Agency) => {
               const image_path = `${serverApi}/${ele.mb_image}`;
               return (
-                <CssVarsProvider>
+                <CssVarsProvider key={ele._id}>
                   <Link
                     overlay
                     href="#"

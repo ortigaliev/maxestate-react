@@ -21,46 +21,30 @@ export function NavbarOthers(props: any) {
             justifyContent={"space-evenly"}
             alignItems={"center"}
           >
-            <Box
-              className="others_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="others_hover-line hover-line">
               <NavLink to="/">Home</NavLink>
             </Box>
-            <Box
-              className="others_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="others_hover-line hover-line">
               <NavLink to="/agency" activeClassName="underline">
                 Agency
               </NavLink>
             </Box>
-            <Box
-              className="agency_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="agency_hover-line hover-line">
               <NavLink to="/estate" activeClassName="underline">
                 Property
               </NavLink>
             </Box>
-            <Box
-              className="agency_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="agency_hover-line hover-line">
               <NavLink to="/blog" activeClassName="underline">
                 Blog
               </NavLink>
             </Box>
-            <Box
-              className="agency_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="agency_hover-line hover-line">
               <NavLink to="/contact" activeClassName="underline">
                 Contact
               </NavLink>
             </Box>
-
-            <Box className="hover-line" onClick={props.setPath}>
+            <Box className="hover-line">
               <Badge badgeContent={3} color="secondary">
                 <NavLink
                   to="/card"
@@ -75,14 +59,19 @@ export function NavbarOthers(props: any) {
             <Box>
               <Button
                 className=" others_hover-line hover-line"
-                variant="contained"
-                style={{
-                  width: "160px",
-                  height: "56px",
-                  backgroundColor: "#ff5a3c",
-                }}
+                variant="text"
+                onClick={props.handleLoginOpen}
               >
                 SIGN IN
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                className=" agency_hover-line hover-line"
+                variant="contained"
+                onClick={props.handleSignUpOpen}
+              >
+                SIGN UP
               </Button>
             </Box>
           </Stack>

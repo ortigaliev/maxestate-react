@@ -80,6 +80,7 @@ export function FeaturedList() {
                   const image_path = `${serverApi}/${estate.estate_images[0]}`;
                   return (
                     <Card
+                      key={estate._id}
                       className="featured_card_item"
                       variant="outlined"
                       sx={{ width: 410, mr: 3 }}

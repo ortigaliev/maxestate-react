@@ -85,7 +85,7 @@ export function AllProperty() {
               >
                 {property_list.map((ele, index) => {
                   return (
-                    <Grid>
+                    <Grid key={index}>
                       <CssVarsProvider>
                         <Card variant="outlined" sx={{ width: 400 }}>
                           <CardOverflow>

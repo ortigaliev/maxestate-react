@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Switch, useRouteMatch, Route } from "react-router-dom";
 import { AllAgency } from "./allAgency";
@@ -11,10 +10,10 @@ export function AgencyPage() {
   return (
     <div className="agency_page">
       <Switch>
-        <Route path={`${agency.path}/:agency_id`}>
+        <Route path={`/agency/:agency_id`}>
           <OneAgency />
         </Route>
-        <Route path={`${agency.path}`}>
+        <Route path={`/agency`}>
           <AllAgency />
         </Route>
       </Switch>

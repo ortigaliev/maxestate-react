@@ -211,17 +211,17 @@ export function ContactPage() {
                   <TabPanel value={"1"}>
                     <Stack className="theRules_box">
                       <Box className={"theRulesFrame"}>
-                        {rules.map((ele) => {
-                          return <p>{ele}</p>;
+                        {rules.map((ele, index) => {
+                          return <p key={index}>{ele}</p>;
                         })}
                       </Box>
                     </Stack>
                   </TabPanel>
                   <TabPanel value={"2"}>
                     <Stack className="accordian_menu">
-                      {faq.map((ele) => {
+                      {faq.map((ele, index) => {
                         return (
-                          <Accordion>
+                          <Accordion key={index}>
                             <AccordionSummary
                               expandIcon={<ExpandMoreIcon />}
                               aria-controls="panelia-content"

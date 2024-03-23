@@ -6,9 +6,8 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
-import React from "react";
 import { NavLink } from "react-router-dom";
-import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export function NavbarAgency(props: any) {
   return (
@@ -28,40 +27,25 @@ export function NavbarAgency(props: any) {
             justifyContent={"space-evenly"}
             alignItems={"center"}
           >
-            <Box
-              className="agency_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="agency_hover-line hover-line">
               <NavLink to="/">Home</NavLink>
             </Box>
-            <Box
-              className="agency_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="agency_hover-line hover-line">
               <NavLink to="/agency" activeClassName="underline">
                 Agency
               </NavLink>
             </Box>
-            <Box
-              className="agency_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="agency_hover-line hover-line">
               <NavLink to="/estate" activeClassName="underline">
                 Property
               </NavLink>
             </Box>
-            <Box
-              className="agency_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="agency_hover-line hover-line">
               <NavLink to="/blog" activeClassName="underline">
                 Blog
               </NavLink>
             </Box>
-            <Box
-              className="agency_hover-line hover-line"
-              onClick={props.setPath}
-            >
+            <Box className="agency_hover-line hover-line">
               <NavLink to="/contact" activeClassName="underline">
                 Contact
               </NavLink>
@@ -77,22 +61,31 @@ export function NavbarAgency(props: any) {
                 //onClick={handleClick}
               />
               <Badge badgeContent={3} color="secondary">
-                <Box className="agency_hover-line_icon-box">
-                  <ShoppingCartCheckoutOutlinedIcon />
+                <Box className="hover-line">
+                  <Badge badgeContent={3} color="secondary">
+                    <NavLink to="/card" activeClassName="underline">
+                      <ShoppingCartIcon />
+                    </NavLink>
+                  </Badge>
                 </Box>
               </Badge>
             </Box>
             <Box>
               <Button
                 className=" agency_hover-line hover-line"
-                variant="contained"
-                style={{
-                  width: "160px",
-                  height: "56px",
-                  backgroundColor: "#ff5a3c",
-                }}
+                variant="text"
+                onClick={props.handleLoginOpen}
               >
                 SIGN IN
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                className=" agency_hover-line hover-line"
+                variant="contained"
+                onClick={props.handleSignUpOpen}
+              >
+                SIGN UP
               </Button>
             </Box>
           </Stack>
