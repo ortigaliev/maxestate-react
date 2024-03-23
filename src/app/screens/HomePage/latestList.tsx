@@ -69,7 +69,7 @@ export function LatestList() {
               {latestEstate.map((estate: Estate) => {
                 const image_path = `${serverApi}/${estate.estate_images[0]}`;
                 return (
-                  <Grid>
+                  <Grid key={estate._id}>
                     <CssVarsProvider>
                       <Card
                         variant="outlined"

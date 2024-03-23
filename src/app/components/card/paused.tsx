@@ -48,7 +48,7 @@ export default function Paused() {
                 {order_card_list.map((ele, index) => {
                   const card_img = "/images/home/h2.jpg";
                   return (
-                    <CardActionArea>
+                    <CardActionArea key={index}>
                       <CardContent>
                         <Stack
                           flexDirection={"row"}
