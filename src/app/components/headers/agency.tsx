@@ -5,9 +5,13 @@ import {
   Container,
   IconButton,
   Stack,
+  Menu,
+  MenuItem,
+  ListItemIcon,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 export function NavbarAgency(props: any) {
   return (
@@ -45,6 +49,17 @@ export function NavbarAgency(props: any) {
                 Blog
               </NavLink>
             </Box>
+            {props.verifiedMemberData ? (
+              <Box className="hover-line">
+                <NavLink
+                  className="my_page"
+                  to="/member"
+                  activeClassName="underline"
+                >
+                  My page
+                </NavLink>
+              </Box>
+            ) : null}
             <Box className="agency_hover-line hover-line">
               <NavLink to="/contact" activeClassName="underline">
                 Contact
@@ -70,23 +85,75 @@ export function NavbarAgency(props: any) {
                 </Box>
               </Badge>
             </Box>
+            {!props.verifiedMemberData ? (
+              <Box>
+                <Button
+                  variant="contained"
+                  style={{ color: "#fff", textDecoration: "none" }}
+                  onClick={props.handleLoginOpen}
+                >
+                  Sign In
+                </Button>
+              </Box>
+            ) : (
+              <img
+                style={{
+                  width: "48px",
+                  height: "48px",
+                  borderRadius: "24px",
+                }}
+                src={props.verifiedMemberData.mb_image}
+                onClick={props.handleLogOutClick}
+              />
+            )}
+
+            <Menu
+              anchorEl={props.anchorEl}
+              open={props.open}
+              onClose={props.handleCloseLogOut}
+              onClick={props.handleCloseLogOut}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <MenuItem onClick={props.handleLogOutRequest}>
+                <ListItemIcon>
+                  <LogoutIcon fontSize="small" style={{ color: "blue" }} />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </Menu>
             <Box>
-              <Button
-                className=" agency_hover-line hover-line"
-                variant="text"
-                onClick={props.handleLoginOpen}
-              >
-                SIGN IN
-              </Button>
-            </Box>
-            <Box>
-              <Button
-                className=" agency_hover-line hover-line"
-                variant="contained"
-                onClick={props.handleSignUpOpen}
-              >
-                SIGN UP
-              </Button>
+              {!props.verifiedMemberData ? (
+                <Button variant="contained" onClick={props.handleSignUpOpen}>
+                  Sign Up
+                </Button>
+              ) : null}
             </Box>
           </Stack>
         </Stack>

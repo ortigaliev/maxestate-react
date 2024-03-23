@@ -4,8 +4,8 @@
   background-image: url("../../public/images/home/home_bg.jpg");
   background-size: cover;
   max-width: 100%;
-  height: 520px;
 }
+
 
 .home_navbar {
   position: relative;
@@ -40,6 +40,10 @@
 
 .home_navbar a {
   text-decoration: none;
+}
+
+.hover-line .my_page {
+  color: #000;
 }
 
 .hover-line a {
