@@ -61,7 +61,7 @@ function App() {
       </Switch>
 
       <Footer />
-      <AuthenticationModal/>
+      <AuthenticationModal />
     </Router>
   );
 }
