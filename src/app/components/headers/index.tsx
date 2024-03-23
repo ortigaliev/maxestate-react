@@ -83,15 +83,19 @@ export function Navbar(props: any) {
               <Box>
                 <Button
                   className=" hover-line"
-                  variant="contained"
-                  style={{
-                    width: "160px",
-                    height: "56px",
-                    backgroundColor: "#ff5a3c",
-                  }}
+                  variant="text"
                   onClick={props.handleLoginOpen}
                 >
                   SIGN IN
+                </Button>
+              </Box>
+              <Box>
+                <Button
+                  className=" agency_hover-line hover-line"
+                  variant="contained"
+                  onClick={props.handleSignUpOpen}
+                >
+                  SIGN UP
                 </Button>
               </Box>
             </Stack>

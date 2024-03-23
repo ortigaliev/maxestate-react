@@ -206,15 +206,6 @@ export default function AuthenticationModal(props: any) {
                 <LoginIcon sx={{ mr: 1 }} />
                 Login
               </Fab>
-              <Box mt={2}>
-                <Button
-                  className=" hover-line"
-                  variant="text"
-                  onClick={props.handleSignUpOpen}
-                >
-                  Sign up to take all advantage!
-                </Button>
-              </Box>
             </Stack>
           </Stack>
         </Fade>
