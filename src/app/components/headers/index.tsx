@@ -72,6 +72,7 @@ export function NavbarHome(props: any) {
                   SIGN IN
                 </Button>
               </Box>
+              
             </Stack>
           </Stack>
         </Container>

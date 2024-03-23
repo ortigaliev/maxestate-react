@@ -77,8 +77,12 @@ export function NavbarAgency(props: any) {
                 //onClick={handleClick}
               />
               <Badge badgeContent={3} color="secondary">
-                <Box className="agency_hover-line_icon-box">
-                  <ShoppingCartIcon />
+                <Box className="hover-line" onClick={props.setPath}>
+                  <Badge badgeContent={3} color="secondary">
+                    <NavLink to="/card" activeClassName="underline">
+                      <ShoppingCartIcon />
+                    </NavLink>
+                  </Badge>
                 </Box>
               </Badge>
             </Box>

@@ -4,10 +4,10 @@ import "../css/navbar.css";
 import "../css/footer.css";
 
 /* REACT ROUTER DOM */
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { AgencyPage } from "./screens/AgencyPage";
 import { PropertyPage } from "./screens/PropertyPage";
-import { BlogPage } from "./screens/BlogPage"; //Community
+import { BlogPage } from "./screens/BlogPage"; 
 import { ContactPage } from "./screens/ContactPage";
 import { HomePage } from "./screens/HomePage";
 import { LoginPage } from "./screens/LoginPage";
@@ -36,11 +36,11 @@ function App() {
 
   return (
     <Router>
-      {main_path == "/" ? (
+      {main_path === "/" ? (
         <NavbarHome
           setPath={setPath}
           handleLoginOpen={handleLoginOpen}
-          /* handleSignUpOpen={handleSignUpOpen} */
+          handleSignUpOpen={handleSignUpOpen}
         />
       ) : main_path.includes("/agency") ? (
         <NavbarAgency
@@ -82,7 +82,6 @@ function App() {
           <HomePage />
         </Route>
       </Switch>
-
       <Footer />
       <AuthenticationModal
         loginOpen={loginOpen}

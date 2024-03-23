@@ -59,7 +59,6 @@ export function NavbarOthers(props: any) {
                 Contact
               </NavLink>
             </Box>
-
             <Box className="hover-line" onClick={props.setPath}>
               <Badge badgeContent={3} color="secondary">
                 <NavLink
@@ -86,6 +85,7 @@ export function NavbarOthers(props: any) {
                 SIGN IN
               </Button>
             </Box>
+            
           </Stack>
         </Stack>
       </Container>
