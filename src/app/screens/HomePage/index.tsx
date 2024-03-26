@@ -23,8 +23,7 @@ const actionDispatch = (dispach: Dispatch) => ({
 
 export function HomePage() {
   /* INITIALIZATION */
-  const {setBestAgencies} = actionDispatch(useDispatch());
-
+  const { setBestAgencies } = actionDispatch(useDispatch());
 
   useEffect(() => {
     const agencyServer = new AgencyApiServer();

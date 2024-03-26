@@ -53,110 +53,99 @@ export function BestAgency() {
               const image_path = `${serverApi}/${ele.mb_image}`;
               return (
                 <CssVarsProvider key={ele._id}>
-                  <Link
-                    overlay
-                    href="#"
-                    underline="none"
+                  <Card
+                    variant="outlined"
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "start",
+                      width: 400,
+                      // to make the card resizable
+                      overflow: "auto",
+                      resize: "horizontal",
                     }}
                   >
-                    <Card
-                      variant="outlined"
+                    <CardOverflow>
+                      <AspectRatio ratio="1.3">
+                        <img src={image_path} loading="lazy" alt="news_img" />
+                      </AspectRatio>
+                    </CardOverflow>
+                    <Box
                       sx={{
-                        width: 400,
-                        // to make the card resizable
-                        overflow: "auto",
-                        resize: "horizontal",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
                       }}
                     >
-                      <CardOverflow>
-                        <AspectRatio ratio="1.3">
-                          <img src={image_path} loading="lazy" alt="news_img" />
-                        </AspectRatio>
-                      </CardOverflow>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
+                      <Avatar src="images/home/agent.jpg" size="lg" />
+                      <AvatarGroup size="sm" sx={{ "--Avatar-size": "28px" }}>
+                        <Avatar src="/images/agency/follower2.jpg" />
+                        <Avatar src="/images/agency/follower3.jpg" />
+                        <Avatar src="/images/agency/follower4.jpg" />
+                        <Avatar>+4K</Avatar>
+                      </AvatarGroup>
+                    </Box>
+                    <CardContent>
+                      <Typography level="title-lg" mb={2}>
+                        {ele.mb_nick}
+                      </Typography>
+                      <Stack
+                        sx={{ marginBottom: "15px" }}
+                        flexDirection={"row"}
                       >
-                        <Avatar src="images/home/agent.jpg" size="lg" />
-                        <AvatarGroup size="sm" sx={{ "--Avatar-size": "28px" }}>
-                          <Avatar src="/images/agency/follower2.jpg" />
-                          <Avatar src="/images/agency/follower3.jpg" />
-                          <Avatar src="/images/agency/follower4.jpg" />
-                          <Avatar>+4K</Avatar>
-                        </AvatarGroup>
-                      </Box>
-                      <CardContent>
-                        <Typography level="title-lg" mb={2}>
-                          {ele.mb_nick}
+                        <LocationOnIcon
+                          sx={{
+                            display: "block",
+                            width: 25,
+                            height: 30,
+                            fontSize: 20,
+                            color: "#ff5a3c",
+                          }}
+                        />
+                        <Typography sx={{ color: "#5c727d" }} level="body-lg">
+                          {ele.mb_address}
                         </Typography>
-                        <Stack
-                          sx={{ marginBottom: "15px" }}
-                          flexDirection={"row"}
-                        >
-                          <LocationOnIcon
-                            sx={{
-                              display: "block",
-                              width: 25,
-                              height: 30,
-                              fontSize: 20,
-                              color: "#ff5a3c",
-                            }}
-                          />
-                          <Typography sx={{ color: "#5c727d" }} level="body-lg">
-                            {ele.mb_address}
-                          </Typography>
-                        </Stack>
-                        <Stack
-                          sx={{ marginBottom: "15px" }}
-                          flexDirection={"row"}
-                        >
-                          <LocalPhoneOutlinedIcon
-                            sx={{
-                              display: "block",
-                              width: 25,
-                              height: 30,
-                              fontSize: 20,
-                              color: "#ff5a3c",
-                            }}
-                          />
-                          <Typography sx={{ color: "#5c727d" }} level="body-lg">
-                            {ele.mb_phone}
-                          </Typography>
-                        </Stack>
-                      </CardContent>
-                      <CardOverflow
-                        variant="soft"
-                        sx={{ bgcolor: "background.level1" }}
+                      </Stack>
+                      <Stack
+                        sx={{ marginBottom: "15px" }}
+                        flexDirection={"row"}
                       >
-                        <CardActions buttonFlex="0 0 auto">
-                          <IconButton variant="outlined" color="neutral">
-                            <div>{ele.mb_likes}</div>
-                            <FavoriteBorder />
-                          </IconButton>
-                          <Divider orientation="vertical" />
-                          <IconButton
-                            variant="outlined"
-                            color="neutral"
-                            sx={{ mr: "auto" }}
-                          >
-                            <div>{ele.mb_views}</div>
-                            <RemoveRedEyeOutlinedIcon />
-                          </IconButton>
+                        <LocalPhoneOutlinedIcon
+                          sx={{
+                            display: "block",
+                            width: 25,
+                            height: 30,
+                            fontSize: 20,
+                            color: "#ff5a3c",
+                          }}
+                        />
+                        <Typography sx={{ color: "#5c727d" }} level="body-lg">
+                          {ele.mb_phone}
+                        </Typography>
+                      </Stack>
+                    </CardContent>
+                    <CardOverflow
+                      variant="soft"
+                      sx={{ bgcolor: "background.level1" }}
+                    >
+                      <CardActions buttonFlex="0 0 auto">
+                        <IconButton variant="outlined" color="neutral">
+                          <div>{ele.mb_likes}</div>
+                          <FavoriteBorder />
+                        </IconButton>
+                        <Divider orientation="vertical" />
+                        <IconButton
+                          variant="outlined"
+                          color="neutral"
+                          sx={{ mr: "auto" }}
+                        >
+                          <div>{ele.mb_views}</div>
+                          <RemoveRedEyeOutlinedIcon />
+                        </IconButton>
 
-                          <Button variant="solid" sx={{ bgcolor: "#ff5a3c" }}>
-                            Follow
-                          </Button>
-                        </CardActions>
-                      </CardOverflow>
-                    </Card>
-                  </Link>
+                        <Button variant="solid" sx={{ bgcolor: "#ff5a3c" }}>
+                          Follow
+                        </Button>
+                      </CardActions>
+                    </CardOverflow>
+                  </Card>
                 </CssVarsProvider>
               );
             })}

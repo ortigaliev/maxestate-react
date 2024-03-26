@@ -1,6 +1,5 @@
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, Stack, Link } from "@mui/material";
 import React from "react";
-import { NavLink } from "react-router-dom";
 
 export function Footer() {
   return (
@@ -178,15 +177,23 @@ export function Footer() {
           >
             <Box className="footer_text">All Rights Reserved @ Company</Box>
             <Stack flexDirection={"row"}>
-              <NavLink className="footer_link_item footer_text" to={"#"}>
+              <Link
+                href="/contact"
+                underline="hover"
+                className="footer_link_item footer_text"
+              >
                 Terms & Conditions
-              </NavLink>
-              <NavLink className="footer_link_item footer_text" to={"#"}>
+              </Link>
+              <Link href="/contact" className="footer_link_item footer_text">
                 Claim
-              </NavLink>
-              <NavLink className="footer_link_item footer_text" to={"#"}>
+              </Link>
+              <Link
+                href="/contact"
+                underline="hover"
+                className="footer_link_item footer_text"
+              >
                 Privacy & Policy
-              </NavLink>
+              </Link>
             </Stack>
           </Stack>
         </Container>

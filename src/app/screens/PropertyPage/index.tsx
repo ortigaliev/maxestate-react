@@ -10,10 +10,10 @@ export function PropertyPage() {
   return (
     <div className={"propert_page"}>
       <Switch>
-        <Route path={`/property/:property_id`}>
+        <Route path={`/estate/:estate_id`}>
           <ChosenProperty />
         </Route>
-        <Route path={`/property`}>
+        <Route path={`/estate`}>
           <AllProperty />
         </Route>
       </Switch>

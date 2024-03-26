@@ -8,35 +8,22 @@ import {
   MenuItem,
   ListItemIcon,
 } from "@mui/material";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 export function NavbarHome(props: any) {
-  const location = useLocation();
-  const page = location.pathname.replace("/", "");
-
-  console.log("page", page);
-  // home => ''
-  // agency => 'agency'
-
   return (
     <div className="format format-home home_navbar">
       <div className="overlay">
         <Container>
           <Stack
             flexDirection={"row"}
-            className={`navbar_config ${
-              page === "agency" ? "agency_navbar_config" : ""
-            }`}
+            className="navbar_config"
             justifyContent={"space-between"}
           >
             <Box>
-              {page === "" ? (
-                <img src="/images/home/logo.png" alt="Logo" />
-              ) : (
-                <img src="/images/agency/logo_black.png" alt="Logo" />
-              )}
+              <img src="/images/home/logo.png" alt="Logo" />
             </Box>
             <Stack
               className="navbar_links"
@@ -44,11 +31,7 @@ export function NavbarHome(props: any) {
               justifyContent={"space-evenly"}
               alignItems={"center"}
             >
-              <Box
-                className={`hover-line ${
-                  page === "agency" ? "agency_hover-line" : ""
-                }`}
-              >
+              <Box className="hover-line">
                 <NavLink to="/" activeClassName="underline">
                   Home
                 </NavLink>
