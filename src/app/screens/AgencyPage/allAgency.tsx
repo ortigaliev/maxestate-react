@@ -1,5 +1,11 @@
-import React, { useEffect } from "react";
-import { Container, Divider, Stack } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Container,
+  Divider,
+  Pagination,
+  PaginationItem,
+  Stack,
+} from "@mui/material";
 import {
   Card,
   CardActions,
@@ -21,6 +27,9 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import Input from "@mui/joy/Input";
 import { AgencyPagination } from "./agencyPagination";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Favorite } from "@mui/icons-material";
 
 /* REDUX */
 import { useSelector, useDispatch } from "react-redux";
@@ -29,6 +38,16 @@ import { retrieveTargetAgencies } from "./selector";
 import { Agency } from "../../../types/user";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setTargetAgencies } from "./slice";
+import AgencyApiServer from "../../apiServer/agencyApiServer";
+import { serverApi } from "../../lib/config";
+import { SearchObj } from "../../../types/others";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+import { Definer } from "../../lib/Definer";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import assert from "assert";
 
 const order_list = Array.from(Array(9).keys());
 
@@ -49,10 +68,58 @@ export function AllAgency() {
   /* INITIALIZATIONS */
   const { setTargetAgencies } = actionDispatch(useDispatch());
   const { targetAgencies } = useSelector(targetAgenciesRetriever);
+  const [targetSearchObject, setTargetSearchObject] = useState<SearchObj>({
+    page: 1,
+    limit: 6,
+    order: "mb_point",
+  });
+  const refs: any = useRef([]);
 
   useEffect(() => {
-    //TODO: Retrieve targetAgeniesData
-  }, []);
+    const agencyService = new AgencyApiServer();
+    agencyService
+      .getAgencies(targetSearchObject)
+      .then((data) => setTargetAgencies(data))
+      .catch((err) => console.log(err));
+  }, [targetSearchObject]);
+
+  /**HANDLERS */
+  const searchHandler = (category: string) => {
+    targetSearchObject.page = 1;
+    targetSearchObject.order = category;
+    setTargetSearchObject({ ...targetSearchObject });
+  };
+
+  const handlePaginationChange = (event: any, value: number) => {
+    targetSearchObject.page = value;
+    setTargetSearchObject({ ...targetSearchObject });
+  };
+
+  const targetLikeHandler = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+      const memberService = new MemberApiServer(),
+        like_result = await memberService.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "member",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "#ccc";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+
+      await sweetTopSmallSuccessAlert("success", 700, false);
+    } catch (err: any) {
+      console.log("targetLikeTop, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
 
   return (
     <div className="all_agency">
@@ -72,12 +139,33 @@ export function AllAgency() {
                   gap: 2,
                   flexWrap: "wrap",
                   color: "#fff",
+                  cursor: "pointer",
                 }}
               >
-                <Button sx={{ bgcolor: "#ff5a3c" }}>BEST</Button>
-                <Button sx={{ bgcolor: "#ff5a3c" }}>POPULAR</Button>
-                <Button sx={{ bgcolor: "#ff5a3c" }}>TREND</Button>
-                <Button sx={{ bgcolor: "#ff5a3c" }}>NEW</Button>
+                <Button
+                  onClick={() => searchHandler("mb_point")}
+                  sx={{ bgcolor: "#ff5a3c" }}
+                >
+                  BEST
+                </Button>
+                <Button
+                  onClick={() => searchHandler("mb_views")}
+                  sx={{ bgcolor: "#ff5a3c" }}
+                >
+                  POPULAR
+                </Button>
+                <Button
+                  onClick={() => searchHandler("mb_likes")}
+                  sx={{ bgcolor: "#ff5a3c" }}
+                >
+                  TREND
+                </Button>
+                <Button
+                  onClick={() => searchHandler("createdAt")}
+                  sx={{ bgcolor: "#ff5a3c" }}
+                >
+                  NEW
+                </Button>
               </Box>
               <Box
                 component="form"
@@ -118,10 +206,10 @@ export function AllAgency() {
               gap={2}
               sx={{ position: "relative", mb: 5 }}
             >
-              {order_list.map((ele, index) => {
+              {targetAgencies.map((ele: Agency) => {
+                const image_path = `${serverApi}/${ele.mb_image}`;
                 return (
                   <Link
-                    key={index}
                     overlay
                     underline="none"
                     sx={{
@@ -141,11 +229,7 @@ export function AllAgency() {
                     >
                       <CardOverflow>
                         <AspectRatio ratio="1.3">
-                          <img
-                            src="/images/agency/luxhouse.png"
-                            loading="lazy"
-                            alt="news_img"
-                          />
+                          <img src={image_path} loading="lazy" alt="news_img" />
                         </AspectRatio>
                       </CardOverflow>
                       <Box
@@ -165,7 +249,7 @@ export function AllAgency() {
                       </Box>
                       <CardContent>
                         <Typography level="title-lg" mb={2}>
-                          A&A Realty Co
+                          {ele.mb_nick} Agency
                         </Typography>
                         <Stack
                           sx={{ marginBottom: "15px" }}
@@ -180,7 +264,7 @@ export function AllAgency() {
                             }}
                           />
                           <Typography sx={{ color: "#5c727d" }} level="body-lg">
-                            3, Sejong-ro 2-gil
+                            {ele.mb_address}
                           </Typography>
                         </Stack>
                         <Stack
@@ -197,7 +281,7 @@ export function AllAgency() {
                             }}
                           />
                           <Typography sx={{ color: "#5c727d" }} level="body-lg">
-                            01093717177
+                            {ele.mb_phone}
                           </Typography>
                         </Stack>
                       </CardContent>
@@ -207,12 +291,26 @@ export function AllAgency() {
                       >
                         <CardActions buttonFlex="0 0 auto">
                           <IconButton color="neutral">
-                            <div>12k</div>
-                            <FavoriteBorder />
+                            <div
+                              ref={(element) =>
+                                (refs.current[ele._id] = element)
+                              }
+                            >
+                              {ele.mb_likes}
+                            </div>
+                            <Favorite
+                              onClick={(e) => targetLikeHandler(e, ele._id)}
+                              style={{
+                                fill:
+                                  ele?.me_liked && ele?.me_liked[0]?.my_favorite
+                                    ? "red"
+                                    : "#ccc",
+                              }}
+                            />
                           </IconButton>
                           <Divider orientation="vertical" />
                           <IconButton color="neutral" sx={{ mr: "auto" }}>
-                            <div>10k</div>
+                            <div>{ele.mb_views}</div>
                             <RemoveRedEyeOutlinedIcon />
                           </IconButton>
                           <Button variant="solid" sx={{ bgcolor: "#ff5a3c" }}>
@@ -227,8 +325,24 @@ export function AllAgency() {
             </Stack>
           </CssVarsProvider>
 
-          {/* Pagination */}
-          <AgencyPagination />
+          <Box ml="auto" mr="auto">
+            <Pagination
+              count={
+                targetSearchObject.page >= 3 ? targetSearchObject.page + 1 : 3
+              }
+              renderItem={(item) => (
+                <PaginationItem
+                  components={{
+                    previous: ArrowBackIcon,
+                    next: ArrowForwardIcon,
+                  }}
+                  {...item}
+                  color={"secondary"}
+                />
+              )}
+              onChange={handlePaginationChange}
+            />
+          </Box>
         </Stack>
       </Container>
     </div>
