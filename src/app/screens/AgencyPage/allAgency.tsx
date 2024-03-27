@@ -30,6 +30,7 @@ import { AgencyPagination } from "./agencyPagination";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Favorite } from "@mui/icons-material";
+import { useHistory } from "react-router-dom";
 
 /* REDUX */
 import { useSelector, useDispatch } from "react-redux";
@@ -66,6 +67,7 @@ const targetAgenciesRetriever = createSelector(
 
 export function AllAgency() {
   /* INITIALIZATIONS */
+  const history = useHistory();
   const { setTargetAgencies } = actionDispatch(useDispatch());
   const { targetAgencies } = useSelector(targetAgenciesRetriever);
   const [targetSearchObject, setTargetSearchObject] = useState<SearchObj>({
@@ -84,6 +86,9 @@ export function AllAgency() {
   }, [targetSearchObject]);
 
   /**HANDLERS */
+  const chosenAgencyHandler = (id: string) => {
+    history.push(`/agency/${id}`);
+  };
   const searchHandler = (category: string) => {
     targetSearchObject.page = 1;
     targetSearchObject.order = category;
@@ -210,6 +215,7 @@ export function AllAgency() {
                 const image_path = `${serverApi}/${ele.mb_image}`;
                 return (
                   <Link
+                    onClick={() => chosenAgencyHandler(ele._id)}
                     overlay
                     underline="none"
                     sx={{
