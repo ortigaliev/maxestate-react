@@ -53,7 +53,6 @@ export function BestAgency() {
   const chosenAgencyHandler = (id: string) => {
     history.push(`/agency/${id}`);
   };
-  const goAgenciesHandler = () => history.push("/agency");
   const targetLikeBest = async (e: any, id: string) => {
     try {
       assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
@@ -69,7 +68,7 @@ export function BestAgency() {
         e.target.style.fill = "red";
         refs.current[like_result.like_ref_id].innerHTML++;
       } else {
-        e.target.style.fill = "white";
+        e.target.style.fill = "#ccc";
         refs.current[like_result.like_ref_id].innerHTML--;
       }
       await sweetTopSmallSuccessAlert("success", 900, false);
@@ -193,12 +192,21 @@ export function BestAgency() {
                           variant="outlined"
                           color="neutral"
                           sx={{ mr: "auto" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
                         >
                           <div>{ele.mb_views}</div>
                           <RemoveRedEyeOutlinedIcon />
                         </IconButton>
 
-                        <Button variant="solid" sx={{ bgcolor: "#ff5a3c" }}>
+                        <Button
+                          variant="solid"
+                          sx={{ bgcolor: "#ff5a3c" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
                           Follow
                         </Button>
                       </CardActions>
