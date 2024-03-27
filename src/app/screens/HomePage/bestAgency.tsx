@@ -18,6 +18,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
+import { Favorite } from "@mui/icons-material";
 
 /* REDUX */
 import { useSelector } from "react-redux";

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Divider, Stack } from "@mui/material";
 import {
   Card,
@@ -22,10 +22,38 @@ import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import Input from "@mui/joy/Input";
 import { AgencyPagination } from "./agencyPagination";
 
+/* REDUX */
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveTargetAgencies } from "./selector";
+import { Agency } from "../../../types/user";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setTargetAgencies } from "./slice";
+
 const order_list = Array.from(Array(9).keys());
-console.log(order_list);
+
+// REDUX SLICE
+const actionDispatch = (dispach: Dispatch) => ({
+  setTargetAgencies: (data: Agency[]) => dispach(setTargetAgencies(data)),
+});
+
+// REDUX SELECTOR
+const targetAgenciesRetriever = createSelector(
+  retrieveTargetAgencies,
+  (targetAgencies) => ({
+    targetAgencies,
+  })
+);
 
 export function AllAgency() {
+  /* INITIALIZATIONS */
+  const { setTargetAgencies } = actionDispatch(useDispatch());
+  const { targetAgencies } = useSelector(targetAgenciesRetriever);
+
+  useEffect(() => {
+    //TODO: Retrieve targetAgeniesData
+  }, []);
+
   return (
     <div className="all_agency">
       <Container>

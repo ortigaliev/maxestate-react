@@ -25,7 +25,10 @@ import { retrieveLatestEstate } from "./selector";
 import EstateApiServer from "../../apiServer/estateApiServer";
 import { serverApi } from "../../lib/config";
 import { useHistory } from "react-router-dom";
-import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../lib/sweetAlert";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
 import { Definer } from "../../lib/Definer";
 import assert from "assert";
 import MemberApiServer from "../../apiServer/memberApiServer";
@@ -198,7 +201,7 @@ export function LatestList() {
                                 e.stopPropagation();
                               }}
                             >
-                              <FavoriteIcon
+                              <Favorite
                                 onClick={(e) => targetLikeLatest(e, estate._id)}
                                 style={{
                                   fill:
@@ -242,33 +245,30 @@ export function LatestList() {
                             >
                               $ {estate.estate_price}
                             </Typography>
-                            <IconButton
-                              sx={{
-                                fontWeight: "md",
-                                ml: "auto",
-                                color: "text.secondary",
-                                "&:hover": { color: "danger.plainColor" },
-                              }}
-                            >
-                              <div
-                                ref={(element) =>
-                                  (refs.current[estate._id] = element)
-                                }
+                            <Box ml="auto" display="flex" gap={1}>
+                              <IconButton
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
                               >
-                                {estate.estate_likes}
-                              </div>
-                              <Favorite />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                fontWeight: "md",
-                                color: "text.secondary",
-                                "&:hover": { color: "primary.plainColor" },
-                              }}
-                            >
-                              <Visibility />
-                              {estate.estate_views}
-                            </IconButton>
+                                <div
+                                  ref={(element) =>
+                                    (refs.current[estate._id] = element)
+                                  }
+                                >
+                                  {estate.estate_likes}
+                                </div>
+                                <Favorite />
+                              </IconButton>
+                              <IconButton
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
+                              >
+                                <Visibility />
+                                {estate.estate_views}
+                              </IconButton>
+                            </Box>
                           </CardContent>
                         </CardOverflow>
                       </Card>
