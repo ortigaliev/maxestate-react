@@ -10,3 +10,9 @@ export interface EstateSearchObj {
   agency_mb_id?: string;
   estate_collection?: string;
 }
+
+export interface MemberLiken {
+  like_group: string;
+  like_status: number;
+  like_ref_id: string;
+}

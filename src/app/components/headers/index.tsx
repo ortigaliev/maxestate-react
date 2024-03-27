@@ -11,8 +11,12 @@ import {
 import { NavLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useState } from "react";
 
 export function NavbarHome(props: any) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
   return (
     <div className="format format-home home_navbar">
       <div className="overlay">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Container, Divider, Stack } from "@mui/material";
 import {
   Card,
@@ -10,12 +10,11 @@ import {
 } from "@mui/joy";
 import CardContent from "@mui/joy/CardContent";
 import AspectRatio from "@mui/joy/AspectRatio";
-import Link from "@mui/joy/Link";
 import Avatar from "@mui/joy/Avatar";
 import AvatarGroup from "@mui/joy/AvatarGroup";
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
-import { FavoriteBorder } from "@mui/icons-material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
@@ -27,6 +26,14 @@ import { retrieveBestAgencies } from "./selector";
 import { setBestAgencies } from "./slice";
 import { Agency } from "../../../types/user";
 import { serverApi } from "../../lib/config";
+import { useHistory } from "react-router-dom";
+import assert from "assert";
+import { Definer } from "../../lib/Definer";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
 
 /* REDUX SELECTOR */
 const bestAgencyRetriever = createSelector(
@@ -38,7 +45,39 @@ const bestAgencyRetriever = createSelector(
 
 export function BestAgency() {
   /* INIRIALIZATION */
+  const history = useHistory();
   const { bestAgencies } = useSelector(bestAgencyRetriever);
+  const refs: any = useRef([]);
+
+  /**HANDLERS */
+  const chosenAgencyHandler = (id: string) => {
+    history.push(`/agency/${id}`);
+  };
+  const goAgenciesHandler = () => history.push("/agency");
+  const targetLikeBest = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+      const memberService = new MemberApiServer(),
+        like_result = await memberService.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "member",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "white";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+      await sweetTopSmallSuccessAlert("success", 900, false);
+    } catch (err: any) {
+      console.log("targetLikeBest, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
   return (
     <div className="service_frame">
       <Container>
@@ -54,12 +93,13 @@ export function BestAgency() {
               return (
                 <CssVarsProvider key={ele._id}>
                   <Card
+                    onClick={() => chosenAgencyHandler(ele._id)}
                     variant="outlined"
                     sx={{
                       width: 400,
-                      // to make the card resizable
                       overflow: "auto",
                       resize: "horizontal",
+                      cursor: "pointer",
                     }}
                   >
                     <CardOverflow>
@@ -84,7 +124,7 @@ export function BestAgency() {
                     </Box>
                     <CardContent>
                       <Typography level="title-lg" mb={2}>
-                        {ele.mb_nick}
+                        {ele.mb_nick} Agency
                       </Typography>
                       <Stack
                         sx={{ marginBottom: "15px" }}
@@ -126,9 +166,27 @@ export function BestAgency() {
                       sx={{ bgcolor: "background.level1" }}
                     >
                       <CardActions buttonFlex="0 0 auto">
-                        <IconButton variant="outlined" color="neutral">
-                          <div>{ele.mb_likes}</div>
-                          <FavoriteBorder />
+                        <IconButton
+                          variant="outlined"
+                          color="neutral"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
+                          <div
+                            ref={(element) => (refs.current[ele._id] = element)}
+                          >
+                            {ele.mb_likes}
+                          </div>
+                          <FavoriteIcon
+                            onClick={(e) => targetLikeBest(e, ele._id)}
+                            style={{
+                              fill:
+                                ele?.me_liked && ele?.me_liked[0]?.my_favorite
+                                  ? "red"
+                                  : "#ccc",
+                            }}
+                          />
                         </IconButton>
                         <Divider orientation="vertical" />
                         <IconButton

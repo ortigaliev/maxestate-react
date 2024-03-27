@@ -152,7 +152,6 @@ export function NavbarOthers(props: any) {
       </Container>
       <div className="format_others_header">
         <Box className="format_others_img">
-          {/* <img src="/images/home/others_bg.jpg" alt="" /> */}
         </Box>
       </div>
     </div>

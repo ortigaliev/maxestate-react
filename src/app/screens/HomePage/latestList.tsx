@@ -9,11 +9,11 @@ import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { AspectRatio, IconButton } from "@mui/joy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { FavoriteBorder, Scale } from "@mui/icons-material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { HomeModal } from "../../components/modal/home-modal";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,13 @@ import { setLatestEstate } from "./slice";
 import { retrieveLatestEstate } from "./selector";
 import EstateApiServer from "../../apiServer/estateApiServer";
 import { serverApi } from "../../lib/config";
+import { useHistory } from "react-router-dom";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../lib/sweetAlert";
+import { Definer } from "../../lib/Definer";
+import assert from "assert";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import { Favorite } from "@mui/icons-material";
+import Visibility from "@mui/icons-material/Visibility";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -42,6 +49,9 @@ export function LatestList() {
   //INITIALIZATION
   const { setLatestEstate } = actionDispatch(useDispatch());
   const { latestEstate } = useSelector(latestEstateRetriever);
+  const refs: any = useRef([]);
+  const history = useHistory();
+
   useEffect(() => {
     const estateServer = new EstateApiServer();
     estateServer
@@ -49,6 +59,38 @@ export function LatestList() {
       .then((data) => setLatestEstate(data))
       .catch((err) => console.log(err));
   }, []);
+
+  /* HANDLER */
+
+  const targetLikeLatest = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+      const memberServer = new MemberApiServer(),
+        like_result = await memberServer.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "estate",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "#ccc";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+      await sweetTopSmallSuccessAlert("success", 900, false);
+    } catch (err: any) {
+      console.log("targetLikeLatest, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
+
+  const chosenEstateHandler = (id: string) => {
+    history.push(`/estate/${id}`);
+  };
+
   return (
     <div className="latest_frame">
       <Container>
@@ -72,9 +114,11 @@ export function LatestList() {
                   <Grid key={estate._id}>
                     <CssVarsProvider>
                       <Card
+                        onClick={() => chosenEstateHandler(estate._id)}
                         variant="outlined"
                         sx={{
                           width: 410,
+                          cursor: "pointer",
                         }}
                       >
                         <CardOverflow
@@ -150,20 +194,36 @@ export function LatestList() {
                             <IconButton
                               variant="outlined"
                               color="neutral"
-                              sx={{}}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
                             >
-                              <FavoriteBorder
+                              <FavoriteIcon
+                                onClick={(e) => targetLikeLatest(e, estate._id)}
                                 style={{
                                   fill:
                                     estate.me_liked &&
                                     estate.me_liked[0]?.my_favorite
                                       ? "red"
-                                      : "black",
+                                      : "#ccc",
                                 }}
                               />
                             </IconButton>
-                            <HomeModal />
-                            <IconButton variant="outlined" color="neutral">
+                            <IconButton
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                            >
+                              <HomeModal />
+                            </IconButton>
+
+                            <IconButton
+                              variant="outlined"
+                              color="neutral"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                            >
                               <AddCircleOutlineOutlinedIcon />
                             </IconButton>
                           </Stack>
@@ -180,8 +240,35 @@ export function LatestList() {
                                 padding: "10px 15px 5px 15px",
                               }}
                             >
-                              {estate.estate_price}
+                              $ {estate.estate_price}
                             </Typography>
+                            <IconButton
+                              sx={{
+                                fontWeight: "md",
+                                ml: "auto",
+                                color: "text.secondary",
+                                "&:hover": { color: "danger.plainColor" },
+                              }}
+                            >
+                              <div
+                                ref={(element) =>
+                                  (refs.current[estate._id] = element)
+                                }
+                              >
+                                {estate.estate_likes}
+                              </div>
+                              <Favorite />
+                            </IconButton>
+                            <IconButton
+                              sx={{
+                                fontWeight: "md",
+                                color: "text.secondary",
+                                "&:hover": { color: "primary.plainColor" },
+                              }}
+                            >
+                              <Visibility />
+                              {estate.estate_views}
+                            </IconButton>
                           </CardContent>
                         </CardOverflow>
                       </Card>

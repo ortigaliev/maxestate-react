@@ -3,6 +3,7 @@ import { Definer } from "../lib/Definer";
 import { serverApi } from "../lib/config";
 import axios from "axios";
 import { Member } from "../../types/user";
+import { MemberLiken } from "../../types/others";
 
 class MemberApiServer {
   private readonly path: string;
@@ -58,6 +59,24 @@ class MemberApiServer {
       return logout_result == "success";
     } catch (err: any) {
       console.log(`ERROR ::: LogOutRequest ${err.message}`);
+      throw err;
+    }
+  }
+
+  public async memberLikeTarget(data: any) {
+    try {
+      const url = "/member-liken";
+      const result = await axios.post(this.path + url, data, {
+        withCredentials: true,
+      });
+      assert.ok(result?.data, Definer.general_err1);
+      assert.ok(result?.data?.state != "fail", result?.data?.message);
+
+      console.log("state:", result.data.data);
+      const like_result: MemberLiken = result.data.data;
+      return like_result;
+    } catch (err: any) {
+      console.log(`ERROR ::: memberLikeTarget ${err.message}`);
       throw err;
     }
   }
