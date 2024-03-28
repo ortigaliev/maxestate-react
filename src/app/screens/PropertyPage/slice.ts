@@ -13,9 +13,6 @@ const PropertyPageSlice = createSlice({
   name: "propertyPage",
   initialState,
   reducers: {
-    setTopSellingEstates: (state, action) => {
-      state.topSellingEstates = action.payload;
-    },
     setTargetEstates: (state, action) => {
       state.targetEstates = action.payload;
     },
@@ -32,7 +29,6 @@ const PropertyPageSlice = createSlice({
 });
 
 export const {
-  setTopSellingEstates,
   setTargetEstates,
   setEstatesByCategory,
   setChosenEstate,

@@ -3,10 +3,7 @@ import { AppRootState } from "../../../types/screen";
 
 const selectPropertyPage = (state: AppRootState) => state.propertyPage;
 
-export const retrieveTopSellingEstates = createSelector(
-  selectPropertyPage,
-  (PropertyPage) => PropertyPage.topSellingEstates
-);
+
 export const retrieveTargetEstates = createSelector(
   selectPropertyPage,
   (PropertyPage) => PropertyPage.targetEstates

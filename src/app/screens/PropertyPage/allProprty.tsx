@@ -1,5 +1,13 @@
-import React from "react";
-import { Box, Button, Container, Link, Stack } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Link,
+  Pagination,
+  PaginationItem,
+  Stack,
+} from "@mui/material";
 import Grid from "@mui/joy/Grid";
 import TextField from "@mui/material/TextField";
 
@@ -11,7 +19,7 @@ import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { AspectRatio, IconButton } from "@mui/joy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { FavoriteBorder } from "@mui/icons-material";
+import { Favorite, FavoriteBorder, Visibility } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import WindowIcon from "@mui/icons-material/Window";
 import ViewListIcon from "@mui/icons-material/ViewList";
@@ -21,10 +29,98 @@ import { HomeModal } from "../../components/modal/home-modal";
 import { AdvancedInfo } from "./advancedInfo";
 import BasicSelect from "./basicSelect";
 import "../../../css/property.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
+/* REDUX */
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { Estate } from "../../../types/estate";
+import { setChosenEstate, setTargetEstates } from "./slice";
+import { retrieveTargetEstates } from "./selector";
+import { Definer } from "../../lib/Definer";
+import assert from "assert";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+import { useParams } from "react-router-dom";
+import { EstateSearchObj } from "../../../types/others";
+import EstateApiServer from "../../apiServer/estateApiServer";
+import { serverApi } from "../../lib/config";
 
 const property_list = Array.from(Array(6).keys());
 
+/* REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setTargetEstates: (data: Estate[]) => dispach(setTargetEstates(data)),
+  setChosenEstate: (data: Estate) => dispach(setChosenEstate(data)),
+});
+
+// REDUX SELECTOR
+const targetEstatesRetriever = createSelector(
+  retrieveTargetEstates,
+  (targetEstates) => ({
+    targetEstates,
+  })
+);
+const chosenEstateRetriever = createSelector(
+  retrieveTargetEstates,
+  (chosenEstate) => ({
+    chosenEstate,
+  })
+);
+
 export function AllProperty() {
+  /**INITIALIZATIONS */
+  let { estate_id } = useParams<{ estate_id: string }>();
+  const { setTargetEstates, setChosenEstate } = actionDispatch(useDispatch());
+  const { targetEstates } = useSelector(targetEstatesRetriever);
+  const { chosenEstate } = useSelector(chosenEstateRetriever);
+  const refs: any = useRef([]);
+  const [chosenEstateId, setChosenEstateId] = useState<string>(estate_id);
+  const [targetEstateSearchObj, setTargetEstateSearchObj] =
+    useState<EstateSearchObj>({
+      page: 1,
+      limit: 8,
+      order: "createdAt",
+    });
+
+  useEffect(() => {
+    const estateService = new EstateApiServer();
+    estateService
+      .getTargetEstates(targetEstateSearchObj)
+      .then((data) => setTargetEstates(data))
+      .catch((err) => console.log(err));
+  }, [targetEstateSearchObj]);
+
+  const targetLikeHandler = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+      const memberServer = new MemberApiServer(),
+        like_result = await memberServer.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "estate",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "#ccc";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+      await sweetTopSmallSuccessAlert("success", 900, false);
+    } catch (err: any) {
+      console.log("targetLikeLatest, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
+
   return (
     <div className="all_property">
       <Container>
@@ -82,7 +178,8 @@ export function AllProperty() {
                 spacing={2}
                 sx={{ flexGrow: 1, paddingTop: "20px" }}
               >
-                {property_list.map((ele, index) => {
+                {targetEstates.map((estate: Estate, index) => {
+                  const image_path = `${serverApi}/${estate.estate_images[0]}`;
                   return (
                     <Grid key={index}>
                       <CssVarsProvider>
@@ -90,7 +187,7 @@ export function AllProperty() {
                           <CardOverflow>
                             <AspectRatio ratio="1.3">
                               <img
-                                src="/images/home/home.jpg"
+                                src={image_path}
                                 loading="lazy"
                                 alt="latestList"
                                 background-size="cover"
@@ -108,7 +205,7 @@ export function AllProperty() {
                               sx={{ marginBottom: "15px" }}
                               level="title-lg"
                             >
-                              Luxury Villa in HanKang Park
+                              {estate.estate_name}
                             </Typography>
                             <Stack
                               sx={{ marginBottom: "15px" }}
@@ -146,7 +243,18 @@ export function AllProperty() {
                                 color="neutral"
                                 sx={{}}
                               >
-                                <FavoriteBorder />
+                                <Favorite
+                                  onClick={(e) =>
+                                    targetLikeHandler(e, estate._id)
+                                  }
+                                  style={{
+                                    fill:
+                                      estate.me_liked &&
+                                      estate.me_liked[0]?.my_favorite
+                                        ? "red"
+                                        : "#ccc",
+                                  }}
+                                />
                               </IconButton>
                               <HomeModal />
                               <IconButton variant="outlined" color="neutral">
@@ -166,8 +274,32 @@ export function AllProperty() {
                                   padding: "10px 15px 5px 15px",
                                 }}
                               >
-                                340.000$
+                                $ {estate.estate_price}
                               </Typography>
+                              <Box ml="auto" display="flex" gap={1}>
+                                <IconButton
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                  }}
+                                >
+                                  <div
+                                    ref={(element) =>
+                                      (refs.current[estate._id] = element)
+                                    }
+                                  >
+                                    {estate.estate_likes}
+                                  </div>
+                                  <Favorite sx={{ ml: 1 }} />
+                                </IconButton>
+                                <IconButton
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                  }}
+                                >
+                                  <Visibility sx={{ mr: 1 }} />
+                                  {estate.estate_views}
+                                </IconButton>
+                              </Box>
                             </CardContent>
                           </CardOverflow>
                         </Card>
@@ -204,6 +336,22 @@ export function AllProperty() {
           </Stack>
 
           {/* PAGINATION */}
+          <Box ml="auto" mr="auto" mt={2}>
+            <Pagination
+              count={3}
+              page={1}
+              renderItem={(item) => (
+                <PaginationItem
+                  components={{
+                    previous: ArrowBackIcon,
+                    next: ArrowForwardIcon,
+                  }}
+                  {...item}
+                  color={"secondary"}
+                />
+              )}
+            />
+          </Box>
         </Stack>
       </Container>
     </div>
