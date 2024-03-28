@@ -4,7 +4,6 @@ import "../css/navbar.css";
 import "../css/footer.css";
 /* REACT ROUTER DOM */
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { AgencyPage } from "./screens/AgencyPage";
 import { PropertyPage } from "./screens/PropertyPage";
 import { BlogPage } from "./screens/BlogPage"; //Community
 import { ContactPage } from "./screens/ContactPage";
@@ -62,7 +61,7 @@ function App() {
   const handleSignUpClose = () => setSignUpOpen(false);
   const handleLoginOpen = () => setLoginOpen(true);
   const handleLoginClose = () => setLoginOpen(false);
-  
+
   const handleLogOutClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -93,7 +92,7 @@ function App() {
           handleLogOutRequest={handleLogOutRequest}
           verifiedMemberData={verifiedMemberData}
         />
-      ) : main_path.includes("/agency") ? (
+      ) /* : main_path.includes("/agency") ? (
         <NavbarAgency
           setPath={setPath}
           anchorEl={anchorEl}
@@ -105,7 +104,7 @@ function App() {
           handleLogOutRequest={handleLogOutRequest}
           verifiedMemberData={verifiedMemberData}
         />
-      ) : (
+      ) */ : (
         <NavbarOthers
           setPath={setPath}
           anchorEl={anchorEl}
@@ -119,9 +118,9 @@ function App() {
         />
       )}
       <Switch>
-        <Route path="/agency">
+       {/*  <Route path="/agency">
           <AgencyPage />
-        </Route>
+        </Route> */}
         <Route path="/estate">
           <PropertyPage />
         </Route>

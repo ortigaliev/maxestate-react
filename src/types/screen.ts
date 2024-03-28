@@ -5,7 +5,7 @@ import { Agency } from "./user";
 /* React App State */
 export interface AppRootState {
   homePage: HomePageState;
-  agencyPage: AgencyPageState;
+  propertyPage: PropertyPageState;
 }
 
 /* HomePage */
@@ -17,11 +17,11 @@ export interface HomePageState {
   newsBoBlogs: BoBlog[];
 }
 
-/* Agency Page */
-export interface AgencyPageState {
-  targetAgencies: Agency[];
-  randomAgencies: Agency[];
-  chosenAgency: Agency | null;
+/* Propert Page */
+export interface PropertyPageState {
+  topSellingEstates: Estate[];
   targetEstates: Estate[];
+  estatesByCategory: Estate[];
   chosenEstate: Estate | null;
+  memberReviews: null,
 }

@@ -34,11 +34,11 @@ export function NavbarOthers(props: any) {
             <Box className="others_hover-line hover-line">
               <NavLink to="/">Home</NavLink>
             </Box>
-            <Box className="others_hover-line hover-line">
+            {/* <Box className="others_hover-line hover-line">
               <NavLink to="/agency" activeClassName="underline">
                 Agency
               </NavLink>
-            </Box>
+            </Box> */}
             <Box className="agency_hover-line hover-line">
               <NavLink to="/estate" activeClassName="underline">
                 Property
@@ -151,8 +151,7 @@ export function NavbarOthers(props: any) {
         </Stack>
       </Container>
       <div className="format_others_header">
-        <Box className="format_others_img">
-        </Box>
+        <Box className="format_others_img"></Box>
       </div>
     </div>
   );

@@ -41,11 +41,11 @@ export function NavbarHome(props: any) {
                 </NavLink>
               </Box>
 
-              <Box className="hover-line">
+             {/*  <Box className="hover-line">
                 <NavLink to="/agency" activeClassName="underline">
                   Agency
                 </NavLink>
-              </Box>
+              </Box> */}
 
               <Box className="hover-line">
                 <NavLink to="/estate" activeClassName="underline">

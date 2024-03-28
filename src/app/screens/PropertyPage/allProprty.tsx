@@ -18,7 +18,6 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { HomeModal } from "../../components/modal/home-modal";
-import { AgencyPagination } from "../AgencyPage/agencyPagination";
 import { AdvancedInfo } from "./advancedInfo";
 import BasicSelect from "./basicSelect";
 import "../../../css/property.css";
@@ -205,7 +204,6 @@ export function AllProperty() {
           </Stack>
 
           {/* PAGINATION */}
-          <AgencyPagination />
         </Stack>
       </Container>
     </div>
