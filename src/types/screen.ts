@@ -1,5 +1,6 @@
 import { BoBlog } from "./boBlog";
 import { Estate } from "./estate";
+import { Order } from "./order";
 import { Agency } from "./user";
 
 /* React App State */
@@ -23,4 +24,11 @@ export interface PropertyPageState {
   estatesByCategory: Estate[];
   chosenEstate: Estate | null;
   estateReviews: null;
+}
+
+/**ORDERS PAGE */
+export interface OrdersPageState {
+  pausedOrders: Order[];
+  processOrders: Order[];
+  finishedOrders: Order[];
 }
