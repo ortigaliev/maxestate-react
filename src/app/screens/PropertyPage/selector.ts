@@ -3,10 +3,9 @@ import { AppRootState } from "../../../types/screen";
 
 const selectPropertyPage = (state: AppRootState) => state.propertyPage;
 
-
-export const retrieveTargetEstates = createSelector(
+export const retrieveAllEstates = createSelector(
   selectPropertyPage,
-  (PropertyPage) => PropertyPage.targetEstates
+  (PropertyPage) => PropertyPage.allEstates
 );
 export const retrieveEstatesByCategory = createSelector(
   selectPropertyPage,
@@ -16,7 +15,7 @@ export const retrieveChosenEstate = createSelector(
   selectPropertyPage,
   (PropertyPage) => PropertyPage.chosenEstate
 );
-export const retrieveMemberReviews = createSelector(
+export const retrieveEstateReviews = createSelector(
   selectPropertyPage,
-  (PropertyPage) => PropertyPage.memberReviews
+  (PropertyPage) => PropertyPage.estateReviews
 );

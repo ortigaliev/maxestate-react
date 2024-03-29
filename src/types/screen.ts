@@ -19,9 +19,8 @@ export interface HomePageState {
 
 /* Propert Page */
 export interface PropertyPageState {
-  topSellingEstates: Estate[];
-  targetEstates: Estate[];
+  allEstates: Estate[];
   estatesByCategory: Estate[];
   chosenEstate: Estate | null;
-  memberReviews: null,
+  estateReviews: null;
 }

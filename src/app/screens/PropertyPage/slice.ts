@@ -2,19 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 import { PropertyPageState } from "../../../types/screen";
 
 const initialState: PropertyPageState = {
-  topSellingEstates: [],
-  targetEstates: [],
+  allEstates: [],
   estatesByCategory: [],
   chosenEstate: null,
-  memberReviews: null,
+  estateReviews: null,
 };
 
 const PropertyPageSlice = createSlice({
   name: "propertyPage",
   initialState,
   reducers: {
-    setTargetEstates: (state, action) => {
-      state.targetEstates = action.payload;
+    setAllEstates: (state, action) => {
+      state.allEstates = action.payload;
     },
     setEstatesByCategory: (state, action) => {
       state.estatesByCategory = action.payload;
@@ -22,17 +21,17 @@ const PropertyPageSlice = createSlice({
     setChosenEstate: (state, action) => {
       state.chosenEstate = action.payload;
     },
-    setMemberReviews: (state, action) => {
-      state.memberReviews = action.payload;
+    setEstateReviews: (state, action) => {
+      state.estateReviews = action.payload;
     },
   },
 });
 
 export const {
-  setTargetEstates,
+  setAllEstates,
   setEstatesByCategory,
   setChosenEstate,
-  setMemberReviews,
+  setEstateReviews,
 } = PropertyPageSlice.actions;
 
 const PropertyPageReducer = PropertyPageSlice.reducer;

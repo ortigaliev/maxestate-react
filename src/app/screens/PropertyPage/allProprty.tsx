@@ -37,8 +37,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { Dispatch } from "@reduxjs/toolkit";
 import { Estate } from "../../../types/estate";
-import { setChosenEstate, setTargetEstates } from "./slice";
-import { retrieveTargetEstates } from "./selector";
+import { setAllEstates, setChosenEstate } from "./slice";
+import { retrieveAllEstates, retrieveChosenEstate } from "./selector";
 import { Definer } from "../../lib/Definer";
 import assert from "assert";
 import MemberApiServer from "../../apiServer/memberApiServer";
@@ -46,28 +46,30 @@ import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../lib/sweetAlert";
-import { useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { EstateSearchObj } from "../../../types/others";
 import EstateApiServer from "../../apiServer/estateApiServer";
 import { serverApi } from "../../lib/config";
+import HomeIcon from "@mui/icons-material/Home";
+import CloseIcon from "@mui/icons-material/Close";
 
 const property_list = Array.from(Array(6).keys());
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
-  setTargetEstates: (data: Estate[]) => dispach(setTargetEstates(data)),
+  setAllEstates: (data: Estate[]) => dispach(setAllEstates(data)),
   setChosenEstate: (data: Estate) => dispach(setChosenEstate(data)),
 });
 
 // REDUX SELECTOR
-const targetEstatesRetriever = createSelector(
-  retrieveTargetEstates,
-  (targetEstates) => ({
-    targetEstates,
+const allEstatesRetriever = createSelector(
+  retrieveAllEstates,
+  (allEstates) => ({
+    allEstates,
   })
 );
 const chosenEstateRetriever = createSelector(
-  retrieveTargetEstates,
+  retrieveChosenEstate,
   (chosenEstate) => ({
     chosenEstate,
   })
@@ -75,26 +77,59 @@ const chosenEstateRetriever = createSelector(
 
 export function AllProperty() {
   /**INITIALIZATIONS */
+  const history = useHistory();
+  const pathname = useLocation();
   let { estate_id } = useParams<{ estate_id: string }>();
-  const { setTargetEstates, setChosenEstate } = actionDispatch(useDispatch());
-  const { targetEstates } = useSelector(targetEstatesRetriever);
+  const { setAllEstates, setChosenEstate } = actionDispatch(useDispatch());
+  const { allEstates } = useSelector(allEstatesRetriever);
   const { chosenEstate } = useSelector(chosenEstateRetriever);
-  const refs: any = useRef([]);
+
   const [chosenEstateId, setChosenEstateId] = useState<string>(estate_id);
-  const [targetEstateSearchObj, setTargetEstateSearchObj] =
-    useState<EstateSearchObj>({
+  const [allEstateSearchObj, setAllEstateSearchObj] = useState<EstateSearchObj>(
+    {
       page: 1,
       limit: 8,
       order: "createdAt",
-    });
+    }
+  );
+
+  const refs: any = useRef([]);
 
   useEffect(() => {
     const estateService = new EstateApiServer();
     estateService
-      .getTargetEstates(targetEstateSearchObj)
-      .then((data) => setTargetEstates(data))
+      .getTargetEstates(allEstateSearchObj)
+      .then((data) => setAllEstates(data))
       .catch((err) => console.log(err));
-  }, [targetEstateSearchObj]);
+  }, [allEstateSearchObj]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [pathname]);
+
+  /* HANDLERS */
+  const chosenEstateHandler = (id: string) => {
+    history.push(`estate/${id}`);
+  };
+
+  const searchCollectionHandler = (collection: string) => {
+    allEstateSearchObj.page = 1;
+    allEstateSearchObj.estate_collection = collection;
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
+  const searchOrderHandler = (order: string) => {
+    allEstateSearchObj.page = 1;
+    allEstateSearchObj.order = order;
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
+
+  const handlePaginationChange = (event: any, value: number) => {
+    allEstateSearchObj.page = value;
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
 
   const targetLikeHandler = async (e: any, id: string) => {
     try {
@@ -129,6 +164,33 @@ export function AllProperty() {
             className="all_property_grid"
             sx={{ width: "880px", m: "15px 15px" }}
           >
+            <Box
+              className="dir_link"
+              mb={2}
+              sx={{ display: "flex", flexDirection: "row", gap: 3 }}
+            >
+              <Box>
+                <Link
+                  href="/"
+                  underline="none"
+                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                >
+                  <HomeIcon />
+                  Home
+                </Link>
+              </Box>
+
+              <Box>
+                <Link
+                  href="/"
+                  underline="none"
+                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                >
+                  All Estate
+                  <CloseIcon />
+                </Link>
+              </Box>
+            </Box>
             {/* MENU BAR AND DEFAULT */}
             <Stack
               width="820px"
@@ -178,12 +240,16 @@ export function AllProperty() {
                 spacing={2}
                 sx={{ flexGrow: 1, paddingTop: "20px" }}
               >
-                {targetEstates.map((estate: Estate, index) => {
+                {allEstates.map((estate: Estate, index) => {
                   const image_path = `${serverApi}/${estate.estate_images[0]}`;
                   return (
                     <Grid key={index}>
                       <CssVarsProvider>
-                        <Card variant="outlined" sx={{ width: 400 }}>
+                        <Card
+                          variant="outlined"
+                          sx={{ width: 400, cursor: "pointer" }}
+                          onClick={() => chosenEstateHandler(estate._id)}
+                        >
                           <CardOverflow>
                             <AspectRatio ratio="1.3">
                               <img
@@ -241,7 +307,9 @@ export function AllProperty() {
                               <IconButton
                                 variant="outlined"
                                 color="neutral"
-                                sx={{}}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
                               >
                                 <Favorite
                                   onClick={(e) =>
@@ -256,8 +324,20 @@ export function AllProperty() {
                                   }}
                                 />
                               </IconButton>
-                              <HomeModal />
-                              <IconButton variant="outlined" color="neutral">
+                              <IconButton
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
+                              >
+                                <HomeModal />
+                              </IconButton>
+                              <IconButton
+                                variant="outlined"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
+                                color="neutral"
+                              >
                                 <AddCircleOutlineOutlinedIcon />
                               </IconButton>
                             </Stack>
