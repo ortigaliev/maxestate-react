@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import {
   Box,
@@ -50,12 +50,119 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import HomeIcon from "@mui/icons-material/Home";
+import CloseIcon from "@mui/icons-material/Close";
 
+import { useParams } from "react-router-dom";
+import { Estate } from "../../../types/estate";
+import { useDispatch, useSelector } from "react-redux";
+import { retrieveChosenEstate } from "../PropertyPage/selector";
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setChosenEstate } from "../PropertyPage/slice";
+import { useEffect } from "react";
+import EstateApiServer from "../../apiServer/estateApiServer";
+import assert from "assert";
+import { Definer } from "../../lib/Definer";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+
+// REDUX SLICE
+const actionDispatch = (dispach: Dispatch) => ({
+  setChosenEstate: (data: Estate) => dispach(setChosenEstate(data)),
+});
+// REDUX SELECTOR
+const chosenEstateRetriever = createSelector(
+  retrieveChosenEstate,
+  (chosenEstate) => ({
+    chosenEstate,
+  })
+);
 const popular_list = Array.from(Array(4).keys());
 
 export function ChosenProperty() {
+  /* INITIALIZATION */
+  let { property_id } = useParams<{ property_id: string }>();
+  const { setChosenEstate } = actionDispatch(useDispatch());
+  const { chosenEstate } = useSelector(chosenEstateRetriever);
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+  const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+
+  const estateRelatedProcess = async () => {
+    try {
+      const estateService = new EstateApiServer();
+      const estate: Estate = await estateService.getChosenEstate(property_id);
+      setChosenEstate(estate);
+    } catch (err) {
+      console.log("estateRelatedProcess, ERROR:", err);
+    }
+  };
+  useEffect(() => {
+    estateRelatedProcess().then();
+  }, [productRebuild]);
+
+  /**HANDLERS */
+  const targetLikeProduct = async (e: any) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+      const memberService = new MemberApiServer(),
+        like_result = await memberService.memberLikeTarget({
+          like_ref_id: e.target.id,
+          group_type: "product",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      await sweetTopSmallSuccessAlert("success", 700, false);
+      setProductRebuild(new Date());
+    } catch (err: any) {
+      console.log("targetLikeProduct, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
   return (
     <div>
+      <Container>
+        <Box
+          className="dir_link"
+          mt={2}
+          mb={2}
+          sx={{ display: "flex", flexDirection: "row", gap: 3 }}
+        >
+          <Box>
+            <Link
+              href="/"
+              underline="none"
+              sx={{ display: "flex", alignItems: "center", gap: 1 }}
+            >
+              <HomeIcon />
+              Home
+            </Link>
+          </Box>
+          <Box>
+            <Link
+              href="/estate"
+              underline="none"
+              sx={{ display: "flex", alignItems: "center", gap: 1 }}
+            >
+              Estate
+            </Link>
+          </Box>
+          <Box>
+            <Link
+              href="/estate"
+              underline="none"
+              sx={{ display: "flex", alignItems: "center", gap: 1 }}
+            >
+              Property
+              <CloseIcon />
+            </Link>
+          </Box>
+        </Box>
+      </Container>
       <Stack height={"500px"}>
         <Swiper
           navigation={true}
@@ -64,27 +171,22 @@ export function ChosenProperty() {
           loop={true}
         >
           <SwiperSlide>
-            {" "}
-            <img src="/images/prop/chosen_prop1.jpg" alt="Chosen_img" />{" "}
+            <img src="/images/prop/chosen_prop1.jpg" alt="Chosen_img" />
           </SwiperSlide>
           <SwiperSlide>
-            {" "}
-            <img src="/images/prop/chosen_prop2.jpg" alt="Chosen_img" />{" "}
+            <img src="/images/prop/chosen_prop2.jpg" alt="Chosen_img" />
           </SwiperSlide>
           <SwiperSlide>
-            {" "}
-            <img src="/images/prop/chosen_prop3.jpg" alt="Chosen_img" />{" "}
+            <img src="/images/prop/chosen_prop3.jpg" alt="Chosen_img" />
           </SwiperSlide>
           <SwiperSlide>
-            {" "}
-            <img src="/images/prop/chosen_prop4.jpg" alt="Chosen_img" />{" "}
+            <img src="/images/prop/chosen_prop4.jpg" alt="Chosen_img" />
           </SwiperSlide>
         </Swiper>
       </Stack>
       <Container>
         <Stack flexDirection={"row"} pt={10} pb={10}>
           <Stack width="850px">
-            {" "}
             <Box sx={{ display: "flex", alignItems: "center", mb: 8 }}>
               <Typography
                 className="card_sub_title"
@@ -110,7 +212,7 @@ export function ChosenProperty() {
               variant="h1"
               sx={{ p: "3px 0", fontWeight: 700 }}
             >
-              Luxury villa in Hang-gang Seoul
+              {chosenEstate?.estate_name}
             </Typography>
             <Typography
               className="card_sub_title"
@@ -154,14 +256,7 @@ export function ChosenProperty() {
                 mr: 5,
               }}
             >
-              Massa tempor nec feugiat nisl pretium. Egestas fringilla phasellus
-              faucibus scelerisque eleifend donec Porta nibh venenatis cras sed
-              felis eget velit aliquet. Neque volutpat ac tincidunt vitae semper
-              quis lectus. Turpis in eu mi bibendum neque egestas congue
-              quisque. Sed elementum tempus egestas sed sed risus pretium quam.
-              Dignissim sodales ut eu sem. Nibh mauris cursus mattis molestee
-              iaculis at erat pellentesque. Id interdum velit laoreet id donec
-              ultrices tincidunt.
+              {chosenEstate?.estate_description}
             </Typography>
             <Typography
               className="card_sub_title"

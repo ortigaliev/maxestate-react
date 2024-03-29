@@ -24,6 +24,7 @@ import { setTrendEstate } from "./slice";
 import { retrieveTrendEstate } from "./selector";
 import EstateApiServer from "../../apiServer/estateApiServer";
 import { serverApi } from "../../lib/config";
+import { useHistory } from "react-router-dom";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -46,6 +47,7 @@ const iconSx = {
 
 export function FeaturedList() {
   //INITIALIZATION
+  const history = useHistory();
   const { setTrendEstate } = actionDispatch(useDispatch());
   const { trendEstate } = useSelector(trendEstateRetriever);
   useEffect(() => {
@@ -55,6 +57,12 @@ export function FeaturedList() {
       .then((data) => setTrendEstate(data))
       .catch((err) => console.log(err));
   }, []);
+
+  /* HANDLERS */
+  const chosenEstateHandler = (id: string) => {
+    history.push(`/estate/${id}`);
+  };
+
   return (
     <div className="featured_frame" style={{ backgroundColor: "#fff" }}>
       <Container>
@@ -83,7 +91,8 @@ export function FeaturedList() {
                       key={estate._id}
                       className="featured_card_item"
                       variant="outlined"
-                      sx={{ width: 410, mr: 3 }}
+                      sx={{ width: 410, mr: 3, cursor: "pointer" }}
+                      onClick={() => chosenEstateHandler(estate._id)}
                     >
                       <CardOverflow>
                         <AspectRatio ratio="1.3">
@@ -277,7 +286,12 @@ export function FeaturedList() {
                       <CardOverflow variant="soft" sx={{ bgcolor: "#fff" }}>
                         <Divider inset="context" />
 
-                        <CardContent orientation="horizontal">
+                        <CardContent
+                          orientation="horizontal"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
                           <Box
                             sx={{
                               display: "flex",

@@ -29,6 +29,23 @@ class EstateApiServer {
       throw err;
     }
   }
+
+  async getChosenEstate(estate_id: string) {
+    try {
+      const url = `/estate/${estate_id}`,
+        result = await axios.get(this.path + url, {
+          withCredentials: true,
+        });
+      assert.ok(result, Definer.general_err1);
+
+      console.log("state", result.data.state);
+      const propert: Estate = result.data.data;
+      return propert;
+    } catch (err: any) {
+      console.log(`ERROR ::: getChosenEstate ${err.message}`);
+      throw err;
+    }
+  }
 }
 
 export default EstateApiServer;
