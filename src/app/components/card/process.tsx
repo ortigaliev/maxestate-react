@@ -13,9 +13,22 @@ import Typography from "@mui/material/Typography";
 import TabPanel from "@material-ui/lab/TabPanel";
 
 import React from "react";
+//REDUX
+import { useSelector } from "react-redux";
+import { retrieveProcessOrders } from "../../screens/Card/selector";
+import { createSelector } from "reselect";
+
+// REDUX SELECTOR
+const processOrdersRetriever = createSelector(
+  retrieveProcessOrders,
+  (processOrders) => ({
+    processOrders,
+  })
+);
 
 export default function Process() {
-
+  /**INITIALIZATIONS */
+  //const { processOrders } = useSelector(processOrdersRetriever);
   return (
     <div>
       <TabPanel value={"2"}>

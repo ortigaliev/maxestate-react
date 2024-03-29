@@ -4,17 +4,39 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Paused from "../../components/card/paused";
 import Process from "../../components/card/process";
 import Finished from "../../components/card/finished";
 
+//REDUX
+import { useDispatch } from "react-redux";
+
+import { createSelector } from "reselect";
+import { serverApi } from "../../lib/config";
+import { Dispatch } from "@reduxjs/toolkit";
+import {
+  setPausedOrders,
+  setProcessOrders,
+  setFinishedOrders,
+} from "../Card/slice";
+import { useHistory, useParams } from "react-router-dom";
+import { Order } from "../../../types/order";
+
+// REDUX SLICE
+const actionDispatch = (dispach: Dispatch) => ({
+  setPausedOrders: (data: Order[]) => dispach(setPausedOrders(data)),
+  setProcessOrders: (data: Order[]) => dispach(setProcessOrders(data)),
+  setFinishedOrders: (data: Order[]) => dispach(setFinishedOrders(data)),
+});
 
 export default function OrderCardExample() {
-
-
   // INITIALIZATIONS
   const [value, setValue] = useState("1");
+  const { setPausedOrders, setProcessOrders, setFinishedOrders } =
+    actionDispatch(useDispatch());
+
+  useEffect(() => {}, []);
 
   // HANDLERS
   const handleChange = (event: any, newValue: string) => {

@@ -4,9 +4,22 @@ import Typography from "@mui/material/Typography";
 import TabPanel from "@material-ui/lab/TabPanel";
 
 import React from "react";
+//REDUX
+import { useSelector } from "react-redux";
+import { retrieveFinishedOrders } from "../../screens/Card/selector";
+import { createSelector } from "reselect";
 
+// REDUX SELECTOR
+const finishedOrdersRetriever = createSelector(
+  retrieveFinishedOrders,
+  (finishedOrders) => ({
+    finishedOrders,
+  })
+);
 
 export default function Finished() {
+  /**INITIALIZATIONS */
+  //const { finishedOrders } = useSelector(finishedOrdersRetriever);
   return (
     <div>
       <TabPanel value={"3"}>

@@ -19,10 +19,28 @@ import TabPanel from "@material-ui/lab/TabPanel";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
+//REDUX
+import { useSelector } from "react-redux";
+import { retrievePausedOrders } from "../../screens/Card/selector";
+import { createSelector } from "reselect";
+import { serverApi } from "../../lib/config";
+import { Dispatch } from "@reduxjs/toolkit";
+import { useHistory, useParams } from "react-router-dom";
+
+// REDUX SELECTOR
+const pausedOrdersRetriever = createSelector(
+  retrievePausedOrders,
+  (pausedOrders) => ({
+    pausedOrders,
+  })
+);
+
 import React, { useState } from "react";
 const order_card_list = Array.from(Array(4).keys());
 
 export default function Paused() {
+  /**INITIALIZATIONS */
+  //const { pausedOrders } = useSelector(pausedOrdersRetriever);
   const [count, setCount] = useState(0);
   const handleIncrement = () => setCount(count + 1);
   const handleDecrement = () => setCount(count - 1);

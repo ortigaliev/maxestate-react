@@ -5,6 +5,7 @@ import { Agency } from "./user";
 
 /* React App State */
 export interface AppRootState {
+  ordersPage: any;
   homePage: HomePageState;
   propertyPage: PropertyPageState;
 }
