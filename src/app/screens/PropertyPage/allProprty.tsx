@@ -333,13 +333,12 @@ export function AllProperty(props: any) {
                               <IconButton
                                 variant="outlined"
                                 onClick={(e) => {
+                                  props.onAdd(estate);
                                   e.stopPropagation();
                                 }}
                                 color="neutral"
                               >
-                                <AddCircleOutlineOutlinedIcon
-                                  onClick={(e) => props.onAdd(estate)}
-                                />
+                                <AddCircleOutlineOutlinedIcon />
                               </IconButton>
                             </Stack>
                           </CardContent>

@@ -78,7 +78,7 @@ export function NavbarOthers(props: any) {
               </Box>
             ) : null}
 
-            <Basket />
+            <Basket cartItems={props.cartItems} />
 
             {!props.verifiedMemberData ? (
               <Box>

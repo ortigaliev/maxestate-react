@@ -86,6 +86,7 @@ function App() {
   };
 
   const onAdd = (estate: Estate) => {
+    console.log("estate::", estate);
     const exist: any = cartItems?.find(
       (item: CartItem) => item._id === estate._id
     );

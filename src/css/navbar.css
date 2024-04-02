@@ -236,7 +236,7 @@
 .basket_frame .cancel_btn {
   position: absolute;
   top: 33%;
-  right: 5%;
+  right: 0%;
   cursor: pointer;
 }
 
@@ -247,13 +247,14 @@
 
   display: flex;
   flex-direction: row;
+  justify-content: "space-between";
   align-items: center;
   border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .to_order_box .price_text {
   margin-left: 27px;
-  margin-right: 10px;
+  margin-right: 40px;
   width: 200px;
   display: flex;
   font-family: "Poppins";
