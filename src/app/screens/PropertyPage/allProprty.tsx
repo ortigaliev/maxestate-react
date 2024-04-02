@@ -53,8 +53,6 @@ import { serverApi } from "../../lib/config";
 import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
 
-const property_list = Array.from(Array(6).keys());
-
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
   setAllEstates: (data: Estate[]) => dispach(setAllEstates(data)),
@@ -75,7 +73,7 @@ const chosenEstateRetriever = createSelector(
   })
 );
 
-export function AllProperty() {
+export function AllProperty(props: any) {
   /**INITIALIZATIONS */
   const history = useHistory();
   const pathname = useLocation();
@@ -89,7 +87,7 @@ export function AllProperty() {
     {
       page: 1,
       limit: 8,
-      order: "createdAt",
+      order: "estate_views",
     }
   );
 
@@ -113,9 +111,10 @@ export function AllProperty() {
   /* HANDLERS */
   const chosenEstateHandler = (id: string) => {
     history.push(`estate/${id}`);
+    window.scrollTo(0, 0);
   };
 
-  const searchCollectionHandler = (collection: string) => {
+  /*  const searchCollectionHandler = (collection: string) => {
     allEstateSearchObj.page = 1;
     allEstateSearchObj.estate_collection = collection;
     setAllEstateSearchObj({ ...allEstateSearchObj });
@@ -124,7 +123,7 @@ export function AllProperty() {
     allEstateSearchObj.page = 1;
     allEstateSearchObj.order = order;
     setAllEstateSearchObj({ ...allEstateSearchObj });
-  };
+  }; */
 
   const handlePaginationChange = (event: any, value: number) => {
     allEstateSearchObj.page = value;
@@ -338,7 +337,9 @@ export function AllProperty() {
                                 }}
                                 color="neutral"
                               >
-                                <AddCircleOutlineOutlinedIcon />
+                                <AddCircleOutlineOutlinedIcon
+                                  onClick={(e) => props.onAdd(estate)}
+                                />
                               </IconButton>
                             </Stack>
                           </CardContent>

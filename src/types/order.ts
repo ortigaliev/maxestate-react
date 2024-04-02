@@ -13,7 +13,7 @@ export interface OrderItem {
 export interface Order {
   _id: string;
   order_total_amount: number;
-  order_delivery_cost: number;
+  order_insurance_cost: number;
   order_status: string;
   mb_id: string;
   createdAt: Date;

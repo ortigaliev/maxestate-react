@@ -26,6 +26,8 @@ import {
 import { Definer } from "./lib/Definer";
 import { Member } from "../types/user";
 import "../app/apiServer/verify";
+import { CartItem } from "../types/others";
+import { Estate } from "../types/estate";
 
 function App() {
   /* INITIALIZATION */
@@ -41,6 +43,10 @@ function App() {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const cartJson: any = localStorage.getItem("cart_data");
+  const current_cart: CartItem[] = JSON.parse(cartJson) ?? [];
+  const [cartItems, setCartItems] = useState<CartItem[]>(current_cart);
 
   useEffect(() => {
     console.log("=== useEffect: App ===");
@@ -78,6 +84,36 @@ function App() {
       sweetFailureProvider(Definer.general_err1);
     }
   };
+
+  const onAdd = (estate: Estate) => {
+    const exist: any = cartItems?.find(
+      (item: CartItem) => item._id === estate._id
+    );
+    if (exist) {
+      const cart_updated = cartItems?.map((item: CartItem) =>
+        item._id === estate._id
+          ? { ...exist, quantity: exist.quantity + 1 }
+          : item
+      );
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    } else {
+      const new_item: CartItem = {
+        _id: estate._id,
+        quantity: 1,
+        name: estate.estate_name,
+        price: estate.estate_price,
+        image: estate.estate_images[0],
+      };
+      const cart_updated = [...cartItems, { ...new_item }];
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    }
+  };
+  const onRemove = () => {};
+  const onDelete = () => {};
+  const onDeleteAll = () => {};
+
   return (
     <Router>
       {main_path == "/" ? (
@@ -91,8 +127,7 @@ function App() {
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
           verifiedMemberData={verifiedMemberData}
-        />
-      ) /* : main_path.includes("/agency") ? (
+        /> /* : main_path.includes("/agency") ? (
         <NavbarAgency
           setPath={setPath}
           anchorEl={anchorEl}
@@ -104,7 +139,8 @@ function App() {
           handleLogOutRequest={handleLogOutRequest}
           verifiedMemberData={verifiedMemberData}
         />
-      ) */ : (
+      ) */
+      ) : (
         <NavbarOthers
           setPath={setPath}
           anchorEl={anchorEl}
@@ -115,14 +151,15 @@ function App() {
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
           verifiedMemberData={verifiedMemberData}
+          cartItems={cartItems}
         />
       )}
       <Switch>
-       {/*  <Route path="/agency">
+        {/*  <Route path="/agency">
           <AgencyPage />
         </Route> */}
         <Route path="/estate">
-          <PropertyPage />
+          <PropertyPage onAdd={onAdd} />
         </Route>
         <Route path="/blog">
           <BlogPage />
@@ -136,7 +173,7 @@ function App() {
         <Route path="/login">
           <LoginPage />
         </Route>
-        <Route path="/card">
+        <Route path="/order">
           <OrderCard />
         </Route>
         <Route path="/">

@@ -75,15 +75,13 @@ export function NavbarAgency(props: any) {
                 aria-expanded={undefined}
                 //onClick={handleClick}
               />
-              <Badge badgeContent={3} color="secondary">
+              {props.verifiedMemberData ? (
                 <Box className="hover-line">
-                  <Badge badgeContent={3} color="secondary">
-                    <NavLink to="/card" activeClassName="underline">
-                      <ShoppingCartIcon />
-                    </NavLink>
-                  </Badge>
+                  <NavLink to="/order" activeClassName="underline">
+                    Order
+                  </NavLink>
                 </Box>
-              </Badge>
+              ) : null}
             </Box>
             {!props.verifiedMemberData ? (
               <Box>

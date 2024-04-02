@@ -65,17 +65,17 @@ export function NavbarOthers(props: any) {
                 Contact
               </NavLink>
             </Box>
-            <Box className="hover-line">
-              <Badge badgeContent={3} color="secondary">
+            {props.verifiedMemberData ? (
+              <Box className="hover-line">
                 <NavLink
-                  to="/card"
+                  to="/order"
                   activeClassName="underline"
                   style={{ color: "#000" }}
                 >
-                  <ShoppingCartIcon />
+                  Order
                 </NavLink>
-              </Badge>
-            </Box>
+              </Box>
+            ) : null}
 
             {!props.verifiedMemberData ? (
               <Box>

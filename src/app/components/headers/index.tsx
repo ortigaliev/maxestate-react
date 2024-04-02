@@ -41,7 +41,7 @@ export function NavbarHome(props: any) {
                 </NavLink>
               </Box>
 
-             {/*  <Box className="hover-line">
+              {/*  <Box className="hover-line">
                 <NavLink to="/agency" activeClassName="underline">
                   Agency
                 </NavLink>
@@ -69,13 +69,13 @@ export function NavbarHome(props: any) {
                   Contact
                 </NavLink>
               </Box>
-              <Box className="hover-line">
-                <Badge badgeContent={3} color="secondary">
-                  <NavLink to="/card" activeClassName="underline">
-                    <ShoppingCartIcon />
+              {props.verifiedMemberData ? (
+                <Box className="hover-line">
+                  <NavLink to="/order" activeClassName="underline">
+                    Order
                   </NavLink>
-                </Badge>
-              </Box>
+                </Box>
+              ) : null}
 
               {!props.verifiedMemberData ? (
                 <Box>

@@ -11,7 +11,6 @@ import Finished from "../../components/card/finished";
 
 //REDUX
 import { useDispatch } from "react-redux";
-
 import { createSelector } from "reselect";
 import { serverApi } from "../../lib/config";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -30,11 +29,13 @@ const actionDispatch = (dispach: Dispatch) => ({
   setFinishedOrders: (data: Order[]) => dispach(setFinishedOrders(data)),
 });
 
-export default function OrderCardExample() {
+export default function OrderCardExample(props: any) {
   // INITIALIZATIONS
   const [value, setValue] = useState("1");
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
+
+  const { cartItems } = props;
 
   useEffect(() => {}, []);
 

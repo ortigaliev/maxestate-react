@@ -18,6 +18,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import TabPanel from "@material-ui/lab/TabPanel";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import React, { useState } from "react";
 
 //REDUX
 import { useSelector } from "react-redux";
@@ -35,7 +36,6 @@ const pausedOrdersRetriever = createSelector(
   })
 );
 
-import React, { useState } from "react";
 const order_card_list = Array.from(Array(4).keys());
 
 export default function Paused() {

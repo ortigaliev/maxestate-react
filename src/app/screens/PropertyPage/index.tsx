@@ -4,7 +4,7 @@ import { ChosenProperty } from "../PropertyPage/chosenProperty";
 import { AllProperty } from "./allProprty";
 import "../../../css/property.css";
 
-export function PropertyPage() {
+export function PropertyPage(props: any) {
   let property = useRouteMatch();
   console.log(property);
   return (
@@ -14,7 +14,7 @@ export function PropertyPage() {
           <ChosenProperty />
         </Route>
         <Route path={`/estate`}>
-          <AllProperty />
+          <AllProperty onAdd={props.onAdd} />
         </Route>
       </Switch>
     </div>

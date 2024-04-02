@@ -2,13 +2,35 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Stack } from "@mui/material";
+import { Radio, Stack } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { RangeSlider } from "./slider";
+import { EstateSearchObj } from "../../../types/others";
+import { useState } from "react";
 
 export function AdvancedInfo() {
+  const [allEstateSearchObj, setAllEstateSearchObj] = useState<EstateSearchObj>(
+    {
+      page: 1,
+      limit: 8,
+      order: "estate_views",
+    }
+  );
+
+  /* HANDLERS */
+  const searchCollectionHandler = (collection: string) => {
+    allEstateSearchObj.page = 1;
+    allEstateSearchObj.estate_collection = collection;
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+    console.log("estate_collection::", collection);
+  };
+  const searchOrderHandler = (order: string) => {
+    allEstateSearchObj.page = 1;
+    allEstateSearchObj.order = order;
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
   return (
     <Stack mt={4}>
       <Card sx={{ width: "370px", paddingLeft: "35px" }}>
@@ -24,15 +46,42 @@ export function AdvancedInfo() {
             Property Type
           </Typography>
           <FormGroup>
-            <FormControlLabel control={<Checkbox />} label="House" />
-            <FormControlLabel control={<Checkbox />} label="Office Villa" />
-            <FormControlLabel control={<Checkbox />} label="Luxary Home" />
-            <FormControlLabel control={<Checkbox />} label="Apartment" />
             <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Studio"
+              control={<Checkbox />}
+              label="House"
+              value="apartment"
+              onClick={() => searchCollectionHandler("apartment")}
             />
-            <FormControlLabel control={<Checkbox />} label="Single Family" />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Office Villa"
+              value="willa"
+              onClick={() => searchCollectionHandler("willa")}
+            />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Luxary Home"
+              value="penthouse"
+              onClick={() => searchCollectionHandler("penthouse")}
+            />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Apartment"
+              value="apartment"
+              onClick={() => searchCollectionHandler("apartment")}
+            />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Studio"
+              value="office"
+              onClick={() => searchCollectionHandler("office")}
+            />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Single Family"
+              value="family"
+              onClick={() => searchCollectionHandler("family")}
+            />
           </FormGroup>
           <Typography
             gutterBottom
