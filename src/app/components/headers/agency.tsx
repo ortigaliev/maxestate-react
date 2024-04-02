@@ -12,6 +12,8 @@ import {
 import { NavLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Basket from "./basket";
 
 export function NavbarAgency(props: any) {
   return (
@@ -83,6 +85,9 @@ export function NavbarAgency(props: any) {
                 </Box>
               ) : null}
             </Box>
+
+            <Basket />
+
             {!props.verifiedMemberData ? (
               <Box>
                 <Button

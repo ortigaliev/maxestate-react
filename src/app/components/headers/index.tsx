@@ -12,6 +12,7 @@ import { NavLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
+import Basket from "./basket";
 
 export function NavbarHome(props: any) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -76,6 +77,8 @@ export function NavbarHome(props: any) {
                   </NavLink>
                 </Box>
               ) : null}
+
+              <Basket />
 
               {!props.verifiedMemberData ? (
                 <Box>
