@@ -87,11 +87,11 @@ function App() {
 
   const onAdd = (estate: Estate) => {
     console.log("estate::", estate);
-    const exist: any = cartItems?.find(
+    const exist: any = cartItems.find(
       (item: CartItem) => item._id === estate._id
     );
     if (exist) {
-      const cart_updated = cartItems?.map((item: CartItem) =>
+      const cart_updated = cartItems.map((item: CartItem) =>
         item._id === estate._id
           ? { ...exist, quantity: exist.quantity + 1 }
           : item

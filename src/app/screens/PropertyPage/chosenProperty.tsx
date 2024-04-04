@@ -83,7 +83,7 @@ const chosenEstateRetriever = createSelector(
 );
 const popular_list = Array.from(Array(4).keys());
 
-export function ChosenProperty() {
+export function ChosenProperty(props: any) {
   /* INITIALIZATION */
   let { property_id } = useParams<{ property_id: string }>();
   const { setChosenEstate } = actionDispatch(useDispatch());
