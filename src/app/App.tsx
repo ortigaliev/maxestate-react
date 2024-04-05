@@ -85,7 +85,7 @@ function App() {
     }
   };
 
-  const onAdd = (estate: Estate) => {
+  const onAdd = async (estate: Estate) => {
     console.log("estate::", estate);
     const exist: any = cartItems.find(
       (item: CartItem) => item._id === estate._id
@@ -96,6 +96,7 @@ function App() {
           ? { ...exist, quantity: exist.quantity + 1 }
           : item
       );
+      await sweetTopSmallSuccessAlert("Estate succesfully added", 1200, false);
       setCartItems(cart_updated);
       localStorage.setItem("cart_data", JSON.stringify(cart_updated));
     } else {
@@ -111,8 +112,35 @@ function App() {
       localStorage.setItem("cart_data", JSON.stringify(cart_updated));
     }
   };
-  const onRemove = () => {};
-  const onDelete = () => {};
+  const onRemove = async (item: CartItem) => {
+    const item_data: any = cartItems?.find(
+      (ele: CartItem) => ele._id === item._id
+    );
+    if (item_data.quantity === 1) {
+      const cart_updated = cartItems.filter(
+        (ele: CartItem) => ele._id !== item._id
+      );
+      await sweetTopSmallSuccessAlert("success", 700, false);
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    } else {
+      const cart_updated = cartItems.map((ele: CartItem) =>
+        ele._id === item._id
+          ? { ...item_data, quantity: item_data.quantity - 1 }
+          : ele
+      );
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    }
+  };
+  const onDelete = async (item: CartItem) => {
+    const cart_updated = cartItems.filter(
+      (ele: CartItem) => ele._id !== item._id
+    );
+    await sweetTopSmallSuccessAlert("success", 700, false);
+    setCartItems(cart_updated);
+    localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+  };
   const onDeleteAll = () => {};
 
   return (
@@ -128,7 +156,13 @@ function App() {
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
           verifiedMemberData={verifiedMemberData}
-        /> /* : main_path.includes("/agency") ? (
+          cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
+        />
+      ) : (
+        /* : main_path.includes("/agency") ? (
         <NavbarAgency
           setPath={setPath}
           anchorEl={anchorEl}
@@ -141,7 +175,6 @@ function App() {
           verifiedMemberData={verifiedMemberData}
         />
       ) */
-      ) : (
         <NavbarOthers
           setPath={setPath}
           anchorEl={anchorEl}
@@ -153,6 +186,9 @@ function App() {
           handleLogOutRequest={handleLogOutRequest}
           verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
         />
       )}
       <Switch>

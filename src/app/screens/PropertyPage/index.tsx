@@ -11,7 +11,7 @@ export function PropertyPage(props: any) {
     <div className={"propert_page"}>
       <Switch>
         <Route path={`/estate/:estate_id`}>
-          <ChosenProperty />
+          <ChosenProperty onAdd={props.onAdd} />
         </Route>
         <Route path={`/estate`}>
           <AllProperty onAdd={props.onAdd} />

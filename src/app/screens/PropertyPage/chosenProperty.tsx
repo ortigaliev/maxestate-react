@@ -10,6 +10,7 @@ import {
   Checkbox,
   Container,
   Divider,
+  IconButton,
   Link,
   Rating,
   TextField,
@@ -44,6 +45,8 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import XIcon from "@mui/icons-material/X";
 import FacebookIcon from "@mui/icons-material/Facebook";
+/* import { Favorite } from "@mui/icons-material";
+import Visibility from "@mui/icons-material/Visibility"; */
 
 /* Data Picker */
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -207,12 +210,42 @@ export function ChosenProperty(props: any) {
                 35 comments
               </Link>
             </Box>
+            {/*  <Box sx={{ display: "flex", alignItems: "center", mb: 8 }}>
+              <IconButton
+                href="#"
+                sx={{
+                  fontWeight: "md",
+                  ml: "auto",
+                  color: "text.secondary",
+                  "&:hover": { color: "danger.plainColor" },
+                }}
+              >
+                <Favorite />2
+              </IconButton>
+              <IconButton
+                href="#"
+                sx={{
+                  fontWeight: "md",
+                  color: "text.secondary",
+                  "&:hover": { color: "primary.plainColor" },
+                }}
+              >
+                <Visibility />2
+              </IconButton>
+            </Box> */}
             <Typography
               className="card_tite"
               variant="h1"
               sx={{ p: "3px 0", fontWeight: 700 }}
             >
-              {chosenEstate?.estate_name}
+              New Apartment Nice View
+            </Typography>
+            <Typography
+              className="card_tite"
+              variant="h3"
+              sx={{ p: "3px 0", fontWeight: 700 }}
+            >
+              Agency Name
             </Typography>
             <Typography
               className="card_sub_title"
@@ -908,6 +941,9 @@ export function ChosenProperty(props: any) {
                     variant="contained"
                     size="large"
                     style={{ width: "100%" }}
+                    onClick={() => {
+                      props.onAdd(chosenEstate);
+                    }}
                   >
                     Book now
                   </Button>

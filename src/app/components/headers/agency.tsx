@@ -86,7 +86,7 @@ export function NavbarAgency(props: any) {
               ) : null}
             </Box>
 
-            <Basket />
+            <Basket cartItems={props.cartItems} onAdd={props.onAdd} />
 
             {!props.verifiedMemberData ? (
               <Box>

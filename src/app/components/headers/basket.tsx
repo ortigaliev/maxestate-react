@@ -14,7 +14,14 @@ export default function Basket(props: any) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const { cartItems = [] } = props;
+  const { cartItems = [], onAdd = [], onRemove = [], onDelete = [] } = props;
+  const itemsPrice = cartItems?.reduce(
+    (a: any, c: CartItem) => a + c.price * c.quantity,
+    0
+  );
+
+  const insurancePrice = 500;
+  const totalPrice = itemsPrice + insurancePrice;
 
   /** HANDLERS **/
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,7 +44,7 @@ export default function Basket(props: any) {
         onClick={handleClick}
       >
         <Badge badgeContent={1} color="secondary">
-          <AddShoppingCartIcon />
+          <AddShoppingCartIcon sx={{ color: "fff" }} />
         </Badge>
       </IconButton>
       <Menu
@@ -89,7 +96,7 @@ export default function Basket(props: any) {
                     <div className={"cancel_btn"}>
                       <CancelIcon
                         color={"primary"}
-                        // onClick={}
+                        onClick={() => onDelete(item)}
                       />
                     </div>
                     <img src={image_path} className={"estate_img"} />
@@ -100,15 +107,12 @@ export default function Basket(props: any) {
                     <Box sx={{ minWidth: 120 }}>
                       <div className="col-2">
                         <button
-                          //   onClick={}
+                          onClick={() => onRemove(item)}
                           className="remove"
                         >
                           -
                         </button>{" "}
-                        <button
-                          //  onClick={}
-                          className="add"
-                        >
+                        <button onClick={() => onAdd(item)} className="add">
                           +
                         </button>
                       </div>
@@ -120,13 +124,16 @@ export default function Basket(props: any) {
           </Box>
           {cartItems?.length > 0 ? (
             <Box className={"to_order_box"}>
-              <span className={"price_text"}>Total: 123</span>
+              <span className={"price_text"}>
+                Total: ${totalPrice} = ({itemsPrice} + {insurancePrice})
+              </span>
               <Button
                 onClick={processOrderHandler}
                 startIcon={<ShoppingCartIcon />}
                 variant={"contained"}
+                sx={{ display: "flex", ml: "auto" }}
               >
-                Order
+                Book Now
               </Button>
             </Box>
           ) : (
