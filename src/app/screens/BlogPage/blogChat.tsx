@@ -21,7 +21,7 @@ export function BlogChat() {
       <Stack>
         <Card
           sx={{
-            maxWidth: 380,
+            maxWidth: "100%",
             bgcolor: "#E3F2FD",
             padding: "20px 17px",
             borderRadius: "30px",

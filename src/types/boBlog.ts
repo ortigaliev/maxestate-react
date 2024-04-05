@@ -6,7 +6,7 @@ export interface BoBlog {
   blog_subject: string;
   blog_content: string;
   blog_image?: string | null;
-  bo_id: string;
+  blog_id: string;
   blog_status: string;
   blog_likes: number;
   blog_views: number;
@@ -15,4 +15,11 @@ export interface BoBlog {
   updatedAt: Date;
   member_data: Member;
   me_liked: MeLiked[];
+}
+
+export interface SearchBlogsObj {
+  blog_id: string;
+  page: number;
+  limit: number;
+  order?: number | null;
 }
