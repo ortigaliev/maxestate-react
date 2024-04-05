@@ -36,7 +36,7 @@ const pausedOrdersRetriever = createSelector(
   })
 );
 
-const order_card_list = Array.from(Array(4).keys());
+const order_card_list = Array.from(Array(1).keys());
 
 export default function Paused() {
   /**INITIALIZATIONS */

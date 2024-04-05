@@ -5,7 +5,7 @@ export interface BoBlog {
   _id: string;
   blog_subject: string;
   blog_content: string;
-  blog_image: string;
+  blog_image?: string | null;
   bo_id: string;
   blog_status: string;
   blog_likes: number;

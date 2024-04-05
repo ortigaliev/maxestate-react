@@ -5,9 +5,10 @@ import { Agency } from "./user";
 
 /* React App State */
 export interface AppRootState {
-  ordersPage: any;
   homePage: HomePageState;
   propertyPage: PropertyPageState;
+  ordersPage: OrdersPageState;
+  blogPage: BlogPageState;
 }
 
 /* HomePage */
@@ -32,4 +33,8 @@ export interface OrdersPageState {
   pausedOrders: Order[];
   processOrders: Order[];
   finishedOrders: Order[];
+}
+/*BLOG PAGE */
+export interface BlogPageState {
+  targetBoBlogs: BoBlog[];
 }
