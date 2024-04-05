@@ -15,9 +15,11 @@ class AgencyApiServer {
     try {
       const url = `/agencies?order=${data.order}&page=${data.page}&limit=${data.limit}`,
         result = await axios.get(this.path + url, { withCredentials: true });
-      assert.ok(result, Definer.general_err1);
 
+      assert.ok(result?.data, Definer.general_err1);
+      assert.ok(result?.data?.state != "fail", result?.data?.message);
       console.log("state:", result.data.state);
+
       const agency: Agency[] = result.data.data;
       return agency;
     } catch (err: any) {
