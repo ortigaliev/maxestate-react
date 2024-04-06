@@ -205,7 +205,7 @@ function App() {
           <ContactPage />
         </Route>
         <Route path="/member">
-          <MemberPage />
+          <MemberPage verifiedMemberData={verifiedMemberData}/>
         </Route>
         <Route path="/login">
           <LoginPage />

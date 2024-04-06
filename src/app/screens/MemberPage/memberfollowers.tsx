@@ -14,6 +14,35 @@ import AvatarGroup from "@mui/joy/AvatarGroup";
 import { CssVarsProvider } from "@mui/joy/styles/CssVarsProvider";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 
+//REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { retrieveMemberFollowers } from "./selector";
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { Follower } from "../../../types/follow";
+import { setMemberFollowers } from "./slice";
+import assert from "assert";
+import { Definer } from "../../lib/Definer";
+import { useHistory } from "react-router-dom";
+import { serverApi } from "../../lib/config";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+
+// REDUX SLICE
+const actionDispatch = (dispach: Dispatch) => ({
+  setMemberFollowers: (data: Follower[]) => dispach(setMemberFollowers(data)),
+});
+
+// REDUX SELECTOR
+const memberFollowersRetriever = createSelector(
+  retrieveMemberFollowers,
+  (memberFollowers) => ({
+    memberFollowers,
+  })
+);
+
 const followers = [
   { mb_nick: "Bakha", following: true },
   { mb_nick: "Jonny", following: false },
@@ -21,6 +50,8 @@ const followers = [
 ];
 
 export function MemberFollowers(props: any) {
+  const { setMemberFollowers } = actionDispatch(useDispatch());
+  const { memberFollowers } = useSelector(memberFollowersRetriever);
   return (
     <div>
       <Container>

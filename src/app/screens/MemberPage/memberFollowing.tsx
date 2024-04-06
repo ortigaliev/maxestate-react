@@ -14,6 +14,34 @@ import AvatarGroup from "@mui/joy/AvatarGroup";
 import { CssVarsProvider } from "@mui/joy/styles/CssVarsProvider";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
 
+//REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { Follower } from "../../../types/follow";
+import { setMemberFollowings } from "./slice";
+import assert from "assert";
+import { Definer } from "../../lib/Definer";
+import { useHistory } from "react-router-dom";
+import { serverApi } from "../../lib/config";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+import { retrieveMemberFollowings } from "./selector";
+
+// REDUX SLICE
+const actionDispatch = (dispach: Dispatch) => ({
+  setMemberFollowings: (data: Follower[]) => dispach(setMemberFollowings(data)),
+});
+
+const memberFollowingsRetriever = createSelector(
+  retrieveMemberFollowings,
+  (memberFollowings) => ({
+    memberFollowings,
+  })
+);
+
 const followings = [
   { mb_nick: "Lion" },
   { mb_nick: "Alex" },
@@ -21,6 +49,8 @@ const followings = [
 ];
 
 export function MemberFollowing(props: any) {
+  const { setMemberFollowings } = actionDispatch(useDispatch());
+  const { memberFollowings } = useSelector(memberFollowingsRetriever);
   return (
     <div>
       <Container>

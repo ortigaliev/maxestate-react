@@ -18,7 +18,7 @@ export const retrieveMemberFollowers = createSelector(
   selectMemberPage,
   (MemberPage) => MemberPage.memberFollowers
 );
-export const retrieveMemberFollowing = createSelector(
+export const retrieveMemberFollowings = createSelector(
   selectMemberPage,
-  (MemberPage) => MemberPage.memberFollowing
+  (MemberPage) => MemberPage.memberFollowings
 );

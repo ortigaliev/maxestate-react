@@ -43,8 +43,64 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import TViewer from "../../components/tuieditor/TViewer";
 import { ChosenBlog } from "./chosenBlog";
 
+/* REDUX */
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Member } from "../../../types/user";
+import { serverApi } from "../../lib/config";
+import assert from "assert";
+import { Definer } from "../../lib/Definer";
+import { useHistory } from "react-router-dom";
+import { Dispatch } from "@reduxjs/toolkit";
+import {
+  setChosenMember,
+  setChosenMemberBoBlogs,
+  setChosenSingleBoBlog,
+} from "./slice";
+import { BoBlog } from "../../../types/boBlog";
+import {
+  retrieveChosenMember,
+  retrieveChosenMemberBoBlogs,
+  retrieveChosenSingleBoBlog,
+} from "./selector";
+
+// REDUX SLICE
+const actionDispatch = (dispach: Dispatch) => ({
+  setChosenMember: (data: Member) => dispach(setChosenMember(data)),
+  setChosenMemberBoBlogs: (data: BoBlog[]) =>
+    dispach(setChosenMemberBoBlogs(data)),
+  setChosenSingleBoBlogs: (data: BoBlog) =>
+    dispach(setChosenSingleBoBlog(data)),
+});
+// REDUX SELECTOR
+const chosenMemberRetriever = createSelector(
+  retrieveChosenMember,
+  (chosenMember) => ({
+    chosenMember,
+  })
+);
+
+const chosenMemberBoBlogsRetriever = createSelector(
+  retrieveChosenMemberBoBlogs,
+  (chosenMemberBoBlogs) => ({
+    chosenMemberBoBlogs,
+  })
+);
+
+const chosenSingleBoBlogRetriever = createSelector(
+  retrieveChosenSingleBoBlog,
+  (chosenSingleBoBlog) => ({
+    chosenSingleBoBlog,
+  })
+);
+
 export function VisitOtherPage(_props: any) {
   //INITIALIZIATION
+  const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlogs } =
+    actionDispatch(useDispatch());
+  const { chosenMember } = useSelector(chosenMemberRetriever);
+  const { chosenMemberBoBlogs } = useSelector(chosenMemberBoBlogsRetriever);
+  const { chosenSingleBoBlog } = useSelector(chosenSingleBoBlogRetriever);
   const [value, setValue] = useState("1");
 
   // HANDLERS
