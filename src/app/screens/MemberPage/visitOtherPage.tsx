@@ -148,28 +148,28 @@ export function VisitOtherPage(_props: any) {
                 </TabPanel>
 
                 {/* Favorite Property */}
-                <TabPanel value={"2"}>
+                {/* <TabPanel value={"2"}>
                   <Box className={"menu_content"}>
                     <FavoriteProperty />
                   </Box>
-                </TabPanel>
+                </TabPanel> */}
 
                 {/* Followers */}
-                <TabPanel value={"3"}>
+                <TabPanel value={"2"}>
                   <Box className={"menu_content"}>
                     <MemberFollowers actions_enabled={false} />
                   </Box>
                 </TabPanel>
 
                 {/* Following */}
-                <TabPanel value={"4"}>
+                <TabPanel value={"3"}>
                   <Box className={"menu_content"}>
                     <MemberFollowing actions_enabled={false} />
                   </Box>
                 </TabPanel>
 
                 {/* Chosen Blog */}
-                <TabPanel value={"5"}>
+                <TabPanel value={"4"}>
                   <Box className={"menu_name"}>
                     <ChosenBlog />
                   </Box>
@@ -259,7 +259,7 @@ export function VisitOtherPage(_props: any) {
                 </ListItemButton>
 
                 {/* Favorite Property */}
-                <TabList>
+               {/*  <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
                     value={"2"}
@@ -272,15 +272,15 @@ export function VisitOtherPage(_props: any) {
                       </ListItemButton>
                     )}
                   />
-                </TabList>
+                </TabList> */}
 
                 {/* Followers */}
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"3"}
+                    value={"2"}
                     component={() => (
-                      <ListItemButton onClick={() => setValue("3")}>
+                      <ListItemButton onClick={() => setValue("2")}>
                         <ListItemIcon>
                           <GroupIcon />
                         </ListItemIcon>
@@ -294,9 +294,9 @@ export function VisitOtherPage(_props: any) {
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"4"}
+                    value={"3"}
                     component={() => (
-                      <ListItemButton onClick={() => setValue("4")}>
+                      <ListItemButton onClick={() => setValue("3")}>
                         <ListItemIcon>
                           <PersonIcon />
                         </ListItemIcon>
@@ -307,14 +307,14 @@ export function VisitOtherPage(_props: any) {
                 </TabList>
 
                 {/* Chosen Blog */}
-                {/* <TabPanel value={"5"}>
+                <TabPanel value={"4"}>
                   <Box className={"menu_name"}>
                     <ChosenBlog />
                   </Box>
                   <Box className={"menu_content"}>
                     <TViewer text={`<div>Hello Blog<div/>`} />
                   </Box>
-                </TabPanel> */}
+                </TabPanel>
               </List>
             </Stack>
           </TabContext>

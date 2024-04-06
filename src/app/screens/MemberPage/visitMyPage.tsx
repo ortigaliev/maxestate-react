@@ -152,14 +152,14 @@ export function VisitMyPage(props: any) {
                 </TabPanel>
 
                 {/* My Properties */}
-                <TabPanel value={"2"}>
+                {/* <TabPanel value={"2"}>
                   <Box className={"menu_content"}>
                     <MemberProperty />
                   </Box>
-                </TabPanel>
+                </TabPanel> */}
 
                 {/* Create a Blog */}
-                <TabPanel value={"3"}>
+                <TabPanel value={"2"}>
                   <Box className={"menu_name"}>
                     <CreateBlog />
                   </Box>
@@ -169,34 +169,34 @@ export function VisitMyPage(props: any) {
                 </TabPanel>
 
                 {/* Favorite Property */}
-                <TabPanel value={"4"}>
+               {/*  <TabPanel value={"4"}>
                   <Box className={"menu_content"}>
                     <FavoriteProperty />
                   </Box>
-                </TabPanel>
+                </TabPanel> */}
                 {/* Followers */}
-                <TabPanel value={"5"}>
+                <TabPanel value={"3"}>
                   <Box className={"menu_content"}>
                     <MemberFollowers actions_enabled={true} />
                   </Box>
                 </TabPanel>
 
                 {/* Following */}
-                <TabPanel value={"6"}>
+                <TabPanel value={"4"}>
                   <Box className={"menu_content"}>
                     <MemberFollowing actions_enabled={true} />
                   </Box>
                 </TabPanel>
 
                 {/* Setting */}
-                <TabPanel value={"7"}>
+                <TabPanel value={"5"}>
                   <Box className={"menu_content"}>
                     <MySetting />
                   </Box>
                 </TabPanel>
 
                 {/* Chosen Blog */}
-                <TabPanel value={"8"}>
+                <TabPanel value={"6"}>
                   <Box className={"menu_name"}>
                     <ChosenBlog />
                   </Box>
@@ -286,7 +286,7 @@ export function VisitMyPage(props: any) {
                 </ListItemButton>
 
                 {/* My property */}
-                <TabList onChange={handleChange}>
+                {/* <TabList onChange={handleChange}>
                   <Tab
                     style={{ flexDirection: "column" }}
                     value={"2"}
@@ -299,15 +299,15 @@ export function VisitMyPage(props: any) {
                       </ListItemButton>
                     )}
                   />
-                </TabList>
+                </TabList> */}
 
                 {/* Create a Blog */}
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"3"}
+                    value={"2"}
                     component={() => (
-                      <ListItemButton onClick={() => setValue("3")}>
+                      <ListItemButton onClick={() => setValue("2")}>
                         <ListItemIcon>
                           <BorderColorIcon />
                         </ListItemIcon>
@@ -318,7 +318,7 @@ export function VisitMyPage(props: any) {
                 </TabList>
 
                 {/* Favorite Property */}
-                <TabList>
+               {/*  <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
                     value={"4"}
@@ -331,15 +331,15 @@ export function VisitMyPage(props: any) {
                       </ListItemButton>
                     )}
                   />
-                </TabList>
+                </TabList> */}
 
                 {/* Followers */}
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"5"}
+                    value={"3"}
                     component={() => (
-                      <ListItemButton onClick={() => setValue("5")}>
+                      <ListItemButton onClick={() => setValue("3")}>
                         <ListItemIcon>
                           <GroupIcon />
                         </ListItemIcon>
@@ -353,9 +353,9 @@ export function VisitMyPage(props: any) {
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"6"}
+                    value={"4"}
                     component={() => (
-                      <ListItemButton onClick={() => setValue("6")}>
+                      <ListItemButton onClick={() => setValue("4")}>
                         <ListItemIcon>
                           <PersonIcon />
                         </ListItemIcon>
@@ -369,9 +369,9 @@ export function VisitMyPage(props: any) {
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"7"}
+                    value={"5"}
                     component={() => (
-                      <ListItemButton onClick={() => setValue("7")}>
+                      <ListItemButton onClick={() => setValue("5")}>
                         <ListItemIcon>
                           <SettingsIcon />
                         </ListItemIcon>
