@@ -4,6 +4,7 @@ import reduxLogger from "redux-logger";
 import PropertyPageReducer from "./screens/PropertyPage/slice";
 import OrdersPageReducer from "./screens/Card/slice";
 import BlogPageReducer from "./screens/BlogPage/slice";
+import MemberPageReducer from "./screens/MemberPage/slice";
 
 export const store = configureStore({
   middleware: (getDefaulMiddleware) =>
@@ -13,6 +14,8 @@ export const store = configureStore({
     propertyPage: PropertyPageReducer,
     card: OrdersPageReducer,
     blogPage: BlogPageReducer,
+    memberPage: MemberPageReducer
+
   },
 });
 

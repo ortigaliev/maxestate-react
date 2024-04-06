@@ -40,10 +40,12 @@ export function BlogPage(props: any) {
   const [value, setValue] = React.useState("1");
 
   const [searchBlogsObj, setSearchBlogsObj] = useState<SearchBlogsObj>({
-    blog_id: "all",
+    bo_id: "all",
     page: 1,
     limit: 5,
   });
+
+  const [blogsRebuild, setBlogsRebuild] = useState<Date>(new Date());
 
   useEffect(() => {
     const blogService = new BlogApiServer();
@@ -51,23 +53,23 @@ export function BlogPage(props: any) {
       .getTargetBlogs(searchBlogsObj)
       .then((data) => setTargetBoBlogs(data))
       .catch((err) => console.log(err));
-  }, [searchBlogsObj]);
+  }, [searchBlogsObj, blogsRebuild]);
 
   // HANDLERS
   const handleChange = (event: any, newValue: string) => {
     searchBlogsObj.page = 1;
     switch (newValue) {
       case "1":
-        searchBlogsObj.blog_id = "all";
+        searchBlogsObj.bo_id = "all";
         break;
       case "2":
-        searchBlogsObj.blog_id = "Real Estate";
+        searchBlogsObj.bo_id = "Real Estate";
         break;
       case "3":
-        searchBlogsObj.blog_id = "Business";
+        searchBlogsObj.bo_id = "Business";
         break;
       case "4":
-        searchBlogsObj.blog_id = "Decorate";
+        searchBlogsObj.bo_id = "Decorate";
         break;
     }
     setSearchBlogsObj({ ...searchBlogsObj });
@@ -130,16 +132,28 @@ export function BlogPage(props: any) {
 
                 <Box className={"article_main"}>
                   <TabPanel value={"1"}>
-                    <TargetArticles targetBoBlogs={targetBoBlogs} />
+                    <TargetArticles
+                      targetBoBlogs={targetBoBlogs}
+                      setBlogsRebuild={setBlogsRebuild}
+                    />
                   </TabPanel>
                   <TabPanel value={"2"}>
-                    <TargetArticles targetBoBlogs={targetBoBlogs} />
+                    <TargetArticles
+                      targetBoBlogs={targetBoBlogs}
+                      setBlogsRebuild={setBlogsRebuild}
+                    />
                   </TabPanel>
                   <TabPanel value={"3"}>
-                    <TargetArticles targetBoBlogs={targetBoBlogs} />
+                    <TargetArticles
+                      targetBoBlogs={targetBoBlogs}
+                      setBlogsRebuild={setBlogsRebuild}
+                    />
                   </TabPanel>
                   <TabPanel value={"4"}>
-                    <TargetArticles targetBoBlogs={targetBoBlogs} />
+                    <TargetArticles
+                      targetBoBlogs={targetBoBlogs}
+                      setBlogsRebuild={setBlogsRebuild}
+                    />
                   </TabPanel>
                 </Box>
                 <Box>

@@ -1,26 +1,42 @@
 import React from "react";
-import {
-  Avatar,
-  Box,
-  Card,
-  CardActionArea,
-  CardContent,
-  Chip,
-  Link,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Card, Chip, Stack, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { BoBlog } from "../../../types/boBlog";
 import { serverApi } from "../../lib/config";
 import moment from "moment";
+import assert from "assert";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import { Definer } from "../../lib/Definer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
 /* import moment from "moment"; */
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export function TargetArticles(props: any) {
+  /**HANDLERS */
+  const targetLikeHandler = async (e: any) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+      const memberService = new MemberApiServer();
+      const like_result = await memberService.memberLikeTarget({
+        like_ref_id: e.target.id,
+        group_type: "blog",
+      });
+      assert.ok(like_result, Definer.general_err1);
+      await sweetTopSmallSuccessAlert("success", 700, false);
+      props.setBlogsRebuild(new Date());
+    } catch (err: any) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
+  };
+
   return (
     <Stack>
       {props.targetBoBlogs?.map((blog: BoBlog) => {
@@ -85,7 +101,7 @@ export function TargetArticles(props: any) {
                     },
                   }}
                 >
-                  {blog?.blog_id}
+                  {blog?.bo_id}
                 </Typography>
                 <Typography
                   variant="h6"
@@ -121,7 +137,12 @@ export function TargetArticles(props: any) {
                         icon={<FavoriteIcon />}
                         checkedIcon={<FavoriteIcon style={{ color: "red" }} />}
                         id={blog?._id}
-                        checked={false}
+                        onClick={targetLikeHandler}
+                        checked={
+                          blog?.me_liked && blog.me_liked[0]?.my_favorite
+                            ? true
+                            : false
+                        }
                       />
                     </Box>
                     {blog?.blog_likes}

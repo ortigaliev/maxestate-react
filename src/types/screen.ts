@@ -1,10 +1,12 @@
 import { BoBlog } from "./boBlog";
 import { Estate } from "./estate";
+import { Follower, Following } from "./follow";
 import { Order } from "./order";
-import { Agency } from "./user";
+import { Agency, Member } from "./user";
 
 /* React App State */
 export interface AppRootState {
+  memberPage: MemberPageState;
   homePage: HomePageState;
   propertyPage: PropertyPageState;
   ordersPage: OrdersPageState;
@@ -37,4 +39,13 @@ export interface OrdersPageState {
 /*BLOG PAGE */
 export interface BlogPageState {
   targetBoBlogs: BoBlog[];
+}
+
+/*MEMBER PAGE */
+export interface MemberPageState {
+  chosenMember: Member | null;
+  chosenMemberBoBlogs: BoBlog[];
+  chosenSingleBoBlog: BoBlog | null;
+  memberFollowers: Follower[];
+  memberFollowing: Following[];
 }

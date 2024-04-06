@@ -115,7 +115,7 @@ export function ChosenProperty(props: any) {
       const memberService = new MemberApiServer(),
         like_result = await memberService.memberLikeTarget({
           like_ref_id: e.target.id,
-          group_type: "product",
+          group_type: "estate",
         });
       assert.ok(like_result, Definer.general_err1);
 

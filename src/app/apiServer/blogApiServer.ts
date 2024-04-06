@@ -13,7 +13,7 @@ class BlogApiServer {
 
   public async getTargetBlogs(data: SearchBlogsObj) {
     try {
-      let url = `/blog/target?blog_id=${data.blog_id}&page=${data.page}&limit=${data.limit}`;
+      let url = `/blog/target?bo_id=${data.bo_id}&page=${data.page}&limit=${data.limit}`;
       if (data.order) url += `&order=${data.order}`;
 
       const result = await axios.get(this.path + url, {
