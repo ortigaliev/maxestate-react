@@ -148,7 +148,10 @@ export function VisitMyPage(props: any) {
       const blogService = new BlogApiServer();
       blogService
         .getChosenBlog(bo_id)
-        .then((data) => setChosenSingleBoBlog(data))
+        .then((data) => {
+          setChosenSingleBoBlog(data);
+          setValue("6");
+        })
         .catch((err) => console.log(err));
     } catch (err: any) {
       console.log(err);
@@ -181,8 +184,8 @@ export function VisitMyPage(props: any) {
                     >
                       <Box className={"bottom_box"}>
                         <Pagination
-                          count={3}
-                          page={1}
+                          count={memberBlogSearchObj.limit}
+                          page={memberBlogSearchObj.page}
                           renderItem={(item) => (
                             <PaginationItem
                               components={{
@@ -250,7 +253,7 @@ export function VisitMyPage(props: any) {
                     <ChosenBlog />
                   </Box>
                   <Box className={"menu_content"}>
-                    <TViewer text={`<h3>Hello Blog</h3>`} />
+                    <TViewer chosenSingleBoBlog={chosenSingleBoBlog} />
                   </Box>
                 </TabPanel>
               </Box>
@@ -430,7 +433,7 @@ export function VisitMyPage(props: any) {
                   />
                 </TabList>
                 {/* Chosen Blog */}
-                {/*  <TabPanel value={"8"}>
+                {/*  <TabPanel value={"6"}>
 
                   <Box className={"menu_content"}></Box>
                 </TabPanel> */}

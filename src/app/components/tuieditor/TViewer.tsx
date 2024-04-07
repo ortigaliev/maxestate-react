@@ -11,7 +11,7 @@ const TViewer = (props: any) => {
         <Viewer
           //@ts-ignore
           ref={editroRef}
-          initialValue={props.text}
+          initialValue={props.chosenSingleBoBlog?.blog_content}
           height={"600px"}
         />
       </Box>
