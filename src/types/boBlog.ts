@@ -23,3 +23,9 @@ export interface SearchBlogsObj {
   limit: number;
   order?: number | null;
 }
+
+export interface SearchMemberBlogsObj {
+  page: number;
+  limit: number;
+  mb_id: string;
+}

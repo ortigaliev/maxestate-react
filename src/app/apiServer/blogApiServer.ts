@@ -2,7 +2,11 @@ import axios from "axios";
 import { serverApi } from "../lib/config";
 import assert from "assert";
 import { Definer } from "../lib/Definer";
-import { BoBlog, SearchBlogsObj } from "../../types/boBlog";
+import {
+  BoBlog,
+  SearchBlogsObj,
+  SearchMemberBlogsObj,
+} from "../../types/boBlog";
 
 class BlogApiServer {
   private readonly path: string;
@@ -28,6 +32,46 @@ class BlogApiServer {
       return blogs;
     } catch (err: any) {
       console.log(`ERROR ::: getTargetBlogs ${err.message}`);
+      throw err;
+    }
+  }
+
+  public async getMemberCommunityBlogs(data: SearchMemberBlogsObj) {
+    try {
+      let url = `/blog/articles?mb_id=${data.mb_id}&page=${data.page}&limit=${data.limit}`;
+
+      const result = await axios.get(this.path + url, {
+        withCredentials: true,
+      });
+
+      assert.ok(result?.data, Definer.general_err1);
+      assert.ok(result?.data?.state != "fail", result?.data?.message);
+      console.log("state", result.data.state);
+
+      const blogs: BoBlog[] = result.data.data;
+      return blogs;
+    } catch (err: any) {
+      console.log(`ERROR ::: getMemberCommunityBlogs ${err.message}`);
+      throw err;
+    }
+  }
+
+  public async getChosenBlog(bo_id: string) {
+    try {
+      let url = `/blog/single-blog/${bo_id}`;
+
+      const result = await axios.get(this.path + url, {
+        withCredentials: true,
+      });
+
+      assert.ok(result?.data, Definer.general_err1);
+      assert.ok(result?.data?.state != "fail", result?.data?.message);
+      console.log("state", result.data.state);
+
+      const blog: BoBlog = result.data.data;
+      return blog;
+    } catch (err: any) {
+      console.log(`ERROR ::: getChosenBlog ${err.message}`);
       throw err;
     }
   }

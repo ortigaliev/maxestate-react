@@ -1,5 +1,5 @@
 import { Box, Chip, Container, Stack } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 /* Card */
 import Card from "@mui/material/Card";
@@ -59,12 +59,15 @@ import {
   setChosenMemberBoBlogs,
   setChosenSingleBoBlog,
 } from "./slice";
-import { BoBlog } from "../../../types/boBlog";
+import { BoBlog, SearchMemberBlogsObj } from "../../../types/boBlog";
 import {
   retrieveChosenMember,
   retrieveChosenMemberBoBlogs,
   retrieveChosenSingleBoBlog,
 } from "./selector";
+import { sweetErrorHandling, sweetFailureProvider } from "../../lib/sweetAlert";
+import BlogApiServer from "../../apiServer/blogApiServer";
+import MemberApiServer from "../../apiServer/memberApiServer";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -99,6 +102,7 @@ const chosenSingleBoBlogRetriever = createSelector(
 export function VisitMyPage(props: any) {
   //INITIALIZIATION
 
+  const { verifiedMemberData } = props;
   const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlogs } =
     actionDispatch(useDispatch());
   const { chosenMember } = useSelector(chosenMemberRetriever);
@@ -106,10 +110,50 @@ export function VisitMyPage(props: any) {
   const { chosenSingleBoBlog } = useSelector(chosenSingleBoBlogRetriever);
 
   const [value, setValue] = useState("1");
+  const [blogsRebuild, setBlogsRebuild] = useState<Date>(new Date());
+  const [memberBlogSearchObj, setMemberBlogSearchObj] =
+    useState<SearchMemberBlogsObj>({ mb_id: "none", page: 1, limit: 5 });
+
+  useEffect(() => {
+    if (!localStorage.getItem("member_data")) {
+      sweetFailureProvider("Please login first", true, true);
+    }
+
+    const blogService = new BlogApiServer();
+    const memberService = new MemberApiServer();
+
+    blogService
+      .getMemberCommunityBlogs(memberBlogSearchObj)
+      .then((data) => setChosenMemberBoBlogs(data))
+      .catch((err) => console.log(err));
+
+    memberService
+      .getChosenMember(verifiedMemberData?._id)
+      .then((data) => setChosenMember(data))
+      .catch((err) => console.log(err));
+  }, [memberBlogSearchObj, blogsRebuild]);
 
   // HANDLERS
   const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
+  };
+
+  const handlePaginationChange = (event: any, value: number) => {
+    memberBlogSearchObj.page = value;
+    setMemberBlogSearchObj({ ...memberBlogSearchObj });
+  };
+
+  const renderChosenBlogHandler = async (bo_id: string) => {
+    try {
+      const blogService = new BlogApiServer();
+      blogService
+        .getChosenBlog(bo_id)
+        .then((data) => setChosenSingleBoBlog(data))
+        .catch((err) => console.log(err));
+    } catch (err: any) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
   };
 
   return (
@@ -122,7 +166,11 @@ export function VisitMyPage(props: any) {
                 <TabPanel value="1">
                   {/* <Box className="menu_name">My Blog</Box> */}
                   <Box className="menu_content">
-                    <MemberBlog />
+                    <MemberBlog
+                      chosenMemberBoBlogs={chosenMemberBoBlogs}
+                      renderChosenBlogHandler={renderChosenBlogHandler}
+                      setBlogsRebuild={setBlogsRebuild}
+                    />
 
                     {/* Pagination Section */}
                     <Stack
@@ -145,6 +193,7 @@ export function VisitMyPage(props: any) {
                               color="secondary"
                             />
                           )}
+                          onChange={handlePaginationChange}
                         />
                       </Box>
                     </Stack>
@@ -169,7 +218,7 @@ export function VisitMyPage(props: any) {
                 </TabPanel>
 
                 {/* Favorite Property */}
-               {/*  <TabPanel value={"4"}>
+                {/*  <TabPanel value={"4"}>
                   <Box className={"menu_content"}>
                     <FavoriteProperty />
                   </Box>
@@ -318,7 +367,7 @@ export function VisitMyPage(props: any) {
                 </TabList>
 
                 {/* Favorite Property */}
-               {/*  <TabList>
+                {/*  <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
                     value={"4"}
