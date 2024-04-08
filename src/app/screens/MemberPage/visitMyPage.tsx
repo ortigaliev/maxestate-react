@@ -111,6 +111,7 @@ export function VisitMyPage(props: any) {
 
   const [value, setValue] = useState("1");
   const [blogsRebuild, setBlogsRebuild] = useState<Date>(new Date());
+  const [followRebuild, setFollowRebuild] = useState<boolean>(false);
   const [memberBlogSearchObj, setMemberBlogSearchObj] =
     useState<SearchMemberBlogsObj>({ mb_id: "none", page: 1, limit: 5 });
 
@@ -131,7 +132,7 @@ export function VisitMyPage(props: any) {
       .getChosenMember(verifiedMemberData?._id)
       .then((data) => setChosenMember(data))
       .catch((err) => console.log(err));
-  }, [memberBlogSearchObj, blogsRebuild]);
+  }, [memberBlogSearchObj, blogsRebuild, followRebuild]);
 
   // HANDLERS
   const handleChange = (event: any, newValue: string) => {
@@ -184,7 +185,11 @@ export function VisitMyPage(props: any) {
                     >
                       <Box className={"bottom_box"}>
                         <Pagination
-                          count={memberBlogSearchObj.limit}
+                          count={
+                            memberBlogSearchObj.page >= 3
+                              ? memberBlogSearchObj.page + 1
+                              : 3
+                          }
                           page={memberBlogSearchObj.page}
                           renderItem={(item) => (
                             <PaginationItem
@@ -229,14 +234,24 @@ export function VisitMyPage(props: any) {
                 {/* Followers */}
                 <TabPanel value={"3"}>
                   <Box className={"menu_content"}>
-                    <MemberFollowers actions_enabled={true} />
+                    <MemberFollowers
+                      actions_enabled={true}
+                      followRebuild={followRebuild}
+                      setFollowRebuild={setFollowRebuild}
+                      mb_id={props.verifiedMemberData?._id}
+                    />
                   </Box>
                 </TabPanel>
 
                 {/* Following */}
                 <TabPanel value={"4"}>
                   <Box className={"menu_content"}>
-                    <MemberFollowing actions_enabled={true} />
+                    <MemberFollowing
+                      actions_enabled={true}
+                      followRebuild={followRebuild}
+                      setFollowRebuild={setFollowRebuild}
+                      mb_id={props.verifiedMemberData?._id}
+                    />
                   </Box>
                 </TabPanel>
 
@@ -286,13 +301,13 @@ export function VisitMyPage(props: any) {
                         gap={2}
                       >
                         <Typography gutterBottom variant="h5" component="div">
-                          Max Mit
+                          {chosenMember?.mb_nick}
                         </Typography>
                         <Chip
                           sx={{
                             width: "80px",
                           }}
-                          label="User"
+                          label={chosenMember?.mb_type}
                         />
                         <Box sx={{ display: "flex", gap: 2 }}>
                           <FacebookIcon />
@@ -304,12 +319,21 @@ export function VisitMyPage(props: any) {
                           sx={{ display: "flex", alignItems: "center", gap: 2 }}
                         >
                           <Typography gutterBottom variant="h5" component="div">
-                            Follower: 2
+                            Follower: {chosenMember?.mb_subscriber_cnt}
                           </Typography>
                           <Typography gutterBottom variant="h5" component="div">
-                            Following: 4
+                            Following: {chosenMember?.mb_follow_cnt}
                           </Typography>
                         </Box>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          style={{ fontStyle: "italic" }}
+                        >
+                          {chosenMember?.mb_description ??
+                            "There is no addition info"}
+                        </Typography>
                       </Stack>
                     </CardContent>
                   </Box>
