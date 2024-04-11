@@ -4,6 +4,7 @@ import assert from "assert";
 import { Definer } from "../lib/Definer";
 import {
   BoBlog,
+  BoBlogInput,
   SearchBlogsObj,
   SearchMemberBlogsObj,
 } from "../../types/boBlog";
@@ -13,6 +14,48 @@ class BlogApiServer {
 
   constructor() {
     this.path = serverApi;
+  }
+
+  public async uploadImageToServer(image: any) {
+    try {
+      let formData = new FormData();
+      formData.append("blog_image", image);
+
+      console.log(image);
+      const result = await axios(`${this.path}/blog/image`, {
+        method: "POST",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      assert.ok(result?.data, Definer.general_err1);
+      assert.ok(result?.data?.state != "fail", result?.data?.message);
+      console.log("state", result.data.state);
+
+      const image_name: string = result.data.data;
+      return image_name;
+    } catch (err: any) {
+      console.log(`ERROR ::: uploadImageToServer ${err.message}`);
+      throw err;
+    }
+  }
+  public async createBlog(data: BoBlogInput) {
+    try {
+      const result = await axios.post(this.path + "/blog/create", data, {
+        withCredentials: true,
+      });
+
+      assert.ok(result?.data, Definer.general_err1);
+      assert.ok(result?.data?.state != "fail", result?.data?.message);
+      console.log("state", result.data.state);
+
+      const blog: BoBlog = result.data.data;
+      return blog;
+    } catch (err: any) {
+      console.log(`ERROR ::: createBlog ${err.message}`);
+      throw err;
+    }
   }
 
   public async getTargetBlogs(data: SearchBlogsObj) {

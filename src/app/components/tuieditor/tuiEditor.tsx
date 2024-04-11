@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
 import { Editor } from "@toast-ui/react-editor";
@@ -12,8 +12,80 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import BlogApiServer from "../../apiServer/blogApiServer";
+import { serverApi } from "../../lib/config";
+import assert from "assert";
+import { Definer } from "../../lib/Definer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+import { BoBlogInput } from "../../../types/boBlog";
+import { useHistory } from "react-router-dom";
 
 export const TuiEditor = (props: any) => {
+  /* INITIALIZATION */
+  const history = useHistory();
+  const [blogArticleData, setBlogArticleData] = useState<BoBlogInput>({
+    blog_content: "",
+    blog_subject: "",
+    blog_image: "",
+    bo_id: "",
+  });
+
+  /**HANDLERS */
+  const uploadImage = async (image: any) => {
+    try {
+      const blogService = new BlogApiServer();
+      const image_name = await blogService.uploadImageToServer(image);
+
+      blogArticleData.blog_image = image_name;
+      setBlogArticleData({ ...blogArticleData });
+
+      const source = `${serverApi}/${image_name}`;
+      return source;
+    } catch (err) {
+      console.log("ERROR ::: uploadImage", err);
+    }
+  };
+
+  const changeCategoryHandler = (e: any) => {
+    blogArticleData.bo_id = e.target.value;
+    setBlogArticleData({ ...blogArticleData });
+  };
+
+  const changeTitleHandler = useCallback(
+    (e: any) => {
+      blogArticleData.blog_subject = e.target.value;
+      setBlogArticleData({ ...blogArticleData });
+    },
+    [blogArticleData.blog_subject]
+  );
+
+  const handleRegisterButton = async () => {
+    try {
+      const editor: any = editorRef.current;
+      const blog_content = editor?.getInstance().getHTML();
+
+      blogArticleData.blog_content = blog_content;
+      assert.ok(
+        blogArticleData.blog_content !== "" &&
+          blogArticleData.bo_id !== "" &&
+          blogArticleData.blog_subject !== "",
+        Definer.input_err1
+      );
+
+      const blogService = new BlogApiServer();
+      await blogService.createBlog(blogArticleData);
+      await sweetTopSmallSuccessAlert("Article is created successfully");
+      props.setBlogsRebuild(new Date());
+      props.setValue("1");
+    } catch (err) {
+      console.log(`ERROR ::: handleRegisterButton ${err}`);
+      sweetErrorHandling(err).then();
+    }
+  };
+
   const editorRef = useRef();
   return (
     <Stack>
@@ -30,17 +102,17 @@ export const TuiEditor = (props: any) => {
           </Typography>
           <FormControl sx={{ width: "100%", background: "white" }}>
             <Select
-              value={"celebrity"}
+              value={blogArticleData.bo_id}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
+              onChange={changeCategoryHandler}
             >
               <MenuItem value="">
                 <span>Choose Category</span>
               </MenuItem>
-              <MenuItem value={"celebrity"}>celebrities</MenuItem>
-              <MenuItem value={"evaluation"}>Agency rating</MenuItem>
-              <MenuItem value={"story"}>Story</MenuItem>
-              <MenuItem value={"story"}>Expert advice</MenuItem>
+              <MenuItem value={"Real Estate"}>Real Estate</MenuItem>
+              <MenuItem value={"Business"}>Business</MenuItem>
+              <MenuItem value={"Decorate"}>Decorate</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -53,6 +125,7 @@ export const TuiEditor = (props: any) => {
             label="Title"
             variant="outlined"
             style={{ width: "300px" }}
+            onChange={changeTitleHandler}
           />
         </Box>
       </Stack>
@@ -70,6 +143,9 @@ export const TuiEditor = (props: any) => {
         ]}
         hooks={{
           addImageBlobHook: async (image: any, callback: any) => {
+            const uploadImageURL = await uploadImage(image);
+            console.log("uploadImageURL", uploadImageURL);
+            callback(uploadImageURL);
             return false;
           },
         }}
@@ -82,6 +158,7 @@ export const TuiEditor = (props: any) => {
           variant="contained"
           color="primary"
           style={{ margin: "30px", width: "250px", height: "45px" }}
+          onClick={handleRegisterButton}
         >
           Publish
         </Button>

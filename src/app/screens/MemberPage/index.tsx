@@ -15,9 +15,9 @@ export function MemberPage(props: any) {
   const query = useQuery();
 
   let chosen_mb_id: string | null = query.get("mb_id") ?? null;
-  const chosen_blog_id: string | null = query.get("blog_id") ?? null;
+  const chosen_bo_id: string | null = query.get("bo_id") ?? null;
 
-  console.log("QUERY TEST:", query.get("test"));
+  console.log("QUERY mb_id:", query.get("mb_id"));
 
   return (
     <div className="member_page">
@@ -26,7 +26,7 @@ export function MemberPage(props: any) {
           <VisitOtherPage
             verifiedMemberData={verifiedMemberData}
             chosen_mb_id={chosen_mb_id}
-            chosen_blog_id={chosen_blog_id}
+            chosen_bo_id={chosen_bo_id}
           />
         </Route>
         <Route path={`${member.path}`}>

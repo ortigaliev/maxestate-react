@@ -59,7 +59,7 @@ export function MemberBlog(props: any) {
             alignItems={"center"}
           >
             <Typography variant="h1" gutterBottom>
-              My Blogs
+              Blogs
             </Typography>
             <Box
               sx={{

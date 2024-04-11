@@ -50,7 +50,7 @@ const memberFollowingsRetriever = createSelector(
 
 export function MemberFollowing(props: any) {
   /* INITIALIZATION */
-
+  const history = useHistory();
   const { setMemberFollowings } = actionDispatch(useDispatch());
   const { memberFollowings } = useSelector(memberFollowingsRetriever);
 
@@ -87,6 +87,11 @@ export function MemberFollowing(props: any) {
   const handlePaginationChange = (event: any, value: number) => {
     followingsSearchObj.page = value;
     setFollowingsSearchObj({ ...followingsSearchObj });
+  };
+
+  const visitMemberHandler = (mb_id: string) => {
+    history.push(`/member/other?mb_id=${mb_id}`);
+    document.location.reload();
   };
 
   return (
@@ -130,7 +135,8 @@ export function MemberFollowing(props: any) {
                       height="150"
                       src={image_url}
                       alt="blog_bg"
-                      style={{ borderRadius: "50%" }}
+                      style={{ borderRadius: "50%", cursor: "pointer" }}
+                      onClick={() => visitMemberHandler(following?.follow_id)}
                     />
                   </Box>
 
@@ -155,10 +161,19 @@ export function MemberFollowing(props: any) {
                         (95 Reviews)
                       </Link>
                     </Box>
-                    <span className="username_text">
-                      {following?.follow_member_data?.mb_nick}
+                    <span
+                      className="username_text"
+                      style={{ color: "#ff5a3c" }}
+                    >
+                      {following?.follow_member_data?.mb_type}
                     </span>
-                    <Typography variant="h4" gutterBottom fontWeight={700}>
+                    <Typography
+                      variant="h4"
+                      gutterBottom
+                      fontWeight={700}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => visitMemberHandler(following?.follow_id)}
+                    >
                       {following?.follow_member_data?.mb_nick}
                     </Typography>
                     <Box>

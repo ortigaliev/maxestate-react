@@ -29,3 +29,10 @@ export interface SearchMemberBlogsObj {
   limit: number;
   mb_id: string;
 }
+
+export interface BoBlogInput {
+  blog_subject: string;
+  blog_content: string;
+  blog_image: string;
+  bo_id: string;
+}

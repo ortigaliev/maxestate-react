@@ -50,6 +50,7 @@ const memberFollowersRetriever = createSelector(
 
 export function MemberFollowers(props: any) {
   /* INITIALIZATION */
+  const history = useHistory();
   const { mb_id, followRebuild, setFollowRebuild } = props;
   const { setMemberFollowers } = actionDispatch(useDispatch());
   const { memberFollowers } = useSelector(memberFollowersRetriever);
@@ -89,6 +90,12 @@ export function MemberFollowers(props: any) {
       sweetErrorHandling(err).then();
     }
   };
+
+  const visitMemberHandler = (mb_id: string) => {
+    history.push(`/member/other?mb_id=${mb_id}`);
+    document.location.reload();
+  };
+
   return (
     <div>
       <Container>
@@ -130,7 +137,10 @@ export function MemberFollowers(props: any) {
                       height="150"
                       src={image_url}
                       alt="blog_bg"
-                      style={{ borderRadius: "50%" }}
+                      style={{ borderRadius: "50%", cursor: "pointer" }}
+                      onClick={() =>
+                        visitMemberHandler(follower?.subscriber_id)
+                      }
                     />
                   </Box>
 
@@ -158,7 +168,15 @@ export function MemberFollowers(props: any) {
                     <span className="username_text">
                       {follower?.subscriber_member_data?.mb_type}
                     </span>
-                    <Typography variant="h4" gutterBottom fontWeight={700}>
+                    <Typography
+                      variant="h4"
+                      gutterBottom
+                      fontWeight={700}
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        visitMemberHandler(follower?.subscriber_id)
+                      }
+                    >
                       {follower.subscriber_member_data?.mb_nick}
                     </Typography>
                     <Box>

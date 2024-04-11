@@ -15,8 +15,6 @@ import ListItemText from "@mui/material/ListItemText";
 import SendIcon from "@mui/icons-material/Send";
 import PersonIcon from "@mui/icons-material/Person";
 import ArticleIcon from "@mui/icons-material/Article";
-import GradingIcon from "@mui/icons-material/Grading";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import GroupIcon from "@mui/icons-material/Group";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -32,8 +30,6 @@ import Tab from "@mui/material/Tab";
 import { MemberBlog } from "./memberBlog";
 import { MemberFollowers } from "./memberfollowers";
 import { MemberFollowing } from "./memberFollowing";
-import { MemberProperty } from "./memberProperty";
-import { FavoriteProperty } from "./favoriteProperty";
 import { MySetting } from "./mySetting";
 
 /* Icons */
@@ -113,7 +109,7 @@ export function VisitMyPage(props: any) {
   const [blogsRebuild, setBlogsRebuild] = useState<Date>(new Date());
   const [followRebuild, setFollowRebuild] = useState<boolean>(false);
   const [memberBlogSearchObj, setMemberBlogSearchObj] =
-    useState<SearchMemberBlogsObj>({ mb_id: "none", page: 1, limit: 5 });
+    useState<SearchMemberBlogsObj>({ mb_id: "none", page: 1, limit: 3 });
 
   useEffect(() => {
     if (!localStorage.getItem("member_data")) {
@@ -221,7 +217,10 @@ export function VisitMyPage(props: any) {
                     <CreateBlog />
                   </Box>
                   <Box className={"write_content"}>
-                    <TuiEditor />
+                    <TuiEditor
+                      setValue={setValue}
+                      setBlogsRebuild={setBlogsRebuild}
+                    />
                   </Box>
                 </TabPanel>
 
