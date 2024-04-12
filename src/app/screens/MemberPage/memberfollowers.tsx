@@ -34,6 +34,7 @@ import {
 } from "../../lib/sweetAlert";
 import { FollowSearchObj, Follower } from "../../../types/follow";
 import FollowApiServer from "../../apiServer/followApiServer";
+import { verifyMemberData } from "../../apiServer/verify";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -78,7 +79,7 @@ export function MemberFollowers(props: any) {
   const subscribeHandler = async (e: any, id: string) => {
     try {
       e.stopPropagation();
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifyMemberData, Definer.auth_err1);
 
       const followService = new FollowApiServer();
       await followService.subscribe(id);

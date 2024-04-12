@@ -64,6 +64,7 @@ import {
 import { sweetErrorHandling, sweetFailureProvider } from "../../lib/sweetAlert";
 import BlogApiServer from "../../apiServer/blogApiServer";
 import MemberApiServer from "../../apiServer/memberApiServer";
+import { verifyMemberData } from "../../apiServer/verify";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -97,8 +98,6 @@ const chosenSingleBoBlogRetriever = createSelector(
 
 export function VisitMyPage(props: any) {
   //INITIALIZIATION
-
-  const { verifiedMemberData } = props;
   const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlogs } =
     actionDispatch(useDispatch());
   const { chosenMember } = useSelector(chosenMemberRetriever);
@@ -112,7 +111,7 @@ export function VisitMyPage(props: any) {
     useState<SearchMemberBlogsObj>({ mb_id: "none", page: 1, limit: 3 });
 
   useEffect(() => {
-    if (!localStorage.getItem("member_data")) {
+    if (!verifyMemberData) {
       sweetFailureProvider("Please login first", true, true);
     }
 
@@ -125,7 +124,7 @@ export function VisitMyPage(props: any) {
       .catch((err) => console.log(err));
 
     memberService
-      .getChosenMember(verifiedMemberData?._id)
+      .getChosenMember(verifyMemberData?._id)
       .then((data) => setChosenMember(data))
       .catch((err) => console.log(err));
   }, [memberBlogSearchObj, blogsRebuild, followRebuild]);
@@ -237,7 +236,7 @@ export function VisitMyPage(props: any) {
                       actions_enabled={true}
                       followRebuild={followRebuild}
                       setFollowRebuild={setFollowRebuild}
-                      mb_id={props.verifiedMemberData?._id}
+                      mb_id={verifyMemberData._id}
                     />
                   </Box>
                 </TabPanel>
@@ -249,7 +248,7 @@ export function VisitMyPage(props: any) {
                       actions_enabled={true}
                       followRebuild={followRebuild}
                       setFollowRebuild={setFollowRebuild}
-                      mb_id={props.verifiedMemberData?._id}
+                      mb_id={verifyMemberData?._id}
                     />
                   </Box>
                 </TabPanel>
@@ -281,7 +280,7 @@ export function VisitMyPage(props: any) {
                     <img
                       width="150"
                       height="150"
-                      src="/images/setting/author.jpg"
+                      src={verifyMemberData?.mb_image}
                       alt="User Setting img"
                       style={{
                         borderRadius: "50%",

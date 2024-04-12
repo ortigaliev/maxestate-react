@@ -14,6 +14,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Basket from "./basket";
+import { verifyMemberData } from "../../apiServer/verify";
 
 export function NavbarAgency(props: any) {
   return (
@@ -51,7 +52,7 @@ export function NavbarAgency(props: any) {
                 Blog
               </NavLink>
             </Box>
-            {props.verifiedMemberData ? (
+            {verifyMemberData ? (
               <Box className="hover-line">
                 <NavLink
                   className="my_page"
@@ -77,7 +78,7 @@ export function NavbarAgency(props: any) {
                 aria-expanded={undefined}
                 //onClick={handleClick}
               />
-              {props.verifiedMemberData ? (
+              {verifyMemberData ? (
                 <Box className="hover-line">
                   <NavLink to="/order" activeClassName="underline">
                     Order
@@ -88,7 +89,7 @@ export function NavbarAgency(props: any) {
 
             <Basket cartItems={props.cartItems} onAdd={props.onAdd} />
 
-            {!props.verifiedMemberData ? (
+            {verifyMemberData ? (
               <Box>
                 <Button
                   variant="contained"
@@ -105,7 +106,7 @@ export function NavbarAgency(props: any) {
                   height: "48px",
                   borderRadius: "24px",
                 }}
-                src={props.verifiedMemberData.mb_image}
+                src={verifyMemberData.mb_image}
                 onClick={props.handleLogOutClick}
               />
             )}
@@ -152,7 +153,7 @@ export function NavbarAgency(props: any) {
               </MenuItem>
             </Menu>
             <Box>
-              {!props.verifiedMemberData ? (
+              {verifyMemberData ? (
                 <Button variant="contained" onClick={props.handleSignUpOpen}>
                   Sign Up
                 </Button>

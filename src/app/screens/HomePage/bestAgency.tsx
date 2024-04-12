@@ -35,6 +35,7 @@ import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../lib/sweetAlert";
+import { verifyMemberData } from "../../apiServer/verify";
 
 /* REDUX SELECTOR */
 const bestAgencyRetriever = createSelector(
@@ -56,7 +57,7 @@ export function BestAgency() {
   };
   const targetLikeBest = async (e: any, id: string) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifyMemberData, Definer.auth_err1);
 
       const memberService = new MemberApiServer(),
         like_result = await memberService.memberLikeTarget({

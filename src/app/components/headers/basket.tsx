@@ -8,13 +8,26 @@ import React from "react";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { CartItem } from "../../../types/others";
 import { serverApi } from "../../lib/config";
+import { verifyMemberData } from "../../apiServer/verify";
+import { Definer } from "../../lib/Definer";
+import assert from "assert";
+import OrderApiServer from "../../apiServer/orderApiServer";
+import { sweetErrorHandling } from "../../lib/sweetAlert";
+import { useHistory } from "react-router-dom";
 
 export default function Basket(props: any) {
   /** INITIALIZATIONS **/
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const { cartItems = [], onAdd = [], onRemove = [], onDelete = [] } = props;
+  const {
+    cartItems = [],
+    onAdd = [],
+    onRemove = [],
+    onDelete = [],
+    onDeleteAll = [],
+  } = props;
   const itemsPrice = cartItems?.reduce(
     (a: any, c: CartItem) => a + c.price * c.quantity,
     0
@@ -31,7 +44,21 @@ export default function Basket(props: any) {
     setAnchorEl(null);
   };
 
-  const processOrderHandler = async () => {};
+  const processOrderHandler = async () => {
+    try {
+      assert.ok(verifyMemberData, Definer.auth_err1);
+      const order = new OrderApiServer();
+      await order.createOrder(cartItems);
+
+      onDeleteAll();
+      handleClose();
+      props.setOrderRebuild(new Date());
+      history.push("/orders");
+    } catch (err: any) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
+  };
 
   return (
     <Box className={"hover-line"}>

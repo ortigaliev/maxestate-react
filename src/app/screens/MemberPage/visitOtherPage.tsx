@@ -70,6 +70,7 @@ import {
   sweetTopSmallSuccessAlert,
 } from "../../lib/sweetAlert";
 import FollowApiServer from "../../apiServer/followApiServer";
+import { verifyMemberData } from "../../apiServer/verify";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -103,7 +104,7 @@ const chosenSingleBoBlogRetriever = createSelector(
 export function VisitOtherPage(props: any) {
   //INITIALIZIATION
   const history = useHistory();
-  const { verifiedMemberData, chosen_mb_id, chosen_bo_id } = props;
+  const { chosen_mb_id, chosen_bo_id } = props;
   const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlog } =
     actionDispatch(useDispatch());
   const { chosenMember } = useSelector(chosenMemberRetriever);
@@ -117,7 +118,7 @@ export function VisitOtherPage(props: any) {
     useState<SearchMemberBlogsObj>({ mb_id: chosen_mb_id, page: 1, limit: 3 });
 
   useEffect(() => {
-    if (chosen_mb_id === verifiedMemberData?._id) {
+    if (chosen_mb_id === verifyMemberData?._id) {
       history.push("/member");
     }
 
@@ -138,7 +139,7 @@ export function VisitOtherPage(props: any) {
   }, [memberBlogSearchObj, chosen_mb_id, blogsRebuild]);
 
   useEffect(() => {
-    if (chosen_mb_id === verifiedMemberData?._id) {
+    if (chosen_mb_id === verifyMemberData?._id) {
       history.push("/member");
 
       const memberService = new MemberApiServer();
@@ -148,7 +149,7 @@ export function VisitOtherPage(props: any) {
         .then((data) => setChosenMember(data))
         .catch((err) => console.log(err));
     }
-  }, [verifiedMemberData, chosen_mb_id, followRebuild]);
+  }, [chosen_mb_id, followRebuild]);
   // HANDLERS
   const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
@@ -177,7 +178,7 @@ export function VisitOtherPage(props: any) {
 
   const subscribeHandler = async (e: any) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifyMemberData, Definer.auth_err1);
 
       const followService = new FollowApiServer();
       await followService.subscribe(e.target.value);
@@ -191,7 +192,7 @@ export function VisitOtherPage(props: any) {
   };
   const unsubscribeHandler = async (e: any) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifyMemberData, Definer.auth_err1);
 
       const followService = new FollowApiServer();
       await followService.unsubscribe(e.target.value);

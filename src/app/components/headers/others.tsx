@@ -13,6 +13,7 @@ import { NavLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Basket from "./basket";
+import { verifyMemberData } from "../../apiServer/verify";
 
 export function NavbarOthers(props: any) {
   return (
@@ -50,7 +51,7 @@ export function NavbarOthers(props: any) {
                 Blog
               </NavLink>
             </Box>
-            {props.verifiedMemberData ? (
+            {verifyMemberData ? (
               <Box className="hover-line">
                 <NavLink
                   className="my_page"
@@ -66,7 +67,7 @@ export function NavbarOthers(props: any) {
                 Contact
               </NavLink>
             </Box>
-            {props.verifiedMemberData ? (
+            {verifyMemberData ? (
               <Box className="hover-line">
                 <NavLink
                   to="/order"
@@ -85,7 +86,7 @@ export function NavbarOthers(props: any) {
               onDelete={props.onDelete}
             />
 
-            {!props.verifiedMemberData ? (
+            {!verifyMemberData ? (
               <Box>
                 <Button
                   variant="contained"
@@ -102,7 +103,7 @@ export function NavbarOthers(props: any) {
                   height: "48px",
                   borderRadius: "24px",
                 }}
-                src={props.verifiedMemberData.mb_image}
+                src={verifyMemberData.mb_image}
                 onClick={props.handleLogOutClick}
               />
             )}
@@ -149,7 +150,7 @@ export function NavbarOthers(props: any) {
               </MenuItem>
             </Menu>
             <Box>
-              {!props.verifiedMemberData ? (
+              {verifyMemberData ? (
                 <Button variant="contained" onClick={props.handleSignUpOpen}>
                   Sign Up
                 </Button>

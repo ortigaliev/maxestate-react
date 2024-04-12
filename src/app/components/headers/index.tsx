@@ -13,6 +13,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
 import Basket from "./basket";
+import { verifyMemberData } from "../../apiServer/verify";
 
 export function NavbarHome(props: any) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -58,7 +59,7 @@ export function NavbarHome(props: any) {
                   Blog
                 </NavLink>
               </Box>
-              {props.verifiedMemberData ? (
+              {verifyMemberData ? (
                 <Box className="hover-line">
                   <NavLink to="/member" activeClassName="underline">
                     My page
@@ -70,7 +71,7 @@ export function NavbarHome(props: any) {
                   Contact
                 </NavLink>
               </Box>
-              {props.verifiedMemberData ? (
+              {!verifyMemberData ? (
                 <Box className="hover-line">
                   <NavLink to="/order" activeClassName="underline">
                     Order
@@ -85,7 +86,7 @@ export function NavbarHome(props: any) {
                 onDelete={props.onDelete}
               />
 
-              {!props.verifiedMemberData ? (
+              {!verifyMemberData ? (
                 <Box>
                   <Button
                     variant="contained"
@@ -102,7 +103,7 @@ export function NavbarHome(props: any) {
                     height: "48px",
                     borderRadius: "24px",
                   }}
-                  src={props.verifiedMemberData.mb_image}
+                  src={verifyMemberData.mb_image}
                   onClick={props.handleLogOutClick}
                 />
               )}
@@ -149,7 +150,7 @@ export function NavbarHome(props: any) {
                 </MenuItem>
               </Menu>
               <Box>
-                {!props.verifiedMemberData ? (
+                {!verifyMemberData ? (
                   <Button variant="contained" onClick={props.handleSignUpOpen}>
                     Sign Up
                   </Button>

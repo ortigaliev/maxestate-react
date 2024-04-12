@@ -22,6 +22,7 @@ import {
 } from "../../lib/sweetAlert";
 import { BoBlog } from "../../../types/boBlog";
 import { serverApi } from "../../lib/config";
+import { verifyMemberData } from "../../apiServer/verify";
 const blog_list = Array.from(Array(3).keys());
 
 export function MemberBlog(props: any) {
@@ -32,7 +33,7 @@ export function MemberBlog(props: any) {
   const targetLikeHandler = async (e: any) => {
     try {
       e.stopPropagation();
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifyMemberData, Definer.auth_err1);
 
       const memberService = new MemberApiServer();
       const like_result = await memberService.memberLikeTarget({

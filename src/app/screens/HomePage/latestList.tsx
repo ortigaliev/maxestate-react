@@ -34,6 +34,7 @@ import assert from "assert";
 import MemberApiServer from "../../apiServer/memberApiServer";
 import { Favorite } from "@mui/icons-material";
 import Visibility from "@mui/icons-material/Visibility";
+import { verifyMemberData } from "../../apiServer/verify";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -67,7 +68,7 @@ export function LatestList() {
 
   const targetLikeLatest = async (e: any, id: string) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifyMemberData, Definer.auth_err1);
 
       const memberServer = new MemberApiServer(),
         like_result = await memberServer.memberLikeTarget({

@@ -13,6 +13,7 @@ import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../lib/sweetAlert";
+import { verifyMemberData } from "../../apiServer/verify";
 /* import moment from "moment"; */
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -21,7 +22,7 @@ export function TargetArticles(props: any) {
   /**HANDLERS */
   const targetLikeHandler = async (e: any) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifyMemberData, Definer.auth_err1);
 
       const memberService = new MemberApiServer();
       const like_result = await memberService.memberLikeTarget({
