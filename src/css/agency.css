@@ -36,7 +36,7 @@
 
 .swiper {
   .swiper-slide {
-    background: #ff5a3c;
+   /*  background: #ff5a3c; */
     display: flex;
     justify-content: center;
     align-items: center;
