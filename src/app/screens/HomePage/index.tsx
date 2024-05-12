@@ -38,7 +38,7 @@ export function HomePage() {
   return (
     <div className="homepage">
       <LatestList />
-      {/*  <BestAgency /> */}
+      <BestAgency />
       <FeaturedList />
       <AppartmentPlan />
       <Ads />
@@ -46,5 +46,4 @@ export function HomePage() {
       <Feedback />
       <LatestNews />
     </div>
-  );
-}
+)};

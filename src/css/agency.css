@@ -92,9 +92,11 @@
   margin-bottom: 15px;
 }
 
-.property_category_box {
-  -moz-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-  -o-transform: rotate(-90deg);
-  -webkit-transform: rotate(-90deg);
+.all_agency_banner {
+  width: 100%;
+  height: 500px;
+  position: relative;
+  background-image: url("../../public/images/agency/allAgency.jpg");
+  background-size: cover;
+  background-position: center;
 }
