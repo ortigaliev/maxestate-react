@@ -71,7 +71,7 @@ export default function Basket(props: any) {
         onClick={handleClick}
       >
         <Badge badgeContent={1} color="secondary">
-          <AddShoppingCartIcon sx={{ color: "fff" }} />
+          <AddShoppingCartIcon sx={{ color: "#fff" }} />
         </Badge>
       </IconButton>
       <Menu

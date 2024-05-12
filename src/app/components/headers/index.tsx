@@ -37,24 +37,24 @@ export function NavbarHome(props: any) {
               justifyContent={"space-evenly"}
               alignItems={"center"}
             >
-              <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/" activeClassName="underline">
                   Home
                 </NavLink>
               </Box>
 
-              {/*  <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/agency" activeClassName="underline">
                   Agency
                 </NavLink>
-              </Box> */}
+              </Box>
 
-              <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/estate" activeClassName="underline">
                   Property
                 </NavLink>
               </Box>
-              <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/blog" activeClassName="underline">
                   Blog
                 </NavLink>
@@ -66,14 +66,18 @@ export function NavbarHome(props: any) {
                   </NavLink>
                 </Box>
               ) : null}
-              <Box className="hover-line">
+              <Box className="hover-line" onClick={props.setPath}>
                 <NavLink to="/contact" activeClassName="underline">
                   Contact
                 </NavLink>
               </Box>
-              {!verifyMemberData ? (
-                <Box className="hover-line">
-                  <NavLink to="/order" activeClassName="underline">
+              {verifyMemberData ? (
+                <Box className="hover-line" onClick={props.setPath}>
+                  <NavLink
+                    to="/order"
+                    activeClassName="underline"
+                    style={{ color: "#000" }}
+                  >
                     Order
                   </NavLink>
                 </Box>

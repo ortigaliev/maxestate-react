@@ -28,6 +28,7 @@ import { Member } from "../types/user";
 import "../app/apiServer/verify";
 import { CartItem } from "../types/others";
 import { Estate } from "../types/estate";
+import { AgencyPage } from "./screens/AgencyPage";
 
 function App() {
   /* INITIALIZATION */
@@ -143,8 +144,7 @@ function App() {
           onRemove={onRemove}
           onDelete={onDelete}
         />
-      ) : (
-        /* : main_path.includes("/agency") ? (
+      ) : main_path.includes("/agency") ? (
         <NavbarAgency
           setPath={setPath}
           anchorEl={anchorEl}
@@ -155,7 +155,7 @@ function App() {
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
         />
-      ) */
+      ) : (
         <NavbarOthers
           setPath={setPath}
           anchorEl={anchorEl}
@@ -172,9 +172,9 @@ function App() {
         />
       )}
       <Switch>
-        {/*  <Route path="/agency">
+        <Route path="/agency">
           <AgencyPage />
-        </Route> */}
+        </Route>
         <Route path="/estate">
           <PropertyPage onAdd={onAdd} />
         </Route>

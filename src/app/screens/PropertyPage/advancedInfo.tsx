@@ -119,7 +119,7 @@ export function AdvancedInfo() {
               control={<Checkbox defaultChecked />}
               label="Medium"
             />
-            <FormControlLabel control={<Checkbox />} label="Heigh Budget" />
+            <FormControlLabel control={<Checkbox />} label="High Budget" />
           </FormGroup>
           <Typography
             gutterBottom

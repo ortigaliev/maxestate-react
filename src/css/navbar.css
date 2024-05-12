@@ -1,9 +1,29 @@
 .format {
   width: 1320px;
+  height: 100%;
   position: relative;
   background-image: url("../../public/images/home/home_bg.jpg");
   background-size: cover;
+}
+
+.format_agency {
+  width: 1320px;
+  height: 60%;
+  position: relative;
+  background-image: url("../../public/images/agency/agency.jpg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   max-width: 100%;
+}
+
+.agency_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(12, 15, 15, 0.4);
 }
 
 .home_navbar {
@@ -45,7 +65,7 @@
   color: #000;
 }
 
-.hover-line a {
+.home_navbar .hover-line a {
   position: relative;
   display: inline-block;
   font-size: 18px;
@@ -55,13 +75,13 @@
   color: #fff;
 }
 
-.underline {
+.home_navbar .underline {
   display: block;
   content: "";
   border-bottom: solid 2px #ff5a3c;
 }
 
-.hover-line::after {
+.home_navbar .hover-line::after {
   display: block;
   content: "";
   border-bottom: solid 2px #ff5a3c;
@@ -69,7 +89,7 @@
   transition: transform 250ms ease-in-out;
 }
 
-.hover-line:hover:after {
+.home_navbar .hover-line:hover:after {
   transform: scaleX(1);
 }
 
@@ -87,63 +107,28 @@
   background-color: #ff5a3c;
 }
 
-/* AGENCY PAGE */
-
-.format_agency {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 100%;
-  height: 800px;
-  display: flex;
-}
-
-.format_agency_img {
-  position: relative;
-  width: 100%;
-  height: 680px;
-  display: flex;
-  background-image: url("../../public/images/home/agency_bg.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  overflow: hidden;
-  background-position: center;
-  margin-bottom: 200px;
-}
-
-.agency_hover-line a {
-  position: relative;
-  display: inline-block;
-  font-size: 18px;
-  padding: 10px 10px;
-  font-weight: 600;
-  font-family: "Nunito Sans", sans-serif;
-  color: #000;
-  text-decoration: none;
-}
-
 /* OTHERS PAGE */
 
 .format_others {
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: sticky;
   width: 100%;
-  height: 442px;
+  height: 120px;
   display: flex;
-  background-color: #fff;
+  background-color: #071c1f;
+  z-index: 2;
+  top: 0;
+}
+
+.navbar_config {
+  position: relative;
 }
 
 .format_others_img {
+  width: 1320px;
   position: relative;
-  width: 100%;
-  height: 326px;
-  display: flex;
-  background-image: url("../../public/images/home/others_bg.jpg");
   background-size: cover;
-  background-repeat: no-repeat;
-  overflow: hidden;
-  background-position: center;
 }
 
 .others_hover-line a {

@@ -19,152 +19,151 @@ import { verifyMemberData } from "../../apiServer/verify";
 export function NavbarAgency(props: any) {
   return (
     <div className="format_agency home_navbar">
-      <Container>
-        <Stack
-          flexDirection={"row"}
-          className="navbar_config agency_navbar_config"
-          justifyContent={"space-between"}
-        >
-          <Box>
-            <img src="/images/agency/logo_black.png" alt="Logo" />
-          </Box>
+      <div className="agency_overlay">
+        <Container>
           <Stack
-            className="navbar_links"
             flexDirection={"row"}
-            justifyContent={"space-evenly"}
-            alignItems={"center"}
+            className="navbar_config"
+            justifyContent={"space-between"}
           >
-            <Box className="agency_hover-line hover-line">
-              <NavLink to="/">Home</NavLink>
+            <Box>
+              <img src="/images/home/logo.png" alt="Logo" />
             </Box>
-            <Box className="agency_hover-line hover-line">
-              <NavLink to="/agency" activeClassName="underline">
-                Agency
-              </NavLink>
-            </Box>
-            <Box className="agency_hover-line hover-line">
-              <NavLink to="/estate" activeClassName="underline">
-                Property
-              </NavLink>
-            </Box>
-            <Box className="agency_hover-line hover-line">
-              <NavLink to="/blog" activeClassName="underline">
-                Blog
-              </NavLink>
-            </Box>
-            {verifyMemberData ? (
-              <Box className="hover-line">
-                <NavLink
-                  className="my_page"
-                  to="/member"
-                  activeClassName="underline"
-                >
-                  My page
+            <Stack
+              className="navbar_links"
+              flexDirection={"row"}
+              justifyContent={"space-evenly"}
+              alignItems={"center"}
+            >
+              <Box className="hover-line" onClick={props.setPath}>
+                <NavLink to="/">Home</NavLink>
+              </Box>
+
+              <Box className="hover-line" onClick={props.setPath}>
+                <NavLink to="/agency" activeClassName="underline">
+                  Agency
                 </NavLink>
               </Box>
-            ) : null}
-            <Box className="agency_hover-line hover-line">
-              <NavLink to="/contact" activeClassName="underline">
-                Contact
-              </NavLink>
-            </Box>
-            {/* Shopping Cart  */}
-            <Box className="agency_hover-line hover-line ">
-              <IconButton
-                aria-label="cart"
-                id="basic-button"
-                aria-controls={undefined}
-                aria-haspopup="true"
-                aria-expanded={undefined}
-                //onClick={handleClick}
-              />
+
+              <Box className="hover-line" onClick={props.setPath}>
+                <NavLink to="/estate" activeClassName="underline">
+                  Property
+                </NavLink>
+              </Box>
+              <Box className="hover-line" onClick={props.setPath}>
+                <NavLink to="/blog" activeClassName="underline">
+                  Blog
+                </NavLink>
+              </Box>
               {verifyMemberData ? (
                 <Box className="hover-line">
-                  <NavLink to="/order" activeClassName="underline">
+                  <NavLink to="/member" activeClassName="underline">
+                    My page
+                  </NavLink>
+                </Box>
+              ) : null}
+              <Box className="hover-line" onClick={props.setPath}>
+                <NavLink to="/contact" activeClassName="underline">
+                  Contact
+                </NavLink>
+              </Box>
+              {verifyMemberData ? (
+                <Box className="hover-line" onClick={props.setPath}>
+                  <NavLink
+                    to="/order"
+                    activeClassName="underline"
+                    style={{ color: "#000" }}
+                  >
                     Order
                   </NavLink>
                 </Box>
               ) : null}
-            </Box>
 
-            <Basket cartItems={props.cartItems} onAdd={props.onAdd} />
-
-            {verifyMemberData ? (
-              <Box>
-                <Button
-                  variant="contained"
-                  style={{ color: "#fff", textDecoration: "none" }}
-                  onClick={props.handleLoginOpen}
-                >
-                  Sign In
-                </Button>
-              </Box>
-            ) : (
-              <img
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "24px",
-                }}
-                src={verifyMemberData.mb_image}
-                onClick={props.handleLogOutClick}
+              <Basket
+                cartItems={props.cartItems}
+                onAdd={props.onAdd}
+                onRemove={props.onRemove}
+                onDelete={props.onDelete}
               />
-            )}
 
-            <Menu
-              anchorEl={props.anchorEl}
-              open={props.open}
-              onClose={props.handleCloseLogOut}
-              onClick={props.handleCloseLogOut}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
+              {!verifyMemberData ? (
+                <Box>
+                  <Button
+                    variant="contained"
+                    style={{ color: "#fff", textDecoration: "none" }}
+                    onClick={props.handleLoginOpen}
+                  >
+                    Sign In
+                  </Button>
+                </Box>
+              ) : (
+                <img
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "24px",
+                  }}
+                  src={verifyMemberData.mb_image}
+                  onClick={props.handleLogOutClick}
+                />
+              )}
+
+              <Menu
+                anchorEl={props.anchorEl}
+                open={props.open}
+                onClose={props.handleCloseLogOut}
+                onClick={props.handleCloseLogOut}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&:before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
                   },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              <MenuItem onClick={props.handleLogOutRequest}>
-                <ListItemIcon>
-                  <LogoutIcon fontSize="small" style={{ color: "blue" }} />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
-            </Menu>
-            <Box>
-              {verifyMemberData ? (
-                <Button variant="contained" onClick={props.handleSignUpOpen}>
-                  Sign Up
-                </Button>
-              ) : null}
-            </Box>
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <MenuItem onClick={props.handleLogOutRequest}>
+                  <ListItemIcon>
+                    <LogoutIcon fontSize="small" style={{ color: "blue" }} />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+              <Box>
+                {!verifyMemberData ? (
+                  <Button variant="contained" onClick={props.handleSignUpOpen}>
+                    Sign Up
+                  </Button>
+                ) : null}
+              </Box>
+            </Stack>
           </Stack>
-        </Stack>
-      </Container>
-      <div className="format_agency_header">
-        <Box className="format_agency_img"></Box>
+        </Container>
       </div>
+
+      {/* <div className="format_agency_header">
+        <Box className="format_agency_img"></Box>
+      </div> */}
     </div>
   );
 }

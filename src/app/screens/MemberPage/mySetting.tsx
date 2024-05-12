@@ -17,9 +17,81 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Checkbox from "@mui/material/Checkbox";
 
 import * as React from "react";
+import { useState } from "react";
+import { verifyMemberData } from "../../apiServer/verify";
+import assert from "assert";
+import { Definer } from "../../lib/Definer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import { MemberUpdateData } from "../../../types/user";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export function MySetting() {
+  /* INITIALIZATION */
+  const [file, setFile] = useState(verifyMemberData?.mb_image);
+
+  const [memberUpdate, setMemberUpdate] = useState<MemberUpdateData>({
+    mb_nick: "",
+    mb_phone: "",
+    mb_address: "",
+    mb_description: "",
+    mb_image: "",
+  });
+
+  /**HANDLERS */
+  const changeMemberNickHandler = (e: any) => {
+    memberUpdate.mb_nick = e.target.value;
+    setMemberUpdate({ ...memberUpdate });
+  };
+  const changeMemberPhoneHandler = (e: any) => {
+    memberUpdate.mb_phone = e.target.value;
+    setMemberUpdate({ ...memberUpdate });
+  };
+  const changeMemberAddressHandler = (e: any) => {
+    memberUpdate.mb_address = e.target.value;
+    setMemberUpdate({ ...memberUpdate });
+  };
+  const changeMemberDescriptionHandler = (e: any) => {
+    memberUpdate.mb_description = e.target.value;
+    setMemberUpdate({ ...memberUpdate });
+  };
+  const handleImagePreviewer = (e: any) => {
+    try {
+      const file = e.target.files[0];
+
+      const fileTypes = file["type"],
+        validTypes = ["image/jpg", "image/jpeg", "image/png"];
+      assert.ok(validTypes.includes(fileTypes) && file, Definer.input_err2);
+
+      memberUpdate.mb_image = file;
+      setMemberUpdate({ ...memberUpdate });
+      setFile(URL.createObjectURL(file));
+    } catch (err) {
+      console.log(`ERROR ::: handleImagePreviewer ${err}`);
+      sweetErrorHandling(err).then();
+    }
+  };
+  const handleSubmitButton = async () => {
+    try {
+      const memberService = new MemberApiServer();
+      const result = await memberService.updateMemberData(memberUpdate);
+
+      assert.ok(result, Definer.general_err1);
+      await sweetTopSmallSuccessAlert(
+        "Information modified successfully!",
+        700,
+        false
+      );
+      window.location.reload();
+    } catch (err) {
+      console.log(`ERROR ::: handleSubmitButton ${err}`);
+      sweetErrorHandling(err).then();
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -57,10 +129,14 @@ export function MySetting() {
                     <img
                       width="180px"
                       height="180"
-                      src="/images/setting/author.jpg"
+                      src={file}
                       alt="Setting user"
                     />
-                    <Button component="label" style={{ minWidth: "0" }}>
+                    <Button
+                      component="label"
+                      style={{ minWidth: "0" }}
+                      onChange={handleImagePreviewer}
+                    >
                       <CloudDownloadIcon />
                       <input type="file" hidden />
                     </Button>
@@ -71,8 +147,9 @@ export function MySetting() {
                       variant="h4"
                       component="div"
                       color="secondary"
+                      onChange={changeMemberNickHandler}
                     >
-                      User
+                      {verifyMemberData?.mb_nick}
                     </Typography>
                     <Typography
                       gutterBottom
@@ -80,7 +157,7 @@ export function MySetting() {
                       component="div"
                       fontWeight={700}
                     >
-                      Rosalina D. William
+                      {verifyMemberData?.mb_name}
                     </Typography>
                     <Box
                       sx={{
@@ -89,9 +166,11 @@ export function MySetting() {
                         gap: 1,
                         mb: 1,
                       }}
+                      onChange={changeMemberDescriptionHandler}
                     >
                       <LocationOnIcon sx={{ color: "#ff5a3c" }} />
-                      Sangnok-gu, Ansan, Gyeonggi-do, South Korea
+                      {verifyMemberData?.mb_address ??
+                        "Member adress does not exist"}
                     </Box>
                     <Box
                       sx={{
@@ -100,13 +179,14 @@ export function MySetting() {
                         gap: 1,
                         mb: 1,
                       }}
+                      onChange={changeMemberPhoneHandler}
                     >
                       <LocalPhoneIcon sx={{ color: "#ff5a3c" }} />
-                      +821023-456789
+                      {verifyMemberData?.mb_phone}
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                       <MailOutlineIcon sx={{ color: "#ff5a3c" }} />
-                      ortigaliyevm@gmail.com
+                      {verifyMemberData?.mb_email ?? "No email adress"}
                     </Box>
                   </CardContent>
                 </Stack>
@@ -180,7 +260,11 @@ export function MySetting() {
                     Save my name, email, and website in this browser for the
                     next time I comment.
                   </Box>
-                  <Button size="large" variant="contained">
+                  <Button
+                    size="large"
+                    variant="contained"
+                    onClick={handleSubmitButton}
+                  >
                     Confirm
                   </Button>
                 </CardContent>
