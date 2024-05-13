@@ -5,6 +5,13 @@
   background-color: #fff;
 }
 
+.chosen_agency {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+}
+
 .one_agency .card_tite {
   color: #212529;
   display: flex;
@@ -36,7 +43,7 @@
 
 .swiper {
   .swiper-slide {
-   /*  background: #ff5a3c; */
+    /*  background: #ff5a3c; */
     display: flex;
     justify-content: center;
     align-items: center;
