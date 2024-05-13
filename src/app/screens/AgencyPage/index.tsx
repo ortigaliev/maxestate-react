@@ -5,16 +5,15 @@ import { AllAgency } from "./allAgency";
 import "../../../css/agency.css";
 import { ChosenAgency } from "./chosenAgency";
 
-
 export function AgencyPage() {
   let agency = useRouteMatch();
   console.log(agency);
   return (
     <div className="agency_page">
       <Switch>
-        {/* <Route path={`${agency.path}/property/:property_id`}>
-          <ChosenProperty />
-        </Route> */}
+        <Route path={`${agency.path}/property/:property_id`}>
+          Chosen Estate
+        </Route>
         <Route path={`${agency.path}/:agency_id`}>
           <ChosenAgency />
         </Route>
@@ -23,5 +22,5 @@ export function AgencyPage() {
         </Route>
       </Switch>
     </div>
-  )
+  );
 }

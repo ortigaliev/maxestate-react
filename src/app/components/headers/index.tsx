@@ -76,7 +76,7 @@ export function NavbarHome(props: any) {
                   <NavLink
                     to="/order"
                     activeClassName="underline"
-                    style={{ color: "#000" }}
+                    style={{ color: "#fff" }}
                   >
                     Order
                   </NavLink>

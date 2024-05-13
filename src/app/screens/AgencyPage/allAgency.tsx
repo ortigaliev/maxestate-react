@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Divider, Stack } from "@mui/material";
+import { Container, Divider, PaginationItem, Stack } from "@mui/material";
 import {
   Card,
   CardActions,
@@ -19,8 +19,11 @@ import { FavoriteBorder, FormatSize } from "@mui/icons-material";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
+import Pagination from "@mui/material/Pagination";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-const order_list = Array.from(Array(6).keys());
+const order_list = Array.from(Array(5).keys());
 console.log(order_list);
 
 export function AllAgency() {
@@ -141,6 +144,22 @@ export function AllAgency() {
             </Stack>
           </CssVarsProvider>
         </Stack>
+        <Stack spacing={2} alignItems={"center"} mb={16}>
+          <Pagination
+            count={3}
+            page={1}
+            renderItem={(item) => (
+              <PaginationItem
+                components={{
+                  previous: ArrowBackIcon,
+                  next: ArrowForwardIcon,
+                }}
+                {...item}
+                color={"secondary"}
+              />
+            )}
+          />
+        </Stack>
       </Container>
       <Stack>
         <Box
@@ -181,6 +200,7 @@ export function AllAgency() {
           />
         </Box>
       </Stack>
+      <Container></Container>
     </div>
   );
 }

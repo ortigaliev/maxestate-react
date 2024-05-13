@@ -87,7 +87,7 @@ export function NavbarOthers(props: any) {
                 <NavLink
                   to="/order"
                   activeClassName="underline"
-                  style={{ color: "#000" }}
+                  style={{ color: "#fff" }}
                 >
                   Order
                 </NavLink>
@@ -175,7 +175,6 @@ export function NavbarOthers(props: any) {
         </Stack>
         <Box className="format_others_img"></Box>
       </Container>
-
     </div>
   );
 }
