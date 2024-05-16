@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Divider, PaginationItem, Stack } from "@mui/material";
 import {
   Card,
@@ -30,9 +30,9 @@ import { retrieveTargetAgencies } from "../../screens/AgencyPage/selector";
 import { Agency } from "../../../types/user";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setTargetAgencies } from "../../screens/AgencyPage/slice";
-
-const order_list = Array.from(Array(5).keys());
-
+import { SearchObj } from "../../../types/others";
+import AgencyApiServer from "../../apiServer/agencyApiServer";
+import { serverApi } from "../../lib/config";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -47,16 +47,35 @@ const targetAgenciesRetriever = createSelector(
   })
 );
 
-
 export function AllAgency() {
-
   /* INITIALIZATION */
   const { setTargetAgencies } = actionDispatch(useDispatch());
   const { targetAgencies } = useSelector(targetAgenciesRetriever);
+  const [targetSearchObject, setTargetSearchObject] = useState<SearchObj>({
+    page: 1,
+    limit: 6,
+    order: "mb_point",
+  });
 
   useEffect(() => {
-    //TODO Retrieve targetAgenciesData
-  }, []);
+    const agencyServer = new AgencyApiServer();
+    agencyServer
+      .getAgencies(targetSearchObject)
+      .then((data) => setTargetAgencies(data))
+      .catch((err) => console.log(err));
+  }, [targetSearchObject]);
+
+  /* HANDLERS */
+  const searchHandler = (category: string) => {
+    targetSearchObject.page = 1;
+    targetSearchObject.order = category;
+    setTargetSearchObject({...targetSearchObject})
+  };
+  const handlePaginationChange = (event: any, value: number) => {
+    targetSearchObject.page = value;
+    setTargetSearchObject({...targetSearchObject});
+  };
+
 
   return (
     <div className="all_agency">
@@ -87,7 +106,8 @@ export function AllAgency() {
             >
               {/* NEW CARD 1 */}
 
-              {order_list.map((ele) => {
+              {targetAgencies.map((ele: Agency) => {
+                const image_path = `${serverApi}/${ele.mb_image}`;
                 return (
                   <Card
                     variant="outlined"
@@ -100,16 +120,12 @@ export function AllAgency() {
                   >
                     <CardOverflow>
                       <AspectRatio ratio="1.3">
-                        <img
-                          src="/images/agency/luxhouse.png"
-                          loading="lazy"
-                          alt="news_img"
-                        />
+                        <img src={image_path} loading="lazy" alt="news_img" />
                       </AspectRatio>
                     </CardOverflow>
                     <CardContent>
                       <Typography level="title-lg" mb={2}>
-                        A&A Realty Co
+                        {ele.mb_nick} AGENCY
                       </Typography>
                       <Stack
                         sx={{ marginBottom: "15px" }}
@@ -125,7 +141,7 @@ export function AllAgency() {
                           }}
                         />
                         <Typography sx={{ color: "#5c727d" }} level="body-lg">
-                          3, Sejong-ro 2-gil
+                          {ele.mb_address}
                         </Typography>
                       </Stack>
                       <Stack
@@ -142,7 +158,7 @@ export function AllAgency() {
                           }}
                         />
                         <Typography sx={{ color: "#5c727d" }} level="body-lg">
-                          01093717177
+                          {ele.mb_phone}
                         </Typography>
                       </Stack>
                     </CardContent>
@@ -152,7 +168,7 @@ export function AllAgency() {
                     >
                       <CardActions buttonFlex="0 0 auto">
                         <IconButton variant="outlined" color="neutral">
-                          <div>12k</div>
+                          <div>{ele.mb_likes}</div>
                           <FavoriteBorder />
                         </IconButton>
                         <Divider orientation="vertical" />
@@ -161,7 +177,7 @@ export function AllAgency() {
                           color="neutral"
                           sx={{ mr: "auto" }}
                         >
-                          <div>10k</div>
+                          <div>{ele.mb_views}</div>
                           <RemoveRedEyeOutlinedIcon />
                         </IconButton>
                         <Button variant="solid" sx={{ bgcolor: "#ff5a3c" }}>
@@ -177,8 +193,10 @@ export function AllAgency() {
         </Stack>
         <Stack spacing={2} alignItems={"center"} mb={16}>
           <Pagination
-            count={3}
-            page={1}
+            count={
+              targetSearchObject.page >= 3 ? targetSearchObject.page + 1 : 3
+            }
+            page={targetSearchObject.page}
             renderItem={(item) => (
               <PaginationItem
                 components={{
@@ -189,6 +207,7 @@ export function AllAgency() {
                 color={"secondary"}
               />
             )}
+            onChange={handlePaginationChange}
           />
         </Stack>
       </Container>
