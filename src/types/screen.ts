@@ -27,7 +27,7 @@ export interface HomePageState {
 export interface AgencyPageState {
   targetAgencies: Agency[];
   chosenAgency: Agency | null;
-  targetEstate: Estate[];
+  targetEstates: Estate[];
   selectedEstate: Estate | null;
 }
 

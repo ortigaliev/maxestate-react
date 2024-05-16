@@ -4,7 +4,7 @@ import { AgencyPageState } from "../../../types/screen";
 const initialState: AgencyPageState = {
   targetAgencies: [],
   chosenAgency: null,
-  targetEstate: [],
+  targetEstates: [],
   selectedEstate: null,
 };
 
@@ -20,8 +20,8 @@ const AgencyPageSlice = createSlice({
     setChosenAgency: (state, action) => {
       state.chosenAgency = action.payload;
     },
-    setTargetEstate: (state, action) => {
-      state.targetEstate = action.payload;
+    setTargetEstates: (state, action) => {
+      state.targetEstates = action.payload;
     },
     setSelectedEstate: (state, action) => {
       state.selectedEstate = action.payload;
@@ -32,7 +32,7 @@ const AgencyPageSlice = createSlice({
 export const {
   setTargetAgencies,
   setChosenAgency,
-  setTargetEstate,
+  setTargetEstates,
   setSelectedEstate,
 } = AgencyPageSlice.actions;
 

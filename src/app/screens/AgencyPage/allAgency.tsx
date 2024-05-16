@@ -42,6 +42,7 @@ import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../lib/sweetAlert";
+import { useHistory } from "react-router-dom";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -76,6 +77,13 @@ export function AllAgency() {
   }, [targetSearchObject]);
 
   /* HANDLERS */
+  const history = useHistory();
+
+
+  const chosenAgencyHandler = (id: string) => {
+    history.push(`/agency/${id}`);
+  };
+
   const searchHandler = (category: string) => {
     targetSearchObject.page = 1;
     targetSearchObject.order = category;
@@ -143,7 +151,7 @@ export function AllAgency() {
               {targetAgencies.map((ele: Agency) => {
                 const image_path = `${serverApi}/${ele.mb_image}`;
                 return (
-                  <Card
+                  <Card onClick={() => chosenAgencyHandler(ele._id)}
                     key={ele._id}
                     variant="outlined"
                     sx={{
@@ -151,6 +159,7 @@ export function AllAgency() {
                       // to make the card resizable
                       overflow: "auto",
                       resize: "horizontal",
+                      cursor: "pointer",
                     }}
                   >
                     <CardOverflow>

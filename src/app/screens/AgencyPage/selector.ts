@@ -11,9 +11,9 @@ export const retrieveChosenAgency = createSelector(
   selectAgencyPage,
   (AgencyPage) => AgencyPage.chosenAgency
 );
-export const retrieveTrendEstate = createSelector(
+export const retrieveTargetEstates = createSelector(
   selectAgencyPage,
-  (AgencyPage) => AgencyPage.targetEstate
+  (AgencyPage) => AgencyPage.targetEstates
 );
 export const retrieveSelectedEstate = createSelector(
   selectAgencyPage,
