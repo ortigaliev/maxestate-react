@@ -115,12 +115,12 @@ export function BestAgency() {
                         alignItems: "center",
                       }}
                     >
-                      <Avatar src="images/home/agent.jpg" size="lg" />
+                      <Avatar src={image_path} size="lg" />
                       <AvatarGroup size="sm" sx={{ "--Avatar-size": "28px" }}>
                         <Avatar src="/images/agency/follower2.jpg" />
                         <Avatar src="/images/agency/follower3.jpg" />
                         <Avatar src="/images/agency/follower4.jpg" />
-                        <Avatar>+4K</Avatar>
+                        <Avatar>+{ele.mb_subscriber_cnt}</Avatar>
                       </AvatarGroup>
                     </Box>
                     <CardContent>

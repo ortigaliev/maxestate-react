@@ -86,6 +86,7 @@ export function FeaturedList() {
               >
                 {trendEstate.map((estate: Estate) => {
                   const image_path = `${serverApi}/${estate.estate_images[0]}`;
+                  /* const mb_image_path = `${serverApi}/${estate.agency_mb_images[0]}`; */
                   return (
                     <Card
                       key={estate._id}
@@ -97,15 +98,17 @@ export function FeaturedList() {
                       <CardOverflow>
                         <AspectRatio ratio="1.3">
                           <img
-                            className={"hero_img"}
                             src={image_path}
+                            className={"hero_img"}
                             loading="lazy"
                             alt="latestList"
                             background-size="cover"
                           />
                         </AspectRatio>
                         <Stack className="location_galery">
-                          <Box className="location_galery_label">For Sale</Box>
+                          <Box className="location_galery_label">
+                            {estate.estate_category}
+                          </Box>
                           <Stack className="location_galery_info">
                             {/* Property address link*/}
 
@@ -127,54 +130,7 @@ export function FeaturedList() {
                                 style={{ color: "#fff" }}
                                 level="body-sm"
                               >
-                                Belmonton Garden, Chicago
-                              </Typography>
-                            </Link>
-
-                            {/* Featured list Location Picture section*/}
-
-                            <Link
-                              sx={iconSx}
-                              href="#"
-                              className="location_galery_info-right"
-                            >
-                              <CameraAltOutlinedIcon
-                                sx={{
-                                  display: "block",
-                                  width: 16,
-                                  height: 20,
-                                  fontSize: 20,
-                                  mr: 1,
-                                  color: "#fff",
-                                }}
-                              />
-                              <Typography
-                                sx={{ color: "#fff" }}
-                                level="body-sm"
-                              >
-                                3
-                              </Typography>
-                            </Link>
-
-                            <Link
-                              sx={iconSx}
-                              href="#"
-                              className="location_galery_info-right"
-                            >
-                              <BedOutlinedIcon
-                                sx={{
-                                  display: "block",
-                                  width: 16,
-                                  height: 20,
-                                  fontSize: 20,
-                                  color: "#fff",
-                                }}
-                              />
-                              <Typography
-                                sx={{ color: "#fff" }}
-                                level="body-sm"
-                              >
-                                2
+                                {estate.estate_address}
                               </Typography>
                             </Link>
                           </Stack>
@@ -204,7 +160,7 @@ export function FeaturedList() {
                           {/* Featured home describtion -1 */}
                           <Stack>
                             <Stack flexDirection={"row"} marginRight={"20px"}>
-                              <span>3</span>
+                              <span>{estate.estate_bed}</span>
                               <BedOutlinedIcon
                                 sx={{
                                   display: "block",
@@ -234,7 +190,7 @@ export function FeaturedList() {
                           {/* Featured home describtion-2 */}
                           <Stack>
                             <Stack flexDirection={"row"}>
-                              <span>2</span>
+                              <span>{estate.estate_bath}</span>
                               <BathtubOutlinedIcon
                                 sx={{
                                   display: "block",
@@ -248,7 +204,7 @@ export function FeaturedList() {
                               sx={{ color: "#5c727d" }}
                               level="body-sm"
                             >
-                              Bedrooms
+                              Bathrooms
                             </Typography>
                             <Divider
                               orientation="vertical"
@@ -264,7 +220,7 @@ export function FeaturedList() {
                           {/* Featured home describtion-3 */}
                           <Stack>
                             <Stack flexDirection={"row"}>
-                              <span>340</span>
+                              <span>{estate.estate_area}</span>
                               <SquareFootOutlinedIcon
                                 sx={{
                                   display: "block",
@@ -300,7 +256,7 @@ export function FeaturedList() {
                             }}
                           >
                             <Avatar
-                              src="https://images.unsplash.com/profile-1502669002421-a8d274ad2897?dpr=2&auto=format&fit=crop&w=32&h=32&q=60&crop=faces&bg=fff"
+                              src="#"
                               size="sm"
                               sx={{ "--Avatar-size": "3rem" }}
                             />
@@ -330,7 +286,15 @@ export function FeaturedList() {
                                 "&:hover": { color: "danger.plainColor" },
                               }}
                             >
-                              <Favorite />
+                              <Favorite
+                                style={{
+                                  fill:
+                                    estate.me_liked &&
+                                    estate.me_liked[0]?.my_favorite
+                                      ? "red"
+                                      : "#ccc",
+                                }}
+                              />
                               {estate.estate_likes}
                             </IconButton>
                             <IconButton

@@ -8,6 +8,7 @@ import { Agency, Member } from "./user";
 export interface AppRootState {
   memberPage: MemberPageState;
   homePage: HomePageState;
+  agencyPage: AgencyPageState;
   propertyPage: PropertyPageState;
   ordersPage: OrdersPageState;
   blogPage: BlogPageState;
@@ -20,6 +21,14 @@ export interface HomePageState {
   trendEstate: Estate[];
   bestBoBlogs: BoBlog[];
   newsBoBlogs: BoBlog[];
+}
+
+/* Agency Page */
+export interface AgencyPageState {
+  targetAgencies: Agency[];
+  chosenAgency: Agency | null;
+  targetEstate: Estate[];
+  selectedEstate: Estate | null;
 }
 
 /* Propert Page */

@@ -20,12 +20,15 @@ export interface Estate {
   estate_bed: number;
   estate_discount: number;
   estate_left_cnt: number;
+  estate_category: string;
+  estate_amenities: string;
   estate_address: string;
   estate_description: string;
   estate_images: string[];
   estate_likes: number;
   estate_views: number;
   agency_mb_id: string;
+  agency_mb_images: string[];
   createdAt: Date;
   updatedAt: Date;
   me_liked: MeLiked[];

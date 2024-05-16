@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Divider, PaginationItem, Stack } from "@mui/material";
 import {
   Card,
@@ -23,10 +23,41 @@ import Pagination from "@mui/material/Pagination";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+/* REDUX */
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveTargetAgencies } from "../../screens/AgencyPage/selector";
+import { Agency } from "../../../types/user";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setTargetAgencies } from "../../screens/AgencyPage/slice";
+
 const order_list = Array.from(Array(5).keys());
-console.log(order_list);
+
+
+/* REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setTargetAgencies: (data: Agency[]) => dispach(setTargetAgencies(data)),
+});
+
+/* REDUX SELECTOR */
+const targetAgenciesRetriever = createSelector(
+  retrieveTargetAgencies,
+  (targetAgencies) => ({
+    targetAgencies,
+  })
+);
+
 
 export function AllAgency() {
+
+  /* INITIALIZATION */
+  const { setTargetAgencies } = actionDispatch(useDispatch());
+  const { targetAgencies } = useSelector(targetAgenciesRetriever);
+
+  useEffect(() => {
+    //TODO Retrieve targetAgenciesData
+  }, []);
+
   return (
     <div className="all_agency">
       <Container>

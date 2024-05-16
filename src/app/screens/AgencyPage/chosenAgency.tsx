@@ -32,6 +32,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { useHistory } from "react-router-dom";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -44,6 +45,13 @@ const coef = fontSize / 14;
 const agency_estate = Array.from(Array(8).keys());
 
 export function ChosenAgency() {
+  const history = useHistory();
+
+  /* HANDLERS */
+  const chosenAgencyHandler = (id: string) => {
+    history.push(`estate/${id}`);
+  };
+
   return (
     <div className="chosen_agency">
       <Container>
@@ -77,229 +85,231 @@ export function ChosenAgency() {
                 {/* CARD 1 */}
                 {agency_estate.map((ele) => {
                   return (
-                    <Link to={`/estate/estate_id`}>
-                      <Card variant="outlined" sx={{ width: 400 }}>
-                        <CardOverflow>
-                          <AspectRatio ratio="4/3">
-                            <img
-                              className={"hero_img"}
-                              src="/images/home/h3.jpg"
-                              loading="lazy"
-                              alt="latestList"
-                              background-size="cover"
-                            />
-                          </AspectRatio>
-                          <Stack className="location_galery">
-                            <Box className="location_galery_label">
-                              For Sale
-                            </Box>
-                            <Stack className="location_galery_info">
-                              {/* Property address link*/}
-                              <Link
-                                /* sx={iconSx} */
-                                /* href="#" */
-                                className="location_galery_info-address" to={"#"}                              >
-                                <LocationOnIcon
-                                  style={{
-                                    display: "block",
-                                    width: 16,
-                                    height: 20,
-                                    fontSize: 20,
-                                    color: "#fff",
-                                  }}
-                                />
-                                <Typography
-                                  style={{ color: "#fff" }}
-                                  level="body-sm"
-                                >
-                                  Belmonton Garden, Chicago
-                                </Typography>
-                              </Link>
-                              {/* Featured list Location Picture section*/}
-                              <Link
-                                /* sx={iconSx} */
-                                href="#"
-                                className="location_galery_info-right" to={"#"}                              >
-                                <CameraAltOutlinedIcon
-                                  sx={{
-                                    display: "block",
-                                    width: 16,
-                                    height: 20,
-                                    fontSize: 20,
-                                    mr: 1,
-                                    color: "#fff",
-                                  }}
-                                />
-                                <Typography
-                                  sx={{ color: "#fff" }}
-                                  level="body-sm"
-                                >
-                                  3
-                                </Typography>
-                              </Link>
-                              <Link
-                                /*  sx={iconSx} */
-                                /* href="#" */
-                                className="location_galery_info-right" to={"#"}                              >
-                                <BedOutlinedIcon
-                                  sx={{
-                                    display: "block",
-                                    width: 16,
-                                    height: 20,
-                                    fontSize: 20,
-                                    color: "#fff",
-                                  }}
-                                />
-                                <Typography
-                                  sx={{ color: "#fff" }}
-                                  level="body-sm"
-                                >
-                                  2
-                                </Typography>
-                              </Link>
-                            </Stack>
-                          </Stack>
-                        </CardOverflow>
-                        <CardContent sx={{ padding: "15px" }}>
-                          <Typography
-                            sx={{
-                              marginBottom: "15px",
-                              color: "#ff5a3c",
-                              fontWeight: 700,
-                            }}
-                            level="body-md"
-                          >
-                            $ 600/Month
-                          </Typography>
-                          <Typography
-                            sx={{ marginBottom: "15px" }}
-                            level="title-lg"
-                          >
-                            Luxury Villa in HanKang Park
-                          </Typography>
-                          <Stack
-                            flexDirection="row"
-                            justifyContent={"space-between"}
-                            sx={{ width: 260 }}
-                          >
-                            {/* Featured home describtion -1 */}
-                            <Stack>
-                              <Stack flexDirection={"row"} marginRight={"20px"}>
-                                <span>3</span>
-                                <BedOutlinedIcon
-                                  sx={{
-                                    display: "block",
-                                    width: 20,
-                                    height: 20,
-                                    fontSize: 20,
-                                  }}
-                                />
-                              </Stack>
+                    <Card variant="outlined" sx={{ width: 400 }}>
+                      <CardOverflow>
+                        <AspectRatio ratio="4/3">
+                          <img
+                            className={"hero_img"}
+                            src="/images/home/h3.jpg"
+                            loading="lazy"
+                            alt="latestList"
+                            background-size="cover"
+                          />
+                        </AspectRatio>
+                        <Stack className="location_galery">
+                          <Box className="location_galery_label">For Sale</Box>
+                          <Stack className="location_galery_info">
+                            {/* Property address link*/}
+                            <Link
+                              /* sx={iconSx} */
+                              /* href="#" */
+                              className="location_galery_info-address"
+                              to={"#"}
+                            >
+                              <LocationOnIcon
+                                style={{
+                                  display: "block",
+                                  width: 16,
+                                  height: 20,
+                                  fontSize: 20,
+                                  color: "#fff",
+                                }}
+                              />
                               <Typography
-                                sx={{ color: "#5c727d" }}
+                                style={{ color: "#fff" }}
                                 level="body-sm"
                               >
-                                Bedrooms
+                                Belmonton Garden, Chicago
                               </Typography>
-                              <Divider
-                                orientation="vertical"
+                            </Link>
+                            {/* Featured list Location Picture section*/}
+                            <Link
+                              /* sx={iconSx} */
+                              href="#"
+                              className="location_galery_info-right"
+                              to={"#"}
+                            >
+                              <CameraAltOutlinedIcon
                                 sx={{
-                                  height: "45px",
-                                  width: "2px",
-                                  position: "absolute",
-                                  left: 110,
+                                  display: "block",
+                                  width: 16,
+                                  height: 20,
+                                  fontSize: 20,
+                                  mr: 1,
+                                  color: "#fff",
+                                }}
+                              />
+                              <Typography
+                                sx={{ color: "#fff" }}
+                                level="body-sm"
+                              >
+                                3
+                              </Typography>
+                            </Link>
+                            <Link
+                              /*  sx={iconSx} */
+                              /* href="#" */
+                              className="location_galery_info-right"
+                              to={"#"}
+                            >
+                              <BedOutlinedIcon
+                                sx={{
+                                  display: "block",
+                                  width: 16,
+                                  height: 20,
+                                  fontSize: 20,
+                                  color: "#fff",
+                                }}
+                              />
+                              <Typography
+                                sx={{ color: "#fff" }}
+                                level="body-sm"
+                              >
+                                2
+                              </Typography>
+                            </Link>
+                          </Stack>
+                        </Stack>
+                      </CardOverflow>
+                      <CardContent sx={{ padding: "15px" }}>
+                        <Typography
+                          sx={{
+                            marginBottom: "15px",
+                            color: "#ff5a3c",
+                            fontWeight: 700,
+                          }}
+                          level="body-md"
+                        >
+                          $ 600/Month
+                        </Typography>
+                        <Typography
+                          sx={{ marginBottom: "15px" }}
+                          level="title-lg"
+                        >
+                          Luxury Villa in HanKang Park
+                        </Typography>
+                        <Stack
+                          flexDirection="row"
+                          justifyContent={"space-between"}
+                          sx={{ width: 260 }}
+                        >
+                          {/* Featured home describtion -1 */}
+                          <Stack>
+                            <Stack flexDirection={"row"} marginRight={"20px"}>
+                              <span>3</span>
+                              <BedOutlinedIcon
+                                sx={{
+                                  display: "block",
+                                  width: 20,
+                                  height: 20,
+                                  fontSize: 20,
                                 }}
                               />
                             </Stack>
-                            {/* Featured home describtion-2 */}
-                            <Stack>
-                              <Stack flexDirection={"row"}>
-                                <span>2</span>
-                                <BathtubOutlinedIcon
-                                  sx={{
-                                    display: "block",
-                                    width: 20,
-                                    height: 20,
-                                    fontSize: 20,
-                                  }}
-                                />
-                              </Stack>
-                              <Typography
-                                sx={{ color: "#5c727d" }}
-                                level="body-sm"
-                              >
-                                Bedrooms
-                              </Typography>
-                              <Divider
-                                orientation="vertical"
-                                sx={{
-                                  height: "45px",
-                                  width: "2px",
-                                  position: "absolute",
-                                  left: 210,
-                                }}
-                              />
-                            </Stack>
-                            {/* Featured home describtion-3 */}
-                            <Stack>
-                              <Stack flexDirection={"row"}>
-                                <span>340</span>
-                                <SquareFootOutlinedIcon
-                                  sx={{
-                                    display: "block",
-                                    width: 20,
-                                    height: 20,
-                                    fontSize: 20,
-                                  }}
-                                />
-                              </Stack>
-                              <Typography
-                                sx={{ color: "#5c727d" }}
-                                level="body-sm"
-                              >
-                                square kv
-                              </Typography>
-                            </Stack>
-                          </Stack>
-                        </CardContent>
-                        <CardOverflow variant="soft" sx={{ bgcolor: "#fff" }}>
-                          <Divider inset="context" />
-                          <CardContent orientation="horizontal">
-                            <Box
+                            <Typography
+                              sx={{ color: "#5c727d" }}
+                              level="body-sm"
+                            >
+                              Bedrooms
+                            </Typography>
+                            <Divider
+                              orientation="vertical"
                               sx={{
-                                display: "flex",
-                                gap: 1,
-                                alignItems: "center",
+                                height: "45px",
+                                width: "2px",
+                                position: "absolute",
+                                left: 110,
+                              }}
+                            />
+                          </Stack>
+                          {/* Featured home describtion-2 */}
+                          <Stack>
+                            <Stack flexDirection={"row"}>
+                              <span>2</span>
+                              <BathtubOutlinedIcon
+                                sx={{
+                                  display: "block",
+                                  width: 20,
+                                  height: 20,
+                                  fontSize: 20,
+                                }}
+                              />
+                            </Stack>
+                            <Typography
+                              sx={{ color: "#5c727d" }}
+                              level="body-sm"
+                            >
+                              Bedrooms
+                            </Typography>
+                            <Divider
+                              orientation="vertical"
+                              sx={{
+                                height: "45px",
+                                width: "2px",
+                                position: "absolute",
+                                left: 210,
+                              }}
+                            />
+                          </Stack>
+                          {/* Featured home describtion-3 */}
+                          <Stack>
+                            <Stack flexDirection={"row"}>
+                              <span>340</span>
+                              <SquareFootOutlinedIcon
+                                sx={{
+                                  display: "block",
+                                  width: 20,
+                                  height: 20,
+                                  fontSize: 20,
+                                }}
+                              />
+                            </Stack>
+                            <Typography
+                              sx={{ color: "#5c727d" }}
+                              level="body-sm"
+                            >
+                              square kv
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                      </CardContent>
+                      <CardOverflow variant="soft" sx={{ bgcolor: "#fff" }}>
+                        <Divider inset="context" />
+                        <CardContent orientation="horizontal">
+                          <Box
+                            sx={{
+                              display: "flex",
+                              gap: 1,
+                              alignItems: "center",
+                            }}
+                          >
+                            <IconButton
+                              href="#"
+                              sx={{
+                                fontWeight: "md",
+                                ml: "auto",
+                                color: "text.secondary",
+                                "&:hover": { color: "danger.plainColor" },
                               }}
                             >
-                              <IconButton
-                                href="#"
-                                sx={{
-                                  fontWeight: "md",
-                                  ml: "auto",
-                                  color: "text.secondary",
-                                  "&:hover": { color: "danger.plainColor" },
-                                }}
-                              >
-                                <Favorite />
-                                117
-                              </IconButton>
-                              <IconButton
-                                href="#"
-                                sx={{
-                                  fontWeight: "md",
-                                  color: "text.secondary",
-                                  "&:hover": { color: "primary.plainColor" },
-                                }}
-                              >
-                                <Visibility />
-                                10.4k
-                              </IconButton>
-                            </Box>
-                          </CardContent>
-                        </CardOverflow>
-                      </Card>
-                    </Link>
+                              <Favorite />
+                              117
+                            </IconButton>
+                            <IconButton
+                              href="#"
+                              sx={{
+                                fontWeight: "md",
+                                color: "text.secondary",
+                                "&:hover": { color: "primary.plainColor" },
+                              }}
+                            >
+                              <Visibility />
+                              10.4k
+                            </IconButton>
+                          </Box>
+                        </CardContent>
+                      </CardOverflow>
+                    </Card>
                   );
                 })}
               </Stack>
