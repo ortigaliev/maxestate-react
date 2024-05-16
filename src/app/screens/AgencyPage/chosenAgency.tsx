@@ -5,6 +5,8 @@ import React, { useEffect, useRef, useState } from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BedOutlinedIcon from "@mui/icons-material/BedOutlined";
 import BathtubOutlinedIcon from "@mui/icons-material/BathtubOutlined";
 import SquareFootOutlinedIcon from "@mui/icons-material/SquareFootOutlined";
@@ -18,6 +20,11 @@ import {
   IconButton,
 } from "@mui/joy";
 
+/* SWIPER */
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -29,17 +36,10 @@ import { retrieveChosenAgency, retrieveTargetEstates } from "./selector";
 import { Agency } from "../../../types/user";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setChosenAgency, setTargetEstates } from "./slice";
-import { Estate } from "../../../types/estate";
-import { EstateSearchObj } from "../../../types/others";
-import EstateApiServer from "../../apiServer/estateApiServer";
 import { serverApi } from "../../lib/config";
-import assert from "assert";
-import { Definer } from "../../lib/Definer";
-import MemberApiServer from "../../apiServer/memberApiServer";
-import {
-  sweetErrorHandling,
-  sweetTopSmallSuccessAlert,
-} from "../../lib/sweetAlert";
+import { Estate } from "../../../types/estate";
+import { EstateSearchObj, SearchObj } from "../../../types/others";
+import EstateApiServer from "../../apiServer/estateApiServer";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -68,19 +68,26 @@ const fontSize = 14; // px
 const htmlFontSize = 16;
 const coef = fontSize / 14;
 
+const agency_list = Array.from(Array(10).keys());
+
 export function ChosenAgency() {
   /* INITIALIZATION */
   const history = useHistory();
   let { agency_id } = useParams<{ agency_id: string }>();
   const { setChosenAgency, setTargetEstates } = actionDispatch(useDispatch());
+
   const { chosenAgency } = useSelector(chosenAgencyRetriever);
   const { targetEstates } = useSelector(targetEstatesRetriever);
+
   const [chosenAgencyId, setChosenAgencyId] = useState<string>(agency_id);
+
   const [targetEstateSearchObj, setTargetEstateSearchObj] =
     useState<EstateSearchObj>({
       page: 1,
       limit: 8,
       order: "createdAt",
+      agency_mb_id: agency_id,
+      estate_collection: "apartment",
     });
 
   const refs: any = useRef([]);
@@ -95,32 +102,10 @@ export function ChosenAgency() {
 
   /* HANDLERS */
   const chosenAgencyHandler = (id: string) => {
-    history.push(`estate/${id}`);
-  };
-
-  const targetLikeHandler = async (e: any, id: string) => {
-    try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
-
-      const memberServer = new MemberApiServer(),
-        like_result: any = await memberServer.memberLikeTarget({
-          like_ref_id: id,
-          group_type: "estate",
-        });
-      assert.ok(like_result, Definer.general_err1);
-
-      if (like_result.like_status > 0) {
-        e.target.style.fill = "red";
-        refs.current[like_result.like_ref_id].innerHTML++;
-      } else {
-        e.target.style.fill = "#ccc";
-        refs.current[like_result.like_ref_id].innerHTML--;
-      }
-      await sweetTopSmallSuccessAlert("success", 900, false);
-    } catch (err: any) {
-      console.log("targetLikeLatest, ERROR:", err);
-      sweetErrorHandling(err).then();
-    }
+    setChosenAgencyId(id);
+    targetEstateSearchObj.agency_mb_id = id;
+    setTargetEstateSearchObj({ ...targetEstateSearchObj });
+    history.push(`/estate/${id}`);
   };
 
   return (
@@ -146,6 +131,42 @@ export function ChosenAgency() {
               </Typography>
 
               <Stack
+                style={{ width: "100%", display: "flex" }}
+                flexDirection={"row"}
+                sx={{ mt: "35px" }}
+                mb={10}
+              >
+                <Swiper
+                  className="agency_avatars_wrapper"
+                  slidesPerView={7}
+                  centeredSlides={false}
+                  spaceBetween={30}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  modules={[Autoplay, Pagination, Navigation]}
+                  navigation={true}
+                >
+                  {agency_list.map((ele, index) => {
+                    return (
+                      <SwiperSlide
+                        style={{ cursor: "pointer" }}
+                        key={index}
+                        className="agency_avatars"
+                      >
+                        <img
+                          src="/images/agency/featured.jpg"
+                          alt="Agency-img"
+                        />
+                        <span>atSoul</span>
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+              </Stack>
+
+              <Stack
                 className="featured_card_wrapper"
                 flexDirection={"row"}
                 flexWrap={"wrap"}
@@ -156,18 +177,13 @@ export function ChosenAgency() {
                 {/* CARD 1 */}
                 {targetEstates.map((estate: Estate) => {
                   const image_path = `${serverApi}/${estate.estate_images[0]}`;
-                  function targetLikeHandler(
-                    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-                    _id: any
-                  ): void {
-                    throw new Error("Function not implemented.");
-                  }
-
                   return (
                     <Card
+                      onClick={() => chosenAgencyHandler(estate._id)}
                       variant="outlined"
                       sx={{ width: 400 }}
                       key={estate._id}
+                      style={{ cursor: "pointer" }}
                     >
                       <CardOverflow>
                         <AspectRatio ratio="4/3">

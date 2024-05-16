@@ -5,6 +5,8 @@
   background-color: #fff;
 }
 
+/* CHOSEN AGENCY */
+
 .chosen_agency {
   position: relative;
   width: 100%;
@@ -12,64 +14,49 @@
   background-color: #fff;
 }
 
-.one_agency .card_tite {
-  color: #212529;
+.agency_page .chosen_agency .prev_btn,
+.chosen_agency .next_btn {
+  width: 10%;
+  height: 147px;
   display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 15px;
-  font-weight: 700;
-  line-height: 1.3;
-  font-size: 30px;
-  font-family: "Poppins", sans-serif;
+  justify-content: center;
+  align-items: center;
 }
 
-.one_agency .card_sub_title {
-  color: #ff5a3c;
-  width: 230px;
-  font-weight: 700;
-  background-color: rgb(255, 90, 60, 0.2);
-  text-align: center;
-  padding: 6px 20px;
-  border-radius: 50px;
+.agency_page .chosen_agency .agency_avatars_wrapper {
+  width: 90%;
+  height: 147px;
   display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 15px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
 }
 
-.swiper .res_swiper {
+.agency_avatars_wrapper .agency_avatars {
+  width: 108px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ccc;
 }
 
-.swiper {
-  .swiper-slide {
-    /*  background: #ff5a3c; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 60px;
-  }
+.chosen_agency .agency_avatars img {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
+.chosen_agency .agency_avatars span {
+  margin-top: 14px;
+  font-family: "Solway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
   color: #ff5a3c;
-}
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 30px;
-}
-
-.swiper-pagination-bullet-active {
-  background-color: #ff5a3c !important;
-}
-
-.one_agency .box_underline {
-  color: red;
-  text-decoration: none;
-}
-.one_agency .underline {
-  text-decoration: none;
 }
 
 /* EXPLORE NEW NEIGHBOOR_HOOD STYLE */

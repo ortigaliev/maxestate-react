@@ -10,12 +10,8 @@ import {
 } from "@mui/joy";
 import CardContent from "@mui/joy/CardContent";
 import AspectRatio from "@mui/joy/AspectRatio";
-import Link from "@mui/joy/Link";
-import Avatar from "@mui/joy/Avatar";
-import AvatarGroup from "@mui/joy/AvatarGroup";
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
-import { FavoriteBorder, FormatSize } from "@mui/icons-material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -37,7 +33,6 @@ import { serverApi } from "../../lib/config";
 import assert from "assert";
 import MemberApiServer from "../../apiServer/memberApiServer";
 import { Definer } from "../../lib/Definer";
-import { verifyMemberData } from "../../apiServer/verify";
 import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
@@ -78,7 +73,6 @@ export function AllAgency() {
 
   /* HANDLERS */
   const history = useHistory();
-
 
   const chosenAgencyHandler = (id: string) => {
     history.push(`/agency/${id}`);
@@ -151,7 +145,8 @@ export function AllAgency() {
               {targetAgencies.map((ele: Agency) => {
                 const image_path = `${serverApi}/${ele.mb_image}`;
                 return (
-                  <Card onClick={() => chosenAgencyHandler(ele._id)}
+                  <Card
+                    onClick={() => chosenAgencyHandler(ele._id)}
                     key={ele._id}
                     variant="outlined"
                     sx={{
@@ -211,7 +206,13 @@ export function AllAgency() {
                       sx={{ bgcolor: "background.level1" }}
                     >
                       <CardActions buttonFlex="0 0 auto">
-                        <IconButton variant="outlined" color="neutral">
+                        <IconButton
+                          variant="outlined"
+                          color="neutral"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
                           <div
                             ref={(element) => (refs.current[ele._id] = element)}
                           >
