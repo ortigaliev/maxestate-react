@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Container, Divider, PaginationItem, Stack } from "@mui/material";
 import {
   Card,
@@ -16,6 +16,7 @@ import AvatarGroup from "@mui/joy/AvatarGroup";
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
 import { FavoriteBorder, FormatSize } from "@mui/icons-material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
@@ -33,6 +34,14 @@ import { setTargetAgencies } from "../../screens/AgencyPage/slice";
 import { SearchObj } from "../../../types/others";
 import AgencyApiServer from "../../apiServer/agencyApiServer";
 import { serverApi } from "../../lib/config";
+import assert from "assert";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import { Definer } from "../../lib/Definer";
+import { verifyMemberData } from "../../apiServer/verify";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -56,6 +65,7 @@ export function AllAgency() {
     limit: 6,
     order: "mb_point",
   });
+  const refs: any = useRef([]);
 
   useEffect(() => {
     const agencyServer = new AgencyApiServer();
@@ -69,13 +79,37 @@ export function AllAgency() {
   const searchHandler = (category: string) => {
     targetSearchObject.page = 1;
     targetSearchObject.order = category;
-    setTargetSearchObject({...targetSearchObject})
+    setTargetSearchObject({ ...targetSearchObject });
   };
   const handlePaginationChange = (event: any, value: number) => {
     targetSearchObject.page = value;
-    setTargetSearchObject({...targetSearchObject});
+    setTargetSearchObject({ ...targetSearchObject });
   };
 
+  const targetLikeHandler = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+      const memberServer = new MemberApiServer(),
+        like_result: any = await memberServer.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "member",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "#ccc";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+      await sweetTopSmallSuccessAlert("success", 900, false);
+    } catch (err: any) {
+      console.log("targetLikeLatest, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
 
   return (
     <div className="all_agency">
@@ -110,6 +144,7 @@ export function AllAgency() {
                 const image_path = `${serverApi}/${ele.mb_image}`;
                 return (
                   <Card
+                    key={ele._id}
                     variant="outlined"
                     sx={{
                       width: 400,
@@ -168,8 +203,20 @@ export function AllAgency() {
                     >
                       <CardActions buttonFlex="0 0 auto">
                         <IconButton variant="outlined" color="neutral">
-                          <div>{ele.mb_likes}</div>
-                          <FavoriteBorder />
+                          <div
+                            ref={(element) => (refs.current[ele._id] = element)}
+                          >
+                            {ele.mb_likes}
+                          </div>
+                          <FavoriteIcon
+                            onClick={(e) => targetLikeHandler(e, ele._id)}
+                            style={{
+                              fill:
+                                ele?.me_liked && ele?.me_liked[0]?.my_favorite
+                                  ? "red"
+                                  : "#ccc",
+                            }}
+                          />
                         </IconButton>
                         <Divider orientation="vertical" />
                         <IconButton
