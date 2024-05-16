@@ -11,7 +11,7 @@ export function AgencyPage() {
   return (
     <div className="agency_page">
       <Switch>
-        <Route path={`${agency.path}/property/:property_id`}>
+        <Route path={`$/estate/:estate_id`}>
           Chosen Estate
         </Route>
         <Route path={`${agency.path}/:agency_id`}>

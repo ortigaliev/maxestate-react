@@ -13,6 +13,11 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { HomeModal } from "../../components/modal/home-modal";
 
+/* ICONS */
+import BathroomIcon from "@mui/icons-material/Bathroom";
+import BedIcon from "@mui/icons-material/Bed";
+import SquareFootIcon from "@mui/icons-material/SquareFoot";
+
 import React, { useEffect, useRef } from "react";
 
 //REDUX
@@ -158,7 +163,7 @@ export function LatestList() {
                             sx={{ marginBottom: "15px", color: "#ff5a3c" }}
                             level="body-md"
                           >
-                            {estate.estate_type}
+                            {estate.estate_collection}
                           </Typography>
                           <Typography
                             sx={{ marginBottom: "15px" }}
@@ -182,13 +187,32 @@ export function LatestList() {
                             <Typography
                               sx={{ color: "#5c727d" }}
                               level="body-sm"
-                            ></Typography>
+                            >
+                              {" "}
+                              {estate.estate_address}
+                            </Typography>
                           </Stack>
                           <Typography
-                            sx={{ color: "#5c727d", marginBottom: "25px" }}
+                            sx={{
+                              color: "#5c727d",
+                              marginBottom: "25px",
+                              display: "flex",
+                              alignItems: "center",
+                            }}
                             level="body-sm"
                           >
-                            3 Bedrooms 2 Bathrooms 3450 square Ft
+                            {estate.estate_bed}{" "}
+                            <BedIcon
+                              style={{ color: "#ff5a3c", marginLeft: "5px" }}
+                            />
+                            / {estate.estate_bath}
+                            <BathroomIcon
+                              style={{ color: "#ff5a3c", marginLeft: "5px" }}
+                            />
+                            /{estate.estate_area}{" "}
+                            <SquareFootIcon
+                              style={{ color: "#ff5a3c", marginLeft: "5px" }}
+                            />
                           </Typography>
                           <Stack
                             flexDirection={"row"}
