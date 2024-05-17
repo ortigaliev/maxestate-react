@@ -16,6 +16,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import EstateApiServer from "../../apiServer/estateApiServer";
+import assert from "assert";
+import { Definer } from "../../lib/Definer";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Navigation, Pagination } from "swiper/modules";
 
@@ -56,26 +65,25 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
 
+/* REDUX */
 import { useParams } from "react-router-dom";
 import { Estate } from "../../../types/estate";
 import { useDispatch, useSelector } from "react-redux";
-import { retrieveChosenEstate } from "../PropertyPage/selector";
 import { createSelector } from "reselect";
 import { Dispatch } from "@reduxjs/toolkit";
-import { setChosenEstate } from "../PropertyPage/slice";
 import { useEffect } from "react";
-import EstateApiServer from "../../apiServer/estateApiServer";
-import assert from "assert";
-import { Definer } from "../../lib/Definer";
-import MemberApiServer from "../../apiServer/memberApiServer";
-import {
-  sweetErrorHandling,
-  sweetTopSmallSuccessAlert,
-} from "../../lib/sweetAlert";
+import { setChosenEstate } from "../PropertyPage/slice";
+import { setChosenAgency } from "../AgencyPage/slice";
+import { retrieveChosenEstate } from "../PropertyPage/selector";
+import { retrieveChosenAgency } from "../AgencyPage/selector";
+import { Agency } from "../../../types/user";
+import AgencyApiServer from "../../apiServer/agencyApiServer";
+import { serverApi } from "../../lib/config";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
   setChosenEstate: (data: Estate) => dispach(setChosenEstate(data)),
+  setChosenAgency: (data: Agency) => dispach(setChosenAgency(data)),
 });
 // REDUX SELECTOR
 const chosenEstateRetriever = createSelector(
@@ -84,21 +92,37 @@ const chosenEstateRetriever = createSelector(
     chosenEstate,
   })
 );
+
+const chosenAgencyRetriever = createSelector(
+  retrieveChosenAgency,
+  (chosenAgency) => ({
+    chosenAgency,
+  })
+);
+
 const popular_list = Array.from(Array(4).keys());
 
 export function ChosenProperty(props: any) {
   /* INITIALIZATION */
-  let { property_id } = useParams<{ property_id: string }>();
-  const { setChosenEstate } = actionDispatch(useDispatch());
+  let { estate_id } = useParams<{ estate_id: string }>();
+
+  const { setChosenEstate, setChosenAgency } = actionDispatch(useDispatch());
   const { chosenEstate } = useSelector(chosenEstateRetriever);
+  const { chosenAgency } = useSelector(chosenAgencyRetriever);
+
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   const [productRebuild, setProductRebuild] = useState<Date>(new Date());
 
   const estateRelatedProcess = async () => {
     try {
-      const estateService = new EstateApiServer();
-      const estate: Estate = await estateService.getChosenEstate(property_id);
+      const estateServer = new EstateApiServer();
+      const estate: Estate = await estateServer.getChosenEstate(estate_id);
       setChosenEstate(estate);
+
+      const agencyServer = new AgencyApiServer();
+      const agency = await agencyServer.getChosenAgency(estate.agency_mb_id);
+      setChosenAgency(agency);
     } catch (err) {
       console.log("estateRelatedProcess, ERROR:", err);
     }
@@ -108,24 +132,7 @@ export function ChosenProperty(props: any) {
   }, [productRebuild]);
 
   /**HANDLERS */
-  const targetLikeProduct = async (e: any) => {
-    try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
 
-      const memberService = new MemberApiServer(),
-        like_result = await memberService.memberLikeTarget({
-          like_ref_id: e.target.id,
-          group_type: "estate",
-        });
-      assert.ok(like_result, Definer.general_err1);
-
-      await sweetTopSmallSuccessAlert("success", 700, false);
-      setProductRebuild(new Date());
-    } catch (err: any) {
-      console.log("targetLikeProduct, ERROR:", err);
-      sweetErrorHandling(err).then();
-    }
-  };
   return (
     <div>
       <Container>
@@ -173,18 +180,14 @@ export function ChosenProperty(props: any) {
           className="mySwiper"
           loop={true}
         >
-          <SwiperSlide>
-            <img src="/images/prop/chosen_prop1.jpg" alt="Chosen_img" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="/images/prop/chosen_prop2.jpg" alt="Chosen_img" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="/images/prop/chosen_prop3.jpg" alt="Chosen_img" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="/images/prop/chosen_prop4.jpg" alt="Chosen_img" />
-          </SwiperSlide>
+          {chosenEstate?.estate_images.map((ele: string) => {
+            const image_path = `${serverApi}/${ele}`;
+            return (
+              <SwiperSlide>
+                <img src={image_path} alt="Chosen_Estate_img" />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </Stack>
       <Container>
@@ -210,42 +213,19 @@ export function ChosenProperty(props: any) {
                 35 comments
               </Link>
             </Box>
-            {/*  <Box sx={{ display: "flex", alignItems: "center", mb: 8 }}>
-              <IconButton
-                href="#"
-                sx={{
-                  fontWeight: "md",
-                  ml: "auto",
-                  color: "text.secondary",
-                  "&:hover": { color: "danger.plainColor" },
-                }}
-              >
-                <Favorite />2
-              </IconButton>
-              <IconButton
-                href="#"
-                sx={{
-                  fontWeight: "md",
-                  color: "text.secondary",
-                  "&:hover": { color: "primary.plainColor" },
-                }}
-              >
-                <Visibility />2
-              </IconButton>
-            </Box> */}
             <Typography
               className="card_tite"
               variant="h1"
               sx={{ p: "3px 0", fontWeight: 700 }}
             >
-              New Apartment Nice View
+              {chosenEstate?.estate_name}
             </Typography>
             <Typography
               className="card_tite"
               variant="h3"
               sx={{ p: "3px 0", fontWeight: 700 }}
             >
-              Agency Name
+              {chosenAgency?.mb_nick}
             </Typography>
             <Typography
               className="card_sub_title"
@@ -267,7 +247,9 @@ export function ChosenProperty(props: any) {
                   color: "#ff5a3c",
                 }}
               />
-              Hang-gang, Seoul
+              {chosenEstate?.estate_address
+                ? chosenEstate?.estate_address
+                : "no adress"}
             </Typography>
             <Typography
               className="card_tite"
@@ -299,10 +281,7 @@ export function ChosenProperty(props: any) {
                 mr: 5,
               }}
             >
-              Massa tempor nec feugiat nisl pretium. Egestas fringilla phasellus
-              faucibus scelerisque eleifend donec Porta nibh venenatis cras sed
-              felis eget velit aliquet. Neque volutpat ac tincidunt vitae semper
-              quis lectus.
+              {chosenEstate?.estate_description || "No description"}
             </Typography>
             <Typography
               className="card_tite"
@@ -338,7 +317,7 @@ export function ChosenProperty(props: any) {
                           <Grid3x3OutlinedIcon
                             sx={{ color: "#ff5a3c", mr: 1 }}
                           />
-                          HZ29
+                          {chosenEstate?.estate_id}
                         </Box>
                       </Box>
                       <Box>
@@ -353,7 +332,7 @@ export function ChosenProperty(props: any) {
                           <SquareFootOutlinedIcon
                             sx={{ color: "#ff5a3c", mr: 1 }}
                           />{" "}
-                          345 Kv
+                          {chosenEstate?.estate_area} Kv
                         </Box>
                       </Box>
                       <Box>
@@ -368,7 +347,7 @@ export function ChosenProperty(props: any) {
                           <DoorFrontOutlinedIcon
                             sx={{ color: "#ff5a3c", mr: 1 }}
                           />{" "}
-                          7
+                          {chosenEstate?.estate_rooms}
                         </Box>
                       </Box>
                       <Box>
@@ -383,7 +362,7 @@ export function ChosenProperty(props: any) {
                           <ShowerOutlinedIcon
                             sx={{ color: "#ff5a3c", mr: 1 }}
                           />{" "}
-                          2
+                          {chosenEstate?.estate_bath}
                         </Box>
                       </Box>
                       <Box>
@@ -395,7 +374,8 @@ export function ChosenProperty(props: any) {
                           Bed
                         </Typography>
                         <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <BedOutlinedIcon sx={{ color: "#ff5a3c", mr: 1 }} /> 3
+                          <BedOutlinedIcon sx={{ color: "#ff5a3c", mr: 1 }} />{" "}
+                          {chosenEstate?.estate_bed}
                         </Box>
                       </Box>
                       <Box>
@@ -409,7 +389,7 @@ export function ChosenProperty(props: any) {
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                           <FormatPaintOutlinedIcon
                             sx={{ color: "#ff5a3c", mr: 1 }}
-                          />{" "}
+                          />
                           Modren Loft
                         </Box>
                       </Box>
@@ -425,7 +405,7 @@ export function ChosenProperty(props: any) {
                           <ConstructionOutlinedIcon
                             sx={{ color: "#ff5a3c", mr: 1 }}
                           />{" "}
-                          2010
+                          {chosenEstate?.estate_year_build}
                         </Box>
                       </Box>
                       <Box>
@@ -442,11 +422,10 @@ export function ChosenProperty(props: any) {
                             alignItems: "center",
                           }}
                         >
-                          {" "}
                           <CheckCircleOutlineOutlinedIcon
                             sx={{ color: "#ff5a3c", mr: 1 }}
-                          />{" "}
-                          For Sale
+                          />
+                          {chosenEstate?.estate_category}
                         </Box>
                       </Box>
                     </Stack>
@@ -462,39 +441,33 @@ export function ChosenProperty(props: any) {
                 sx={{
                   pl: 2,
                   mt: 5,
+                  mb: 5,
                   fontWeight: 500,
                   borderLeft: "2px solid #ff5a3c",
                 }}
               >
                 From Our Gallery
               </Typography>
-              <Stack flexDirection={"row"} gap={4} mt={4}>
-                <Box>
-                  <Box mb={2}>
-                    <img
-                      width={"410px"}
-                      height={"204px"}
-                      src="/images/prop/gori.jpg"
-                      alt="gorizontal"
-                    />
-                  </Box>
-                  <Box>
-                    <img
-                      width={"410px"}
-                      height={"236px"}
-                      src="/images/prop/gorizantal.jpg"
-                      alt="gozi"
-                    />
-                  </Box>
-                </Box>
-                <Box>
-                  <img
-                    width={"410px"}
-                    height={"462px"}
-                    src="/images/prop/vertikal.jpg"
-                    alt="vertikal"
-                  />
-                </Box>
+              <Stack
+                flexDirection={"row"}
+                flexWrap={"wrap"}
+                display={"flex"}
+                gap={2}
+                height={"auto"}
+              >
+                {chosenEstate?.estate_images.map((ele: string) => {
+                  const image_path = `${serverApi}/${ele}`;
+                  return (
+                    <Box>
+                      <img
+                        width={"410px"}
+                        height={"204px"}
+                        src={image_path}
+                        alt="gorizontal"
+                      />
+                    </Box>
+                  );
+                })}
               </Stack>
             </Box>
             {/* MAP */}
@@ -933,7 +906,7 @@ export function ChosenProperty(props: any) {
                         color: "#ff5a3c",
                       }}
                     >
-                      $578.000
+                      {chosenEstate?.estate_price},000$
                     </Typography>
                   </Box>
                   <Button

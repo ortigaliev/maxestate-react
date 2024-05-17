@@ -7,7 +7,7 @@ export interface MeLiked {
 export interface Estate {
   _id: string;
   estate_name: string;
-  estate_year_biuld: number;
+  estate_year_build: number;
   estate_id: string;
   estate_area: number;
   estate_collection: string;

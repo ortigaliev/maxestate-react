@@ -38,13 +38,13 @@ class EstateApiServer {
         result = await axios.get(this.path + url, {
           withCredentials: true,
         });
-        
+
       assert.ok(result?.data, Definer.general_err1);
-      assert.ok(result?.data?.state != "fail", result?.data?.message);
+      /* assert.ok(result?.data?.state != "fail", result?.data?.message); */
       console.log("state:", result.data.state);
 
-      const propert: Estate = result.data.data;
-      return propert;
+      const estate: Estate = result.data.data;
+      return estate;
     } catch (err: any) {
       console.log(`ERROR ::: getChosenEstate ${err.message}`);
       throw err;
