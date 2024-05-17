@@ -121,12 +121,17 @@ export function ChosenAgency() {
       .then((data) => setRandomAgencies(data))
       .catch((err) => console.log(err));
 
+    agencyServer
+      .getChosenAgency(chosenAgencyId)
+      .then((data) => setChosenAgency(data))
+      .catch((err) => console.log(err));
+
     const estateServer = new EstateApiServer();
     estateServer
       .getTargetEstates(targetEstateSearchObj)
       .then((data) => setTargetEstates(data))
       .catch((err) => console.log(err));
-  }, [targetEstateSearchObj]);
+  }, [chosenAgencyId, targetEstateSearchObj]);
 
   /* HANDLERS */
   const chosenAgencyHandler = (id: string) => {
@@ -134,6 +139,10 @@ export function ChosenAgency() {
     targetEstateSearchObj.agency_mb_id = id;
     setTargetEstateSearchObj({ ...targetEstateSearchObj });
     history.push(`/agency/${id}`);
+  };
+
+  const chosenEstateHandler = (id: string) => {
+    history.push(`/estate/${id}`);
   };
 
   const targetLikeEstate = async (e: any, id: string) => {
@@ -180,7 +189,7 @@ export function ChosenAgency() {
                 component={"h1"}
                 style={{ fontSize: "48px", marginBottom: "40px" }}
               >
-                Agency Name
+                {chosenAgency?.mb_nick}
               </Typography>
 
               <Stack
@@ -231,6 +240,7 @@ export function ChosenAgency() {
                   const image_path = `${serverApi}/${estate.estate_images[0]}`;
                   return (
                     <Card
+                      onClick={() => chosenEstateHandler(estate._id)}
                       variant="outlined"
                       sx={{ width: 400 }}
                       key={estate._id}

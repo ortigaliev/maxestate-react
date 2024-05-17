@@ -27,5 +27,21 @@ class AgencyApiServer {
       throw err;
     }
   }
+
+  async getChosenAgency(id: string) {
+    try{
+      const url = `/agencies/${id}`,
+        result = await axios.get(this.path + url, { withCredentials: true});
+      assert.ok(result,Definer.general_err1);
+
+      console.log("state:", result.data.data);
+      const agency: Agency = result.data.data;
+      return agency;
+    }catch(err: any) {
+      console.log(`ERROR ::: getChosenAgency ${err.message}`);
+      throw err;
+    }
+  }
+
 }
 export default AgencyApiServer;
