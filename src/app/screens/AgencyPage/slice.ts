@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AgencyPageState } from "../../../types/screen";
 
 const initialState: AgencyPageState = {
+  randomAgencies: [],
   targetAgencies: [],
   chosenAgency: null,
   targetEstates: [],
@@ -14,6 +15,9 @@ const AgencyPageSlice = createSlice({
   initialState,
 
   reducers: {
+    setRandomAgencies: (state, action) => {
+      state.randomAgencies = action.payload;
+    },
     setTargetAgencies: (state, action) => {
       state.targetAgencies = action.payload;
     },
@@ -30,6 +34,7 @@ const AgencyPageSlice = createSlice({
 });
 
 export const {
+  setRandomAgencies,
   setTargetAgencies,
   setChosenAgency,
   setTargetEstates,

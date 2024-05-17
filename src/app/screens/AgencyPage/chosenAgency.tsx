@@ -32,22 +32,44 @@ import { Link } from "react-router-dom";
 /* REDUX */
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { retrieveChosenAgency, retrieveTargetEstates } from "./selector";
+import {
+  retrieveChosenAgency,
+  retrieveRandomAgencies,
+  retrieveTargetEstates,
+} from "./selector";
 import { Agency } from "../../../types/user";
 import { Dispatch } from "@reduxjs/toolkit";
-import { setChosenAgency, setTargetEstates } from "./slice";
+import { setChosenAgency, setRandomAgencies, setTargetEstates } from "./slice";
 import { serverApi } from "../../lib/config";
 import { Estate } from "../../../types/estate";
 import { EstateSearchObj, SearchObj } from "../../../types/others";
 import EstateApiServer from "../../apiServer/estateApiServer";
+import AgencyApiServer from "../../apiServer/agencyApiServer";
+import assert from "assert";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import { Definer } from "../../lib/Definer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+import { verifyMemberData } from "../../apiServer/verify";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
+  setRandomAgencies: (data: Agency[]) => dispach(setRandomAgencies(data)),
   setChosenAgency: (data: Agency) => dispach(setChosenAgency(data)),
   setTargetEstates: (data: Estate[]) => dispach(setTargetEstates(data)),
 });
 
 /* REDUX SELECTOR */
+
+const randomAgenciesRetriever = createSelector(
+  retrieveRandomAgencies,
+  (randomAgencies) => ({
+    randomAgencies,
+  })
+);
+
 const chosenAgencyRetriever = createSelector(
   retrieveChosenAgency,
   (chosenAgency) => ({
@@ -68,14 +90,14 @@ const fontSize = 14; // px
 const htmlFontSize = 16;
 const coef = fontSize / 14;
 
-const agency_list = Array.from(Array(10).keys());
-
 export function ChosenAgency() {
   /* INITIALIZATION */
   const history = useHistory();
   let { agency_id } = useParams<{ agency_id: string }>();
-  const { setChosenAgency, setTargetEstates } = actionDispatch(useDispatch());
+  const { setRandomAgencies, setChosenAgency, setTargetEstates } =
+    actionDispatch(useDispatch());
 
+  const { randomAgencies } = useSelector(randomAgenciesRetriever);
   const { chosenAgency } = useSelector(chosenAgencyRetriever);
   const { targetEstates } = useSelector(targetEstatesRetriever);
 
@@ -87,12 +109,18 @@ export function ChosenAgency() {
       limit: 8,
       order: "createdAt",
       agency_mb_id: agency_id,
-      estate_collection: "apartment",
+      estate_collection: "house",
     });
 
   const refs: any = useRef([]);
 
   useEffect(() => {
+    const agencyServer = new AgencyApiServer();
+    agencyServer
+      .getAgencies({ page: 1, limit: 10, order: "random" })
+      .then((data) => setRandomAgencies(data))
+      .catch((err) => console.log(err));
+
     const estateServer = new EstateApiServer();
     estateServer
       .getTargetEstates(targetEstateSearchObj)
@@ -105,7 +133,32 @@ export function ChosenAgency() {
     setChosenAgencyId(id);
     targetEstateSearchObj.agency_mb_id = id;
     setTargetEstateSearchObj({ ...targetEstateSearchObj });
-    history.push(`/estate/${id}`);
+    history.push(`/agency/${id}`);
+  };
+
+  const targetLikeEstate = async (e: any, id: string) => {
+    try {
+      assert.ok(verifyMemberData, Definer.auth_err1);
+
+      const memberService = new MemberApiServer(),
+        like_result = await memberService.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "estate",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "#ccc";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+      await sweetTopSmallSuccessAlert("success", 900, false);
+    } catch (err: any) {
+      console.log("targetLikeBest, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
   };
 
   return (
@@ -148,18 +201,17 @@ export function ChosenAgency() {
                   modules={[Autoplay, Pagination, Navigation]}
                   navigation={true}
                 >
-                  {agency_list.map((ele, index) => {
+                  {randomAgencies.map((ele: Agency) => {
+                    const random_image_path = `${serverApi}/${ele.mb_image}`;
                     return (
                       <SwiperSlide
+                        onClick={() => chosenAgencyHandler(ele._id)}
                         style={{ cursor: "pointer" }}
-                        key={index}
+                        key={ele._id}
                         className="agency_avatars"
                       >
-                        <img
-                          src="/images/agency/featured.jpg"
-                          alt="Agency-img"
-                        />
-                        <span>atSoul</span>
+                        <img src={random_image_path} alt="Agency-img" />
+                        <span>{ele.mb_nick}</span>
                       </SwiperSlide>
                     );
                   })}
@@ -179,7 +231,6 @@ export function ChosenAgency() {
                   const image_path = `${serverApi}/${estate.estate_images[0]}`;
                   return (
                     <Card
-                      onClick={() => chosenAgencyHandler(estate._id)}
                       variant="outlined"
                       sx={{ width: 400 }}
                       key={estate._id}
@@ -345,8 +396,12 @@ export function ChosenAgency() {
                                 color: "text.secondary",
                                 "&:hover": { color: "danger.plainColor" },
                               }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
                             >
                               <FavoriteIcon
+                                onClick={(e) => targetLikeEstate(e, estate._id)}
                                 style={{
                                   fill:
                                     estate?.me_liked &&

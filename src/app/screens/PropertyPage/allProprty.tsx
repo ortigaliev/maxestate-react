@@ -114,7 +114,7 @@ export function AllProperty(props: any) {
     window.scrollTo(0, 0);
   };
 
-  /*  const searchCollectionHandler = (collection: string) => {
+  const searchCollectionHandler = (collection: string) => {
     allEstateSearchObj.page = 1;
     allEstateSearchObj.estate_collection = collection;
     setAllEstateSearchObj({ ...allEstateSearchObj });
@@ -123,7 +123,7 @@ export function AllProperty(props: any) {
     allEstateSearchObj.page = 1;
     allEstateSearchObj.order = order;
     setAllEstateSearchObj({ ...allEstateSearchObj });
-  }; */
+  };
 
   const handlePaginationChange = (event: any, value: number) => {
     allEstateSearchObj.page = value;
@@ -264,7 +264,7 @@ export function AllProperty(props: any) {
                               sx={{ marginBottom: "15px", color: "#ff5a3c" }}
                               level="body-md"
                             >
-                              FOR SALE
+                              {estate.estate_category}
                             </Typography>
                             <Typography
                               sx={{ marginBottom: "15px" }}
@@ -289,14 +289,15 @@ export function AllProperty(props: any) {
                                 sx={{ color: "#5c727d" }}
                                 level="body-sm"
                               >
-                                California
+                                {estate.estate_address}
                               </Typography>
                             </Stack>
                             <Typography
                               sx={{ color: "#5c727d", marginBottom: "25px" }}
                               level="body-sm"
                             >
-                              3 Bedrooms 2 Bathrooms 3450 square Ft
+                              {estate.estate_bed} Bedrooms {estate.estate_bath}{" "}
+                              Bathrooms {estate.estate_area} square Ft
                             </Typography>
                             <Stack
                               flexDirection={"row"}

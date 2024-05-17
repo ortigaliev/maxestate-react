@@ -25,6 +25,7 @@ export interface HomePageState {
 
 /* Agency Page */
 export interface AgencyPageState {
+  randomAgencies: Agency[];
   targetAgencies: Agency[];
   chosenAgency: Agency | null;
   targetEstates: Estate[];
