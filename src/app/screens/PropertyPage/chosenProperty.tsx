@@ -184,7 +184,14 @@ export function ChosenProperty(props: any) {
             const image_path = `${serverApi}/${ele}`;
             return (
               <SwiperSlide>
-                <img src={image_path} alt="Chosen_Estate_img" />
+                <img
+                  style={{
+                    maxWidth: "100%",
+                    objectFit: "cover",
+                  }}
+                  src={image_path}
+                  alt="Chosen_Estate_img"
+                />
               </SwiperSlide>
             );
           })}

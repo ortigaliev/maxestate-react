@@ -419,8 +419,10 @@ export function AllProperty(props: any) {
           {/* PAGINATION */}
           <Box ml="auto" mr="auto" mt={2}>
             <Pagination
-              count={3}
-              page={1}
+              count={
+                allEstateSearchObj.page >= 3 ? allEstateSearchObj.page + 1 : 3
+              }
+              page={allEstateSearchObj.page}
               renderItem={(item) => (
                 <PaginationItem
                   components={{
@@ -431,6 +433,7 @@ export function AllProperty(props: any) {
                   color={"secondary"}
                 />
               )}
+              onChange={handlePaginationChange}
             />
           </Box>
         </Stack>
