@@ -8,29 +8,87 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { RangeSlider } from "./slider";
 import { EstateSearchObj } from "../../../types/others";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function AdvancedInfo() {
-  const [allEstateSearchObj, setAllEstateSearchObj] = useState<EstateSearchObj>(
-    {
+/* REDUX */
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { Estate } from "../../../types/estate";
+import { setTargetEstates } from "../AgencyPage/slice";
+import { retrieveTargetEstates } from "../AgencyPage/selector";
+import EstateApiServer from "../../apiServer/estateApiServer";
+import { useParams } from "react-router-dom";
+
+/* REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setTargetEstates: (data: Estate[]) => dispach(setTargetEstates(data)),
+});
+
+/* REDUX SELECTOR */
+const targetEstatesRetriever = createSelector(
+  retrieveTargetEstates,
+  (targetEstates) => ({
+    targetEstates,
+  })
+);
+
+const collection = [
+  "house",
+  "office",
+  "willa",
+  "luxary home",
+  "apartment",
+  "studio",
+  "single family",
+  "business center",
+  "penthouse",
+  "etc",
+];
+
+const amenities = [
+  "swimming-pool",
+  "parking",
+  "library",
+  "medical-center",
+  "kids-playground",
+  "private-security",
+  "smart-home",
+];
+
+export function AdvancedInfo(props: any) {
+  /* INITIALIZATION */
+
+  const { setTargetEstates } = actionDispatch(useDispatch());
+
+  const { targetEstates } = useSelector(targetEstatesRetriever);
+  const [orderRebuild, setOrderRebuild] = useState<Date>(new Date());
+  const [collections, setCollections] = useState("");
+
+  const [targetEstateSearchObj, setTargetEstateSearchObj] =
+    useState<EstateSearchObj>({
       page: 1,
       limit: 8,
-      order: "estate_views",
-    }
-  );
+      order: "createdAt",
+      estate_collection: "",
+    });
+
+  useEffect(() => {
+    const estateServer = new EstateApiServer();
+    estateServer
+      .getTargetEstates(targetEstateSearchObj)
+      .then((data) => setTargetEstates(data))
+      .catch((err) => console.log(err));
+  }, [targetEstateSearchObj, orderRebuild]);
 
   /* HANDLERS */
-  const searchCollectionHandler = (collection: string) => {
-    allEstateSearchObj.page = 1;
-    allEstateSearchObj.estate_collection = collection;
-    setAllEstateSearchObj({ ...allEstateSearchObj });
-    console.log("estate_collection::", collection);
+  const chosenCollectionHandler = (e: any) => {
+    targetEstateSearchObj.page = 1;
+    targetEstateSearchObj.estate_collection = e.target.value;
+    setCollections(e.target.value);
+    setTargetEstateSearchObj({ ...targetEstateSearchObj });
   };
-  const searchOrderHandler = (order: string) => {
-    allEstateSearchObj.page = 1;
-    allEstateSearchObj.order = order;
-    setAllEstateSearchObj({ ...allEstateSearchObj });
-  };
+
   return (
     <Stack mt={4}>
       <Card sx={{ width: "370px", paddingLeft: "35px" }}>
@@ -46,42 +104,54 @@ export function AdvancedInfo() {
             Property Type
           </Typography>
           <FormGroup>
-            <FormControlLabel
+            {collection?.map((ele: string) => {
+              return (
+                <FormControlLabel
+                  key={ele}
+                  value={ele}
+                  label={ele}
+                  onChange={chosenCollectionHandler}
+                  control={<Checkbox />}
+                />
+              );
+            })}
+
+            {/*  <FormControlLabel
               control={<Checkbox />}
-              label="House"
-              value="apartment"
-              onClick={() => searchCollectionHandler("apartment")}
-            />
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Office Villa"
+              label="Willa"
               value="willa"
-              onClick={() => searchCollectionHandler("willa")}
             />
             <FormControlLabel
               control={<Checkbox />}
               label="Luxary Home"
-              value="penthouse"
-              onClick={() => searchCollectionHandler("penthouse")}
+              value="luxary home"
             />
             <FormControlLabel
-              control={<Checkbox />}
+              control={<Checkbox defaultChecked />}
               label="Apartment"
               value="apartment"
-              onClick={() => searchCollectionHandler("apartment")}
             />
             <FormControlLabel
               control={<Checkbox />}
               label="Studio"
-              value="office"
-              onClick={() => searchCollectionHandler("office")}
+              value="studio"
             />
             <FormControlLabel
               control={<Checkbox />}
               label="Single Family"
-              value="family"
-              onClick={() => searchCollectionHandler("family")}
+              value="single family"
             />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Business Center"
+              value="business center"
+            />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Penthouse"
+              value="penthouse"
+            />
+            <FormControlLabel control={<Checkbox />} label="etc" value="etc" /> */}
           </FormGroup>
           <Typography
             gutterBottom

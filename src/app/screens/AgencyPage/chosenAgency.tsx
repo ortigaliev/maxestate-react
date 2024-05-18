@@ -25,6 +25,19 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import EstateApiServer from "../../apiServer/estateApiServer";
+import AgencyApiServer from "../../apiServer/agencyApiServer";
+import assert from "assert";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import { Definer } from "../../lib/Definer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+import { verifyMemberData } from "../../apiServer/verify";
+import { serverApi } from "../../lib/config";
+import { Estate } from "../../../types/estate";
+import { EstateSearchObj, SearchObj } from "../../../types/others";
 
 /* REDUX */
 import { useDispatch, useSelector } from "react-redux";
@@ -37,19 +50,6 @@ import {
 import { Agency } from "../../../types/user";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setChosenAgency, setRandomAgencies, setTargetEstates } from "./slice";
-import { serverApi } from "../../lib/config";
-import { Estate } from "../../../types/estate";
-import { EstateSearchObj, SearchObj } from "../../../types/others";
-import EstateApiServer from "../../apiServer/estateApiServer";
-import AgencyApiServer from "../../apiServer/agencyApiServer";
-import assert from "assert";
-import MemberApiServer from "../../apiServer/memberApiServer";
-import { Definer } from "../../lib/Definer";
-import {
-  sweetErrorHandling,
-  sweetTopSmallSuccessAlert,
-} from "../../lib/sweetAlert";
-import { verifyMemberData } from "../../apiServer/verify";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -170,281 +170,270 @@ export function ChosenAgency() {
   return (
     <div className="chosen_agency">
       <Container>
-        <CssVarsProvider>
-          <Stack>
-            <Stack
-              flexDirection={"column"}
-              alignItems={"center"}
-              className={"lf_card_wrapper"}
-              sx={{
-                paddingTop: "115px",
-                paddingBottom: "90px",
-              }}
+        <Stack>
+          <Stack
+            flexDirection={"column"}
+            alignItems={"center"}
+            className={"lf_card_wrapper"}
+            sx={{
+              paddingTop: "115px",
+              paddingBottom: "90px",
+            }}
+          >
+            <Typography
+              className="card_tite"
+              component={"h1"}
+              style={{ fontSize: "48px", marginBottom: "40px" }}
             >
-              <Typography
-                className="card_tite"
-                component={"h1"}
-                style={{ fontSize: "48px", marginBottom: "40px" }}
-              >
-                {chosenAgency?.mb_nick}
-              </Typography>
+              {chosenAgency?.mb_nick}
+            </Typography>
 
-              <Stack
-                style={{ width: "100%", display: "flex" }}
-                flexDirection={"row"}
-                sx={{ mt: "35px" }}
-                mb={10}
+            <Stack
+              style={{ width: "100%", display: "flex" }}
+              flexDirection={"row"}
+              sx={{ mt: "35px" }}
+              mb={10}
+            >
+              <Swiper
+                className="agency_avatars_wrapper"
+                slidesPerView={7}
+                centeredSlides={false}
+                spaceBetween={30}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                modules={[Autoplay, Pagination, Navigation]}
+                navigation={true}
               >
-                <Swiper
-                  className="agency_avatars_wrapper"
-                  slidesPerView={7}
-                  centeredSlides={false}
-                  spaceBetween={30}
-                  autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                  }}
-                  modules={[Autoplay, Pagination, Navigation]}
-                  navigation={true}
-                >
-                  {randomAgencies.map((ele: Agency) => {
-                    const random_image_path = `${serverApi}/${ele.mb_image}`;
-                    return (
-                      <SwiperSlide
-                        onClick={() => chosenAgencyHandler(ele._id)}
-                        style={{ cursor: "pointer" }}
-                        key={ele._id}
-                        className="agency_avatars"
-                      >
-                        <img src={random_image_path} alt="Agency-img" />
-                        <span>{ele.mb_nick}</span>
-                      </SwiperSlide>
-                    );
-                  })}
-                </Swiper>
-              </Stack>
-
-              <Stack
-                className="featured_card_wrapper"
-                flexDirection={"row"}
-                flexWrap={"wrap"}
-                display={"flex"}
-                height={"auto"}
-                gap={2}
-              >
-                {/* CARD 1 */}
-                {targetEstates.map((estate: Estate) => {
-                  const image_path = `${serverApi}/${estate.estate_images[0]}`;
+                {randomAgencies.map((ele: Agency) => {
+                  const random_image_path = `${serverApi}/${ele.mb_image}`;
                   return (
-                    <Card
-                      onClick={() => chosenEstateHandler(estate._id)}
-                      variant="outlined"
-                      sx={{ width: 400 }}
-                      key={estate._id}
+                    <SwiperSlide
+                      onClick={() => chosenAgencyHandler(ele._id)}
                       style={{ cursor: "pointer" }}
+                      key={ele._id}
+                      className="agency_avatars"
                     >
-                      <CardOverflow>
-                        <AspectRatio ratio="4/3">
-                          <img
-                            src={image_path}
-                            className={"hero_img"}
-                            loading="lazy"
-                            alt="latestList"
-                            background-size="cover"
-                          />
-                        </AspectRatio>
-                        <Stack className="location_galery">
-                          <Box className="location_galery_label">
-                            {estate.estate_category}
-                          </Box>
-                          <Stack className="location_galery_info">
-                            {/* Property address link*/}
-                            <Link
-                              /* sx={iconSx} */
-                              /* href="#" */
-                              className="location_galery_info-address"
-                              to={"#"}
-                            >
-                              <LocationOnIcon
-                                style={{
-                                  display: "block",
-                                  width: 16,
-                                  height: 20,
-                                  fontSize: 20,
-                                  color: "#fff",
-                                }}
-                              />
-                              <Typography
-                                style={{ color: "#fff" }}
-                                level="body-sm"
-                              >
-                                {estate.estate_address}
-                              </Typography>
-                            </Link>
-                          </Stack>
-                        </Stack>
-                      </CardOverflow>
-                      <CardContent sx={{ padding: "15px" }}>
-                        <Typography
-                          sx={{
-                            marginBottom: "15px",
-                            color: "#ff5a3c",
-                            fontWeight: 700,
-                          }}
-                          level="body-md"
-                        >
-                          ${estate.estate_price}
-                        </Typography>
-                        <Typography
-                          sx={{ marginBottom: "15px" }}
-                          level="title-lg"
-                        >
-                          {estate.estate_name}
-                        </Typography>
-                        <Stack
-                          flexDirection="row"
-                          justifyContent={"space-between"}
-                          sx={{ width: 260 }}
-                        >
-                          {/* Featured home describtion -1 */}
-                          <Stack>
-                            <Stack flexDirection={"row"} marginRight={"20px"}>
-                              <span>{estate.estate_bed}</span>
-                              <BedOutlinedIcon
-                                sx={{
-                                  display: "block",
-                                  width: 20,
-                                  height: 20,
-                                  fontSize: 20,
-                                }}
-                              />
-                            </Stack>
-                            <Typography
-                              sx={{ color: "#5c727d" }}
-                              level="body-sm"
-                            >
-                              Bedrooms
-                            </Typography>
-                            <Divider
-                              orientation="vertical"
-                              sx={{
-                                height: "45px",
-                                width: "2px",
-                                position: "absolute",
-                                left: 110,
-                              }}
-                            />
-                          </Stack>
-                          {/* Featured home describtion-2 */}
-                          <Stack>
-                            <Stack flexDirection={"row"}>
-                              <span>{estate.estate_bath}</span>
-                              <BathtubOutlinedIcon
-                                sx={{
-                                  display: "block",
-                                  width: 20,
-                                  height: 20,
-                                  fontSize: 20,
-                                }}
-                              />
-                            </Stack>
-                            <Typography
-                              sx={{ color: "#5c727d" }}
-                              level="body-sm"
-                            >
-                              Bedrooms
-                            </Typography>
-                            <Divider
-                              orientation="vertical"
-                              sx={{
-                                height: "45px",
-                                width: "2px",
-                                position: "absolute",
-                                left: 210,
-                              }}
-                            />
-                          </Stack>
-                          {/* Featured home describtion-3 */}
-                          <Stack>
-                            <Stack flexDirection={"row"}>
-                              <span>{estate.estate_area}</span>
-                              <SquareFootOutlinedIcon
-                                sx={{
-                                  display: "block",
-                                  width: 20,
-                                  height: 20,
-                                  fontSize: 20,
-                                }}
-                              />
-                            </Stack>
-                            <Typography
-                              sx={{ color: "#5c727d" }}
-                              level="body-sm"
-                            >
-                              square kv
-                            </Typography>
-                          </Stack>
-                        </Stack>
-                      </CardContent>
-                      <CardOverflow variant="soft" sx={{ bgcolor: "#fff" }}>
-                        <Divider inset="context" />
-                        <CardContent orientation="horizontal">
-                          <Box
-                            sx={{
-                              display: "flex",
-                              gap: 1,
-                              alignItems: "center",
-                            }}
-                          >
-                            <IconButton
-                              sx={{
-                                fontWeight: "md",
-                                ml: "auto",
-                                color: "text.secondary",
-                                "&:hover": { color: "danger.plainColor" },
-                              }}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                              }}
-                            >
-                              <FavoriteIcon
-                                onClick={(e) => targetLikeEstate(e, estate._id)}
-                                style={{
-                                  fill:
-                                    estate?.me_liked &&
-                                    estate?.me_liked[0]?.my_favorite
-                                      ? "red"
-                                      : "#ccc",
-                                }}
-                              />
-                              <div
-                                ref={(element) =>
-                                  (refs.current[estate._id] = element)
-                                }
-                              >
-                                {estate.estate_likes}
-                              </div>
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                fontWeight: "md",
-                                color: "text.secondary",
-                                "&:hover": { color: "primary.plainColor" },
-                              }}
-                            >
-                              <Visibility />
-                              {estate.estate_views}
-                            </IconButton>
-                          </Box>
-                        </CardContent>
-                      </CardOverflow>
-                    </Card>
+                      <img src={random_image_path} alt="Agency-img" />
+                      <span>{ele.mb_nick}</span>
+                    </SwiperSlide>
                   );
                 })}
-              </Stack>
+              </Swiper>
+            </Stack>
+
+            <Stack
+              className="featured_card_wrapper"
+              flexDirection={"row"}
+              flexWrap={"wrap"}
+              display={"flex"}
+              height={"auto"}
+              gap={2}
+            >
+              {/* CARD 1 */}
+              {targetEstates.map((estate: Estate) => {
+                const image_path = `${serverApi}/${estate.estate_images[0]}`;
+                return (
+                  <Card
+                    onClick={() => chosenEstateHandler(estate._id)}
+                    variant="outlined"
+                    sx={{ width: 400 }}
+                    key={estate._id}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <CardOverflow>
+                      <AspectRatio ratio="4/3">
+                        <img
+                          src={image_path}
+                          className={"hero_img"}
+                          loading="lazy"
+                          alt="latestList"
+                          background-size="cover"
+                        />
+                      </AspectRatio>
+                      <Stack className="location_galery">
+                        <Box className="location_galery_label">
+                          {estate.estate_category}
+                        </Box>
+                        <Stack className="location_galery_info">
+                          {/* Property address link*/}
+                          <Link
+                            /* sx={iconSx} */
+                            /* href="#" */
+                            className="location_galery_info-address"
+                            to={"#"}
+                          >
+                            <LocationOnIcon
+                              style={{
+                                display: "block",
+                                width: 16,
+                                height: 20,
+                                fontSize: 20,
+                                color: "#fff",
+                              }}
+                            />
+                            <Typography
+                              style={{ color: "#fff" }}
+                              level="body-sm"
+                            >
+                              {estate.estate_address}
+                            </Typography>
+                          </Link>
+                        </Stack>
+                      </Stack>
+                    </CardOverflow>
+                    <CardContent sx={{ padding: "15px" }}>
+                      <Typography
+                        sx={{
+                          marginBottom: "15px",
+                          color: "#ff5a3c",
+                          fontWeight: 700,
+                        }}
+                        level="body-md"
+                      >
+                        ${estate.estate_price}
+                      </Typography>
+                      <Typography
+                        sx={{ marginBottom: "15px" }}
+                        level="title-lg"
+                      >
+                        {estate.estate_name}
+                      </Typography>
+                      <Stack
+                        flexDirection="row"
+                        justifyContent={"space-between"}
+                        sx={{ width: 260 }}
+                      >
+                        {/* Featured home describtion -1 */}
+                        <Stack>
+                          <Stack flexDirection={"row"} marginRight={"20px"}>
+                            <span>{estate.estate_bed}</span>
+                            <BedOutlinedIcon
+                              sx={{
+                                display: "block",
+                                width: 20,
+                                height: 20,
+                                fontSize: 20,
+                              }}
+                            />
+                          </Stack>
+                          <Typography sx={{ color: "#5c727d" }} level="body-sm">
+                            Bedrooms
+                          </Typography>
+                          <Divider
+                            orientation="vertical"
+                            sx={{
+                              height: "45px",
+                              width: "2px",
+                              position: "absolute",
+                              left: 110,
+                            }}
+                          />
+                        </Stack>
+                        {/* Featured home describtion-2 */}
+                        <Stack>
+                          <Stack flexDirection={"row"}>
+                            <span>{estate.estate_bath}</span>
+                            <BathtubOutlinedIcon
+                              sx={{
+                                display: "block",
+                                width: 20,
+                                height: 20,
+                                fontSize: 20,
+                              }}
+                            />
+                          </Stack>
+                          <Typography sx={{ color: "#5c727d" }} level="body-sm">
+                            Bedrooms
+                          </Typography>
+                          <Divider
+                            orientation="vertical"
+                            sx={{
+                              height: "45px",
+                              width: "2px",
+                              position: "absolute",
+                              left: 210,
+                            }}
+                          />
+                        </Stack>
+                        {/* Featured home describtion-3 */}
+                        <Stack>
+                          <Stack flexDirection={"row"}>
+                            <span>{estate.estate_area}</span>
+                            <SquareFootOutlinedIcon
+                              sx={{
+                                display: "block",
+                                width: 20,
+                                height: 20,
+                                fontSize: 20,
+                              }}
+                            />
+                          </Stack>
+                          <Typography sx={{ color: "#5c727d" }} level="body-sm">
+                            square kv
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </CardContent>
+                    <CardOverflow variant="soft" sx={{ bgcolor: "#fff" }}>
+                      <Divider inset="context" />
+                      <CardContent orientation="horizontal">
+                        <Box
+                          sx={{
+                            display: "flex",
+                            gap: 1,
+                            alignItems: "center",
+                          }}
+                        >
+                          <IconButton
+                            sx={{
+                              fontWeight: "md",
+                              ml: "auto",
+                              color: "text.secondary",
+                              "&:hover": { color: "danger.plainColor" },
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
+                            <FavoriteIcon
+                              onClick={(e) => targetLikeEstate(e, estate._id)}
+                              style={{
+                                fill:
+                                  estate?.me_liked &&
+                                  estate?.me_liked[0]?.my_favorite
+                                    ? "red"
+                                    : "#ccc",
+                              }}
+                            />
+                            <div
+                              ref={(element) =>
+                                (refs.current[estate._id] = element)
+                              }
+                            >
+                              {estate.estate_likes}
+                            </div>
+                          </IconButton>
+                          <IconButton
+                            sx={{
+                              fontWeight: "md",
+                              color: "text.secondary",
+                              "&:hover": { color: "primary.plainColor" },
+                            }}
+                          >
+                            <Visibility />
+                            {estate.estate_views}
+                          </IconButton>
+                        </Box>
+                      </CardContent>
+                    </CardOverflow>
+                  </Card>
+                );
+              })}
             </Stack>
           </Stack>
-        </CssVarsProvider>
+        </Stack>
       </Container>
     </div>
   );

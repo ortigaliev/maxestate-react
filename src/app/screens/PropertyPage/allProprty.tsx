@@ -1,13 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Link,
-  Pagination,
-  PaginationItem,
-  Stack,
-} from "@mui/material";
 import Grid from "@mui/joy/Grid";
 import TextField from "@mui/material/TextField";
 
@@ -17,7 +8,15 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import Divider from "@mui/joy/Divider";
 import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
-import { AspectRatio, IconButton } from "@mui/joy";
+import {
+  AspectRatio,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Link,
+  Stack,
+} from "@mui/joy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Favorite, FavoriteBorder, Visibility } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
@@ -52,6 +51,8 @@ import EstateApiServer from "../../apiServer/estateApiServer";
 import { serverApi } from "../../lib/config";
 import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -87,7 +88,7 @@ export function AllProperty(props: any) {
     {
       page: 1,
       limit: 8,
-      order: "estate_views",
+      order: "createdAt",
     }
   );
 
@@ -158,285 +159,269 @@ export function AllProperty(props: any) {
   return (
     <div className="all_property">
       <Container>
-        <Stack mt={5} mb={10} position={"relative"}>
-          <Stack
-            className="all_property_grid"
-            sx={{ width: "880px", m: "15px 15px" }}
-          >
-            <Box
-              className="dir_link"
-              mb={2}
-              sx={{ display: "flex", flexDirection: "row", gap: 3 }}
-            >
-              <Box>
-                <Link
-                  href="/"
-                  underline="none"
-                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                >
-                  <HomeIcon />
-                  Home
-                </Link>
-              </Box>
-
-              <Box>
-                <Link
-                  href="/"
-                  underline="none"
-                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                >
-                  All Estate
-                  <CloseIcon />
-                </Link>
-              </Box>
-            </Box>
-            {/* MENU BAR AND DEFAULT */}
+        <CssVarsProvider>
+          <Stack mt={5} mb={10} position={"relative"}>
             <Stack
-              width="820px"
-              flexDirection={"row"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-              mb={5}
+              className="all_property_grid"
+              sx={{ width: "880px", m: "15px 15px" }}
             >
-              <Box sx={{ display: "flax", alignItems: "center", gap: 2 }}>
-                <Link href="#" underline="none">
-                  <WindowIcon sx={{ width: "40px", height: "36px" }} />
-                </Link>
-                <Link href="#" underline="none">
-                  <ViewListIcon sx={{ width: "40px", height: "36px" }} />
-                </Link>
-              </Box>
-              <Box>
-                <BasicSelect />
-              </Box>
-            </Stack>
-
-            {/* Search BAR */}
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: "1 0", width: "85ch" },
-                display: "flex",
-                alignItems: "center",
-              }}
-              noValidate
-              autoComplete="off"
-              bgcolor={"#f2f6f7"}
-            >
-              <TextField
-                id="filled-search"
-                label="Search field"
-                type="search"
-              />
-              <Button variant="contained" sx={{ padding: 2, margin: 0 }}>
-                <SearchIcon />
-              </Button>
-            </Box>
-            {/* Latest Lists Section */}
-            <Box>
-              <Grid
-                container
-                spacing={2}
-                sx={{ flexGrow: 1, paddingTop: "20px" }}
+              {/* MENU BAR AND DEFAULT */}
+              <Stack
+                width="820px"
+                flexDirection={"row"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                mb={5}
               >
-                {allEstates.map((estate: Estate, index) => {
-                  const image_path = `${serverApi}/${estate.estate_images[0]}`;
-                  return (
-                    <Grid key={index}>
-                      <CssVarsProvider>
-                        <Card
-                          variant="outlined"
-                          sx={{ width: 400, cursor: "pointer" }}
-                          onClick={() => chosenEstateHandler(estate._id)}
-                        >
-                          <CardOverflow>
-                            <AspectRatio ratio="1.3">
-                              <img
-                                src={image_path}
-                                loading="lazy"
-                                alt="latestList"
-                                background-size="cover"
-                              />
-                            </AspectRatio>
-                          </CardOverflow>
-                          <CardContent sx={{ padding: "15px" }}>
-                            <Typography
-                              sx={{ marginBottom: "15px", color: "#ff5a3c" }}
-                              level="body-md"
-                            >
-                              {estate.estate_category}
-                            </Typography>
-                            <Typography
-                              sx={{ marginBottom: "15px" }}
-                              level="title-lg"
-                            >
-                              {estate.estate_name}
-                            </Typography>
-                            <Stack
-                              sx={{ marginBottom: "15px" }}
-                              flexDirection={"row"}
-                            >
-                              <LocationOnIcon
-                                sx={{
-                                  display: "block",
-                                  width: 16,
-                                  height: 20,
-                                  fontSize: 20,
-                                  color: "#ff5a3c",
-                                }}
-                              />
+                <Box sx={{ display: "flax", alignItems: "center", gap: 2 }}>
+                  <Link href="#" underline="none">
+                    <WindowIcon sx={{ width: "40px", height: "36px" }} />
+                  </Link>
+                  <Link href="#" underline="none">
+                    <ViewListIcon sx={{ width: "40px", height: "36px" }} />
+                  </Link>
+                </Box>
+                <Box>
+                  <BasicSelect />
+                </Box>
+              </Stack>
+
+              {/* Search BAR */}
+              <Box
+                component="form"
+                sx={{
+                  "& .MuiTextField-root": { m: "1 0", width: "85ch" },
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                noValidate
+                autoComplete="off"
+                bgcolor={"#f2f6f7"}
+              >
+                <TextField
+                  id="filled-search"
+                  label="Search field"
+                  type="search"
+                />
+                <Button sx={{ padding: 2, margin: 0 }}>
+                  <SearchIcon />
+                </Button>
+              </Box>
+              {/* Latest Lists Section */}
+              <Box>
+                <Grid
+                  container
+                  spacing={2}
+                  sx={{ flexGrow: 1, paddingTop: "20px" }}
+                >
+                  {allEstates.map((estate: Estate, index) => {
+                    const image_path = `${serverApi}/${estate.estate_images[0]}`;
+                    return (
+                      <Grid key={index}>
+                        <CssVarsProvider>
+                          <Card
+                            variant="outlined"
+                            sx={{ width: 400, cursor: "pointer" }}
+                            onClick={() => chosenEstateHandler(estate._id)}
+                          >
+                            <CardOverflow>
+                              <AspectRatio ratio="1.3">
+                                <img
+                                  src={image_path}
+                                  loading="lazy"
+                                  alt="latestList"
+                                  background-size="cover"
+                                />
+                              </AspectRatio>
+                            </CardOverflow>
+                            <CardContent sx={{ padding: "15px" }}>
                               <Typography
-                                sx={{ color: "#5c727d" }}
-                                level="body-sm"
+                                sx={{ marginBottom: "15px", color: "#ff5a3c" }}
+                                level="body-md"
                               >
-                                {estate.estate_address}
+                                {estate.estate_category}
                               </Typography>
-                            </Stack>
-                            <Typography
-                              sx={{ color: "#5c727d", marginBottom: "25px" }}
-                              level="body-sm"
-                            >
-                              {estate.estate_bed} Bedrooms {estate.estate_bath}{" "}
-                              Bathrooms {estate.estate_area} square Ft
-                            </Typography>
-                            <Stack
-                              flexDirection={"row"}
-                              gap={1}
-                              className="lates_frame_button_wrapper"
-                            >
-                              <IconButton
-                                variant="outlined"
-                                color="neutral"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                }}
+                              <Typography
+                                sx={{ marginBottom: "15px" }}
+                                level="title-lg"
                               >
-                                <Favorite
-                                  onClick={(e) =>
-                                    targetLikeHandler(e, estate._id)
-                                  }
-                                  style={{
-                                    fill:
-                                      estate.me_liked &&
-                                      estate.me_liked[0]?.my_favorite
-                                        ? "red"
-                                        : "#ccc",
+                                {estate.estate_name}
+                              </Typography>
+                              <Stack
+                                sx={{ marginBottom: "15px" }}
+                                flexDirection={"row"}
+                              >
+                                <LocationOnIcon
+                                  sx={{
+                                    display: "block",
+                                    width: 16,
+                                    height: 20,
+                                    fontSize: 20,
+                                    color: "#ff5a3c",
                                   }}
                                 />
-                              </IconButton>
-                              <IconButton
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                }}
-                              >
-                                <HomeModal />
-                              </IconButton>
-                              <IconButton
-                                variant="outlined"
-                                onClick={(e) => {
-                                  props.onAdd(estate);
-                                  e.stopPropagation();
-                                }}
-                                color="neutral"
-                              >
-                                <AddCircleOutlineOutlinedIcon />
-                              </IconButton>
-                            </Stack>
-                          </CardContent>
-                          <CardOverflow variant="soft" sx={{ bgcolor: "#fff" }}>
-                            <Divider inset="context" />
-                            <CardContent orientation="horizontal">
+                                <Typography
+                                  sx={{ color: "#5c727d" }}
+                                  level="body-sm"
+                                >
+                                  {estate.estate_address}
+                                </Typography>
+                              </Stack>
                               <Typography
-                                level="body-lg"
-                                fontWeight="bold"
-                                textColor="text.secondary"
-                                sx={{
-                                  color: "#ff5a3c",
-                                  padding: "10px 15px 5px 15px",
-                                }}
+                                sx={{ color: "#5c727d", marginBottom: "25px" }}
+                                level="body-sm"
                               >
-                                $ {estate.estate_price}
+                                {estate.estate_bed} Bedrooms
+                                {estate.estate_bath} Bathrooms
+                                {estate.estate_area} square Ft
                               </Typography>
-                              <Box ml="auto" display="flex" gap={1}>
+                              <Stack
+                                flexDirection={"row"}
+                                gap={1}
+                                className="lates_frame_button_wrapper"
+                              >
                                 <IconButton
+                                  variant="outlined"
+                                  color="neutral"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                   }}
                                 >
-                                  <div
-                                    ref={(element) =>
-                                      (refs.current[estate._id] = element)
+                                  <Favorite
+                                    onClick={(e) =>
+                                      targetLikeHandler(e, estate._id)
                                     }
-                                  >
-                                    {estate.estate_likes}
-                                  </div>
-                                  <Favorite sx={{ ml: 1 }} />
+                                    style={{
+                                      fill:
+                                        estate.me_liked &&
+                                        estate.me_liked[0]?.my_favorite
+                                          ? "red"
+                                          : "#ccc",
+                                    }}
+                                  />
                                 </IconButton>
                                 <IconButton
                                   onClick={(e) => {
                                     e.stopPropagation();
                                   }}
                                 >
-                                  <Visibility sx={{ mr: 1 }} />
-                                  {estate.estate_views}
+                                  <HomeModal />
                                 </IconButton>
-                              </Box>
+                                <IconButton
+                                  variant="outlined"
+                                  onClick={(e) => {
+                                    props.onAdd(estate);
+                                    e.stopPropagation();
+                                  }}
+                                  color="neutral"
+                                >
+                                  <AddCircleOutlineOutlinedIcon />
+                                </IconButton>
+                              </Stack>
                             </CardContent>
-                          </CardOverflow>
-                        </Card>
-                      </CssVarsProvider>
-                    </Grid>
-                  );
-                })}
-              </Grid>
-            </Box>
-            {/* ADVANCED INFORMATION */}
-            <Stack position={"absolute"} sx={{ top: 0, right: 0 }}>
-              <Typography
-                gutterBottom
-                component="div"
-                fontSize={24}
-                fontWeight={700}
-                mt={2}
-                mb={1}
-              >
-                Advanced Information
-              </Typography>
-              <Typography
-                component="div"
-                fontSize={16}
-                fontWeight={400}
-                sx={{ color: "#5c727d" }}
-              >
-                About 1,620 results (0.82 secund)
-                <Box>
-                  <AdvancedInfo />
-                </Box>
-              </Typography>
+                            <CardOverflow
+                              variant="soft"
+                              sx={{ bgcolor: "#fff" }}
+                            >
+                              <Divider inset="context" />
+                              <CardContent orientation="horizontal">
+                                <Typography
+                                  level="body-lg"
+                                  fontWeight="bold"
+                                  textColor="text.secondary"
+                                  sx={{
+                                    color: "#ff5a3c",
+                                    padding: "10px 15px 5px 15px",
+                                  }}
+                                >
+                                  $ {estate.estate_price}
+                                </Typography>
+                                <Box ml="auto" display="flex" gap={1}>
+                                  <IconButton
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                    }}
+                                  >
+                                    <div
+                                      ref={(element) =>
+                                        (refs.current[estate._id] = element)
+                                      }
+                                    >
+                                      {estate.estate_likes}
+                                    </div>
+                                    <Favorite sx={{ ml: 1 }} />
+                                  </IconButton>
+                                  <IconButton
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                    }}
+                                  >
+                                    <Visibility sx={{ mr: 1 }} />
+                                    {estate.estate_views}
+                                  </IconButton>
+                                </Box>
+                              </CardContent>
+                            </CardOverflow>
+                          </Card>
+                        </CssVarsProvider>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+              </Box>
+              {/* ADVANCED INFORMATION */}
+              <Stack position={"absolute"} sx={{ top: 0, right: 0 }}>
+                <Typography
+                  gutterBottom
+                  component="div"
+                  fontSize={24}
+                  fontWeight={700}
+                  mt={2}
+                  mb={1}
+                >
+                  Advanced Information
+                </Typography>
+                <Typography
+                  component="div"
+                  fontSize={16}
+                  fontWeight={400}
+                  sx={{ color: "#5c727d" }}
+                >
+                  About 1,620 results (0.82 secund)
+                </Typography>
+                {/* <Box>{<AdvancedInfo />}</Box> */}
+                <Stack mt={4}>
+                  <Card sx={{ width: "370px", paddingLeft: "35px" }}>
+                    <CardContent>
+                      <Typography>Estate Collection</Typography>
+                    </CardContent>
+                  </Card>
+                </Stack>
+              </Stack>
             </Stack>
-          </Stack>
 
-          {/* PAGINATION */}
-          <Box ml="auto" mr="auto" mt={2}>
-            <Pagination
-              count={
-                allEstateSearchObj.page >= 3 ? allEstateSearchObj.page + 1 : 3
-              }
-              page={allEstateSearchObj.page}
-              renderItem={(item) => (
-                <PaginationItem
-                  components={{
-                    previous: ArrowBackIcon,
-                    next: ArrowForwardIcon,
-                  }}
-                  {...item}
-                  color={"secondary"}
-                />
-              )}
-              onChange={handlePaginationChange}
-            />
-          </Box>
-        </Stack>
+            {/* PAGINATION */}
+            <Box ml="auto" mr="auto" mt={2}>
+              <Pagination
+                count={
+                  allEstateSearchObj.page >= 3 ? allEstateSearchObj.page + 1 : 3
+                }
+                page={allEstateSearchObj.page}
+                renderItem={(item) => (
+                  <PaginationItem
+                    components={{
+                      previous: ArrowBackIcon,
+                      next: ArrowForwardIcon,
+                    }}
+                    {...item}
+                    color={"secondary"}
+                  />
+                )}
+                onChange={handlePaginationChange}
+              />
+            </Box>
+          </Stack>
+        </CssVarsProvider>
       </Container>
     </div>
   );
