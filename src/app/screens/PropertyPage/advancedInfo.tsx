@@ -56,6 +56,10 @@ const amenities = [
   "smart-home",
 ];
 
+const price_range = ["low-budget", "medium", "height-budget"];
+
+const bed_bath_count = ["single", "double", "more-than-double"];
+
 export function AdvancedInfo(props: any) {
   /* INITIALIZATION */
 

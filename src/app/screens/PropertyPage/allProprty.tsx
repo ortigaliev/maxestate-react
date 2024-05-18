@@ -31,6 +31,16 @@ import "../../../css/property.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { Definer } from "../../lib/Definer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
+import assert from "assert";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
+import { serverApi } from "../../lib/config";
+
 /* REDUX */
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
@@ -38,21 +48,10 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { Estate } from "../../../types/estate";
 import { setAllEstates, setChosenEstate } from "./slice";
 import { retrieveAllEstates, retrieveChosenEstate } from "./selector";
-import { Definer } from "../../lib/Definer";
-import assert from "assert";
 import MemberApiServer from "../../apiServer/memberApiServer";
-import {
-  sweetErrorHandling,
-  sweetTopSmallSuccessAlert,
-} from "../../lib/sweetAlert";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { EstateSearchObj } from "../../../types/others";
 import EstateApiServer from "../../apiServer/estateApiServer";
-import { serverApi } from "../../lib/config";
-import HomeIcon from "@mui/icons-material/Home";
-import CloseIcon from "@mui/icons-material/Close";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -75,6 +74,7 @@ const chosenEstateRetriever = createSelector(
 );
 
 export function AllProperty(props: any) {
+
   /**INITIALIZATIONS */
   const history = useHistory();
   const pathname = useLocation();
@@ -102,12 +102,12 @@ export function AllProperty(props: any) {
       .catch((err) => console.log(err));
   }, [allEstateSearchObj]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
-  }, [pathname]);
+  }, [pathname]); */
 
   /* HANDLERS */
   const chosenEstateHandler = (id: string) => {

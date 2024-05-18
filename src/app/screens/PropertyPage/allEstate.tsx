@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -34,10 +34,191 @@ import { Favorite, Visibility } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import assert from "assert";
+import { Definer } from "../../lib/Definer";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../lib/sweetAlert";
 
 import { RangeSlider } from "./slider";
 
+/* REDUX */
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Dispatch } from "@reduxjs/toolkit";
+import { Estate } from "../../../types/estate";
+import { setAllEstates, setChosenEstate } from "./slice";
+import { retrieveAllEstates, retrieveChosenEstate } from "./selector";
+import MemberApiServer from "../../apiServer/memberApiServer";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { EstateSearchObj } from "../../../types/others";
+import EstateApiServer from "../../apiServer/estateApiServer";
+import { serverApi } from "../../lib/config";
+import { setTargetEstates } from "../AgencyPage/slice";
+import { retrieveTargetEstates } from "../AgencyPage/selector";
+
+/* REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setAllEstates: (data: Estate[]) => dispach(setAllEstates(data)),
+  setChosenEstate: (data: Estate) => dispach(setChosenEstate(data)),
+  setTargetEstates: (data: Estate[]) => dispach(setTargetEstates(data)),
+});
+
+// REDUX SELECTOR
+const allEstatesRetriever = createSelector(
+  retrieveAllEstates,
+  (allEstates) => ({
+    allEstates,
+  })
+);
+const chosenEstateRetriever = createSelector(
+  retrieveChosenEstate,
+  (chosenEstate) => ({
+    chosenEstate,
+  })
+);
+
+const targetEstatesRetriever = createSelector(
+  retrieveTargetEstates,
+  (targetEstates) => ({
+    targetEstates,
+  })
+);
+
+const collection = [
+  "house",
+  "office",
+  "willa",
+  "luxary home",
+  "apartment",
+  "studio",
+  "single family",
+  "business center",
+  "penthouse",
+  "etc",
+];
+
+const amenities = [
+  "swimming-pool",
+  "parking",
+  "library",
+  "medical-center",
+  "kids-playground",
+  "private-security",
+  "smart-home",
+];
+
+const price_range = ["low-budget", "medium", "height-budget"];
+
+const bed_bath_count = ["single", "double", "more-than-double"];
+
+const category = ["For Buy", "For Rent", "For Sell", "For Sale"];
+
 export function AllEstate(props: any) {
+  /**INITIALIZATIONS */
+  const history = useHistory();
+
+  const pathname = useLocation();
+  let { estate_id } = useParams<{ estate_id: string }>();
+  const { setAllEstates, setChosenEstate } = actionDispatch(useDispatch());
+  const { allEstates } = useSelector(allEstatesRetriever);
+  const { chosenEstate } = useSelector(chosenEstateRetriever);
+
+  const { setTargetEstates } = actionDispatch(useDispatch());
+  const { targetEstates } = useSelector(targetEstatesRetriever);
+  const [orderRebuild, setOrderRebuild] = useState<Date>(new Date());
+  const [collections, setCollections] = useState("");
+
+  const [chosenEstateId, setChosenEstateId] = useState<string>(estate_id);
+  const [allEstateSearchObj, setAllEstateSearchObj] = useState<EstateSearchObj>(
+    {
+      page: 1,
+      limit: 8,
+      order: "createdAt",
+      estate_collection: "",
+    }
+  );
+
+  const refs: any = useRef([]);
+
+  useEffect(() => {
+    const estateService = new EstateApiServer();
+    estateService
+      .getTargetEstates(allEstateSearchObj)
+      .then((data) => setAllEstates(data))
+      .catch((err) => console.log(err));
+  }, [allEstateSearchObj, orderRebuild]);
+
+  /* HANDLERS */
+  const chosenEstateHandler = (id: string) => {
+    history.push(`estate/${id}`);
+  };
+
+  const searchCollectionHandler = (e: any) => {
+    allEstateSearchObj.page = 1;
+    allEstateSearchObj.estate_collection = e.target.value;
+    setCollections(e.target.value);
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
+  const searchAmenitiesHandler = (e: any) => {
+    allEstateSearchObj.page = 1;
+    allEstateSearchObj.estate_amenities = e.target.value;
+    setCollections(e.target.value);
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
+
+  const searchPrice_rangeHandler = (e: any) => {
+    allEstateSearchObj.page = 1;
+    allEstateSearchObj.estate_price_range = e.target.value;
+    setCollections(e.target.value);
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
+
+  const searchBed_bath_countHandler = (e: any) => {
+    allEstateSearchObj.page = 1;
+    allEstateSearchObj.estate_bed_bath_count = e.target.value;
+    setCollections(e.target.value);
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
+
+  const searchCategoryHandler = (e: any) => {
+    allEstateSearchObj.page = 1;
+    allEstateSearchObj.estate_category = e.target.value;
+    setCollections(e.target.value);
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
+
+  const handlePaginationChange = (event: any, value: number) => {
+    allEstateSearchObj.page = value;
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
+
+  const targetLikeHandler = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+      const memberServer = new MemberApiServer(),
+        like_result = await memberServer.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "estate",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "#ccc";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+      await sweetTopSmallSuccessAlert("success", 900, false);
+    } catch (err: any) {
+      console.log("targetLikeLatest, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
+
   return (
     <div className="all_property">
       <Container>
@@ -98,214 +279,144 @@ export function AllEstate(props: any) {
                   spacing={2}
                   sx={{ flexGrow: 1, paddingTop: "20px" }}
                 >
-                  <Grid item xs={6}>
-                    <Card>
-                      <CardMedia
-                        component="img"
-                        alt="All Estate"
-                        height="312"
-                        image="/images/home/h4.jpg"
-                      />
-                      <CardContent sx={{ padding: 5 }}>
-                        <Typography
-                          gutterBottom
-                          variant="h5"
-                          component="div"
-                          sx={{
-                            marginBottom: "15px",
-                            color: "#ff5a3c",
-                            fontSiz: "16px",
-                          }}
-                        >
-                          Estate category
-                        </Typography>
-                        <Typography
-                          color="text.primary"
-                          sx={{ marginBottom: "15px", fontSiz: "22px" }}
-                        >
-                          Estate Name
-                        </Typography>
-                        <Stack
-                          sx={{ marginBottom: "15px" }}
-                          flexDirection={"row"}
-                        >
-                          <LocationOnIcon
-                            sx={{
-                              display: "block",
-                              width: 16,
-                              height: 20,
-                              fontSize: 20,
-                              color: "#ff5a3c",
-                            }}
+                  {allEstates.map((estate: Estate, index) => {
+                    const image_path = `${serverApi}/${estate.estate_images[0]}`;
+                    return (
+                      <Grid item xs={6}>
+                        <Card>
+                          <CardMedia
+                            component="img"
+                            alt="All Estate"
+                            height="312"
+                            image={image_path}
                           />
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{ color: "#5c727d" }}
-                          >
-                            Estate Address
-                          </Typography>
-                        </Stack>
-                        <Typography
-                          sx={{ color: "#5c727d", marginBottom: "25px" }}
-                        >
-                          2 Bedrooms 2 Bathrooms 209 square Ft
-                        </Typography>
-                        <Stack
-                          flexDirection={"row"}
-                          gap={1}
-                          className="lates_frame_button_wrapper"
-                        >
-                          <IconButton aria-label="delete">
-                            <Favorite />
-                          </IconButton>
-                          <IconButton aria-label="delete">
-                            <AddCircleOutlineOutlinedIcon />
-                          </IconButton>
-                        </Stack>
-                        <Divider sx={{ mt: "10px", mb: "10px" }} />
-                        <Stack flexDirection={"row"} alignItems={"center"}>
-                          <Typography
-                            variant="h3"
-                            component="h2"
-                            style={{ color: "#ff5a3c" }}
-                          >
-                            Estate Price
-                          </Typography>
-                          <Box ml="auto" display="flex" gap={1}>
-                            <IconButton
-                              onClick={(e) => {
-                                e.stopPropagation();
+                          <CardContent sx={{ padding: 5 }}>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                              sx={{
+                                marginBottom: "15px",
+                                color: "#ff5a3c",
+                                fontSize: "16px",
+                                textTransform: "Uppercase",
+                                fontWeight: "600",
+                                lineHeight: "25px",
                               }}
                             >
-                              <div
-                              /*  ref={(element) =>
-                                  (refs.current[estate._id] = element)
-                                } */
+                              {estate.estate_category}
+                            </Typography>
+                            <Typography
+                              color="text.primary"
+                              sx={{
+                                marginBottom: "15px",
+                                fontSiz: "22px",
+                                textTransform: "Uppercase",
+                                fontWeight: "600",
+                                lineHeight: "28px",
+                              }}
+                            >
+                              {estate.estate_name}
+                            </Typography>
+                            <Stack
+                              sx={{ marginBottom: "15px" }}
+                              flexDirection={"row"}
+                            >
+                              <LocationOnIcon
+                                sx={{
+                                  display: "block",
+                                  width: 16,
+                                  height: 20,
+                                  fontSize: 20,
+                                  color: "#ff5a3c",
+                                }}
+                              />
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                                sx={{ color: "#5c727d" }}
                               >
-                                {" "}
-                                3{/* {estate.estate_likes} */}
-                              </div>
-                              <Favorite sx={{ ml: 1 }} />
-                            </IconButton>
-                            <IconButton
-                              onClick={(e) => {
-                                e.stopPropagation();
-                              }}
+                                {estate.estate_address}
+                              </Typography>
+                            </Stack>
+                            <Typography
+                              sx={{ color: "#ff5a3c", marginBottom: "25px" }}
                             >
-                              <Visibility sx={{ mr: 1 }} />3{" "}
-                              {/* {estate.estate_views} */}
-                            </IconButton>
-                          </Box>
-                        </Stack>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Card>
-                      <CardMedia
-                        component="img"
-                        alt="All Estate"
-                        height="312"
-                        image="/images/home/h4.jpg"
-                      />
-                      <CardContent sx={{ padding: 5 }}>
-                        <Typography
-                          gutterBottom
-                          variant="h5"
-                          component="div"
-                          sx={{
-                            marginBottom: "15px",
-                            color: "#ff5a3c",
-                            fontSiz: "16px",
-                          }}
-                        >
-                          Estate category
-                        </Typography>
-                        <Typography
-                          color="text.primary"
-                          sx={{ marginBottom: "15px", fontSiz: "22px" }}
-                        >
-                          Estate Name
-                        </Typography>
-                        <Stack
-                          sx={{ marginBottom: "15px" }}
-                          flexDirection={"row"}
-                        >
-                          <LocationOnIcon
-                            sx={{
-                              display: "block",
-                              width: 16,
-                              height: 20,
-                              fontSize: 20,
-                              color: "#ff5a3c",
-                            }}
-                          />
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{ color: "#5c727d" }}
-                          >
-                            Estate Address
-                          </Typography>
-                        </Stack>
-                        <Typography
-                          sx={{ color: "#5c727d", marginBottom: "25px" }}
-                        >
-                          2 Bedrooms 2 Bathrooms 209 square Ft
-                        </Typography>
-                        <Stack
-                          flexDirection={"row"}
-                          gap={1}
-                          className="lates_frame_button_wrapper"
-                        >
-                          <IconButton aria-label="delete">
-                            <Favorite />
-                          </IconButton>
-                          <IconButton aria-label="delete">
-                            <AddCircleOutlineOutlinedIcon />
-                          </IconButton>
-                        </Stack>
-                        <Divider sx={{ mt: "10px", mb: "10px" }} />
-                        <Stack flexDirection={"row"} alignItems={"center"}>
-                          <Typography
-                            variant="h3"
-                            component="h2"
-                            style={{ color: "#ff5a3c" }}
-                          >
-                            Estate Price
-                          </Typography>
-                          <Box ml="auto" display="flex" gap={1}>
-                            <IconButton
-                              onClick={(e) => {
-                                e.stopPropagation();
-                              }}
+                              {estate.estate_bed} Bedrooms /{estate.estate_bath}{" "}
+                              Bathrooms /{estate.estate_area} square Ft
+                            </Typography>
+                            <Stack
+                              flexDirection={"row"}
+                              gap={1}
+                              className="lates_frame_button_wrapper"
                             >
-                              <div
-                              /*  ref={(element) =>
-                                  (refs.current[estate._id] = element)
-                                } */
+                              <IconButton aria-label="delete">
+                                <Favorite
+                                  onClick={(e) =>
+                                    targetLikeHandler(e, estate._id)
+                                  }
+                                  style={{
+                                    fill:
+                                      estate.me_liked &&
+                                      estate.me_liked[0]?.my_favorite
+                                        ? "red"
+                                        : "#ccc",
+                                  }}
+                                />
+                              </IconButton>
+                              <IconButton
+                                aria-label="delete"
+                                onClick={(e) => {
+                                  props.onAdd(estate);
+                                  e.stopPropagation();
+                                }}
                               >
-                                {" "}
-                                3{/* {estate.estate_likes} */}
-                              </div>
-                              <Favorite sx={{ ml: 1 }} />
-                            </IconButton>
-                            <IconButton
-                              onClick={(e) => {
-                                e.stopPropagation();
-                              }}
-                            >
-                              <Visibility sx={{ mr: 1 }} />3{" "}
-                              {/* {estate.estate_views} */}
-                            </IconButton>
-                          </Box>
-                        </Stack>
-                      </CardContent>
-                    </Card>
-                  </Grid>
+                                <AddCircleOutlineOutlinedIcon />
+                              </IconButton>
+                            </Stack>
+                            <Divider sx={{ mt: "10px", mb: "10px" }} />
+                            <Stack flexDirection={"row"} alignItems={"center"}>
+                              <Typography
+                                variant="h3"
+                                component="h2"
+                                style={{ color: "#ff5a3c" }}
+                              >
+                                $ {estate.estate_price}
+                              </Typography>
+                              <Box ml="auto" display="flex" gap={1}>
+                                <IconButton
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                  }}
+                                >
+                                  <div
+                                    ref={(element) =>
+                                      (refs.current[estate._id] = element)
+                                    }
+                                  >
+                                    {" "}
+                                    {estate.estate_likes}
+                                  </div>
+                                  <Favorite sx={{ ml: 1 }} />
+                                </IconButton>
+                                <IconButton
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                  }}
+                                >
+                                  <Visibility sx={{ mr: 1 }} />
+                                  {estate.estate_views}
+                                </IconButton>
+                              </Box>
+                            </Stack>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                    );
+                  })}
                 </Grid>
               </Box>
+
               {/* ADVANCED INFO */}
               <Box ml={2} mt={-21}>
                 <Typography
@@ -340,11 +451,16 @@ export function AllEstate(props: any) {
                     </Typography>
                     {/* ESTATE COLLECTION */}
                     <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox defaultChecked />}
-                        label="House"
-                      />
-                      <FormControlLabel control={<Checkbox />} label="Willa" />
+                      {collection.map((ele: string) => {
+                        return (
+                          <FormControlLabel
+                            control={<Checkbox />}
+                            value={ele}
+                            label={ele}
+                            onChange={searchCollectionHandler}
+                          />
+                        );
+                      })}
                     </FormGroup>
                     <Typography
                       gutterBottom
@@ -358,26 +474,16 @@ export function AllEstate(props: any) {
                     </Typography>
                     {/* ESTATE AMENITIES */}
                     <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="Swimming Pool"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox defaultChecked />}
-                        label="Parking"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="Library"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="Medical Center"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="Kid's Playground"
-                      />
+                      {amenities.map((ele: string) => {
+                        return (
+                          <FormControlLabel
+                            control={<Checkbox />}
+                            value={ele}
+                            label={ele}
+                            onChange={searchAmenitiesHandler}
+                          />
+                        );
+                      })}
                     </FormGroup>
                     <Typography
                       gutterBottom
@@ -390,18 +496,16 @@ export function AllEstate(props: any) {
                       Price Renge
                     </Typography>
                     <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="Low Budget"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox defaultChecked />}
-                        label="Medium"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="High Budget"
-                      />
+                      {price_range.map((ele: string) => {
+                        return (
+                          <FormControlLabel
+                            control={<Checkbox />}
+                            value={ele}
+                            label={ele}
+                            onChange={searchPrice_rangeHandler}
+                          />
+                        );
+                      })}
                     </FormGroup>
                     <Typography
                       gutterBottom
@@ -425,15 +529,16 @@ export function AllEstate(props: any) {
                       Bed/Bath
                     </Typography>
                     <FormGroup>
-                      <FormControlLabel control={<Checkbox />} label="Single" />
-                      <FormControlLabel
-                        control={<Checkbox defaultChecked />}
-                        label="double"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="High Tech"
-                      />
+                      {bed_bath_count.map((ele: string) => {
+                        return (
+                          <FormControlLabel
+                            control={<Checkbox />}
+                            value={ele}
+                            label={ele}
+                            onChange={searchBed_bath_countHandler}
+                          />
+                        );
+                      })}
                     </FormGroup>
                     <Typography
                       gutterBottom
@@ -446,15 +551,16 @@ export function AllEstate(props: any) {
                       Category
                     </Typography>
                     <FormGroup>
-                      <FormControlLabel control={<Checkbox />} label="Buying" />
-                      <FormControlLabel
-                        control={<Checkbox defaultChecked />}
-                        label="Renting"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="Selling"
-                      />
+                      {category.map((ele: string) => {
+                        return (
+                          <FormControlLabel
+                            control={<Checkbox />}
+                            value={ele}
+                            label={ele}
+                            onChange={searchCategoryHandler}
+                          />
+                        );
+                      })}
                     </FormGroup>
                   </Card>
                 </Box>
@@ -465,10 +571,9 @@ export function AllEstate(props: any) {
           <Box ml="auto" mr="auto" mt={2}>
             <Pagination
               count={
-                3
-                /* allEstateSearchObj.page >= 3 ? allEstateSearchObj.page + 1 : 3 */
+                allEstateSearchObj.page >= 3 ? allEstateSearchObj.page + 1 : 3
               }
-              page={1 /* allEstateSearchObj.page */}
+              page={allEstateSearchObj.page}
               renderItem={(item) => (
                 <PaginationItem
                   components={{
@@ -479,7 +584,7 @@ export function AllEstate(props: any) {
                   color={"secondary"}
                 />
               )}
-             /*  onChange={handlePaginationChange} */
+              onChange={handlePaginationChange}
             />
           </Box>
         </Stack>
