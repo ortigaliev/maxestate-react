@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Stack from "@mui/material/Stack";
 import {
   Box,
@@ -10,20 +10,12 @@ import {
   Checkbox,
   Container,
   Divider,
-  IconButton,
   Link,
   Rating,
   TextField,
   Typography,
 } from "@mui/material";
 import EstateApiServer from "../../apiServer/estateApiServer";
-import assert from "assert";
-import { Definer } from "../../lib/Definer";
-import MemberApiServer from "../../apiServer/memberApiServer";
-import {
-  sweetErrorHandling,
-  sweetTopSmallSuccessAlert,
-} from "../../lib/sweetAlert";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Navigation, Pagination } from "swiper/modules";
@@ -54,8 +46,6 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import XIcon from "@mui/icons-material/X";
 import FacebookIcon from "@mui/icons-material/Facebook";
-/* import { Favorite } from "@mui/icons-material";
-import Visibility from "@mui/icons-material/Visibility"; */
 
 /* Data Picker */
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -66,24 +56,28 @@ import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
 
 /* REDUX */
-import { useParams } from "react-router-dom";
+
 import { Estate } from "../../../types/estate";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useEffect } from "react";
-import { setChosenEstate } from "../PropertyPage/slice";
+
 import { setChosenAgency } from "../AgencyPage/slice";
 import { retrieveChosenEstate } from "../PropertyPage/selector";
 import { retrieveChosenAgency } from "../AgencyPage/selector";
 import { Agency } from "../../../types/user";
 import AgencyApiServer from "../../apiServer/agencyApiServer";
 import { serverApi } from "../../lib/config";
+import { EstateSearchObj } from "../../../types/others";
+import { setChosenEstate } from "./slice";
+import { useHistory, useParams } from "react-router-dom";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
   setChosenEstate: (data: Estate) => dispach(setChosenEstate(data)),
   setChosenAgency: (data: Agency) => dispach(setChosenAgency(data)),
+
 });
 // REDUX SELECTOR
 const chosenEstateRetriever = createSelector(
@@ -104,11 +98,16 @@ const popular_list = Array.from(Array(4).keys());
 
 export function ChosenProperty(props: any) {
   /* INITIALIZATION */
+  const history = useHistory();
   let { estate_id } = useParams<{ estate_id: string }>();
 
   const { setChosenEstate, setChosenAgency } = actionDispatch(useDispatch());
   const { chosenEstate } = useSelector(chosenEstateRetriever);
   const { chosenAgency } = useSelector(chosenAgencyRetriever);
+
+  const [randomEstateId, setRandomEstateId] = useState<string>(estate_id);
+
+  const refs: any = useRef([]);
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -230,9 +229,9 @@ export function ChosenProperty(props: any) {
             <Typography
               className="card_tite"
               variant="h3"
-              sx={{ p: "3px 0", fontWeight: 700 }}
+              sx={{ p: "3px 0", fontWeight: 700, color: "#ff5a3c" }}
             >
-              {chosenAgency?.mb_nick}
+              {chosenAgency?.mb_nick} Agency
             </Typography>
             <Typography
               className="card_sub_title"
@@ -471,6 +470,7 @@ export function ChosenProperty(props: any) {
                         height={"204px"}
                         src={image_path}
                         alt="gorizontal"
+                        style={{ objectFit: "cover", width: "100%" }}
                       />
                     </Box>
                   );
