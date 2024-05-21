@@ -6,7 +6,8 @@ export interface SearchObj {
 export interface EstateSearchObj {
   page: number;
   limit: number;
-  order?: string;
+  order: string;
+  search?: string;
   agency_mb_id?: string;
   estate_collection?: string;
   estate_price_range?: string;

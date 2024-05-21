@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Grid from "@mui/joy/Grid";
 import TextField from "@mui/material/TextField";
 
@@ -18,15 +18,13 @@ import {
   Stack,
 } from "@mui/joy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { Favorite, FavoriteBorder, Visibility } from "@mui/icons-material";
+import { Favorite, Visibility } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import WindowIcon from "@mui/icons-material/Window";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { HomeModal } from "../../components/modal/home-modal";
-import { AdvancedInfo } from "./advancedInfo";
-import BasicSelect from "./basicSelect";
 import "../../../css/property.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -49,7 +47,7 @@ import { Estate } from "../../../types/estate";
 import { setAllEstates, setChosenEstate } from "./slice";
 import { retrieveAllEstates, retrieveChosenEstate } from "./selector";
 import MemberApiServer from "../../apiServer/memberApiServer";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { EstateSearchObj } from "../../../types/others";
 import EstateApiServer from "../../apiServer/estateApiServer";
 
@@ -74,16 +72,11 @@ const chosenEstateRetriever = createSelector(
 );
 
 export function AllProperty(props: any) {
-
   /**INITIALIZATIONS */
   const history = useHistory();
-  const pathname = useLocation();
-  let { estate_id } = useParams<{ estate_id: string }>();
   const { setAllEstates, setChosenEstate } = actionDispatch(useDispatch());
   const { allEstates } = useSelector(allEstatesRetriever);
-  const { chosenEstate } = useSelector(chosenEstateRetriever);
 
-  const [chosenEstateId, setChosenEstateId] = useState<string>(estate_id);
   const [allEstateSearchObj, setAllEstateSearchObj] = useState<EstateSearchObj>(
     {
       page: 1,
@@ -180,9 +173,6 @@ export function AllProperty(props: any) {
                   <Link href="#" underline="none">
                     <ViewListIcon sx={{ width: "40px", height: "36px" }} />
                   </Link>
-                </Box>
-                <Box>
-                  <BasicSelect />
                 </Box>
               </Stack>
 

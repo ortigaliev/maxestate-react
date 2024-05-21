@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Box,
-  Button,
   Card,
   Container,
   Grid,
@@ -11,10 +10,8 @@ import {
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import BasicSelect from "./basicSelect";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { HomeModal } from "../../components/modal/home-modal";
 import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import Pagination from "@mui/material/Pagination";
@@ -49,14 +46,12 @@ import { createSelector } from "reselect";
 import { Dispatch } from "@reduxjs/toolkit";
 import { Estate } from "../../../types/estate";
 import { setAllEstates, setChosenEstate } from "./slice";
-import { retrieveAllEstates, retrieveChosenEstate } from "./selector";
+import { retrieveAllEstates } from "./selector";
 import MemberApiServer from "../../apiServer/memberApiServer";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { EstateSearchObj } from "../../../types/others";
 import EstateApiServer from "../../apiServer/estateApiServer";
 import { serverApi } from "../../lib/config";
 import { setTargetEstates } from "../AgencyPage/slice";
-import { retrieveTargetEstates } from "../AgencyPage/selector";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -70,19 +65,6 @@ const allEstatesRetriever = createSelector(
   retrieveAllEstates,
   (allEstates) => ({
     allEstates,
-  })
-);
-const chosenEstateRetriever = createSelector(
-  retrieveChosenEstate,
-  (chosenEstate) => ({
-    chosenEstate,
-  })
-);
-
-const targetEstatesRetriever = createSelector(
-  retrieveTargetEstates,
-  (targetEstates) => ({
-    targetEstates,
   })
 );
 
@@ -116,25 +98,14 @@ const bed_bath_count = ["single", "double", "more-than-double"];
 const category = ["For Buy", "For Rent", "For Sell", "For Sale"];
 
 export function AllEstate(props: any) {
-  /**INITIALIZATIONS */
-  const history = useHistory();
-
-  const pathname = useLocation();
-  let { estate_id } = useParams<{ estate_id: string }>();
   const { setAllEstates, setChosenEstate } = actionDispatch(useDispatch());
   const { allEstates } = useSelector(allEstatesRetriever);
-  const { chosenEstate } = useSelector(chosenEstateRetriever);
 
-  const { setTargetEstates } = actionDispatch(useDispatch());
-  const { targetEstates } = useSelector(targetEstatesRetriever);
-  const [orderRebuild, setOrderRebuild] = useState<Date>(new Date());
-  const [collections, setCollections] = useState("");
-
-  const [chosenEstateId, setChosenEstateId] = useState<string>(estate_id);
   const [allEstateSearchObj, setAllEstateSearchObj] = useState<EstateSearchObj>(
     {
       page: 1,
       limit: 8,
+      search: "",
       order: "createdAt",
       estate_collection: "",
     }
@@ -148,44 +119,42 @@ export function AllEstate(props: any) {
       .getTargetEstates(allEstateSearchObj)
       .then((data) => setAllEstates(data))
       .catch((err) => console.log(err));
-  }, [allEstateSearchObj, orderRebuild]);
-
-  /* HANDLERS */
-  const chosenEstateHandler = (id: string) => {
-    history.push(`estate/${id}`);
-  };
+  }, [allEstateSearchObj]);
 
   const searchCollectionHandler = (e: any) => {
+    console.log("e.target.value", e.target.checked);
     allEstateSearchObj.page = 1;
-    allEstateSearchObj.estate_collection = e.target.value;
-    setCollections(e.target.value);
+    allEstateSearchObj.estate_collection = e.target.checked
+      ? e.target.value
+      : null;
     setAllEstateSearchObj({ ...allEstateSearchObj });
   };
+
   const searchAmenitiesHandler = (e: any) => {
     allEstateSearchObj.page = 1;
-    allEstateSearchObj.estate_amenities = e.target.value;
-    setCollections(e.target.value);
+    allEstateSearchObj.estate_amenities = e.target.checked
+      ? e.target.value
+      : null;
     setAllEstateSearchObj({ ...allEstateSearchObj });
   };
 
   const searchPrice_rangeHandler = (e: any) => {
     allEstateSearchObj.page = 1;
     allEstateSearchObj.estate_price_range = e.target.value;
-    setCollections(e.target.value);
     setAllEstateSearchObj({ ...allEstateSearchObj });
   };
 
   const searchBed_bath_countHandler = (e: any) => {
     allEstateSearchObj.page = 1;
-    allEstateSearchObj.estate_bed_bath_count = e.target.value;
-    setCollections(e.target.value);
+    allEstateSearchObj.estate_bed_bath_count = e.target.checked
+      ? e.target.value
+      : null;
     setAllEstateSearchObj({ ...allEstateSearchObj });
   };
 
   const searchCategoryHandler = (e: any) => {
     allEstateSearchObj.page = 1;
     allEstateSearchObj.estate_category = e.target.value;
-    setCollections(e.target.value);
     setAllEstateSearchObj({ ...allEstateSearchObj });
   };
 
@@ -219,6 +188,17 @@ export function AllEstate(props: any) {
     }
   };
 
+  const orderChangeHandler = (order: string) => {
+    allEstateSearchObj.order = order;
+    setAllEstateSearchObj({ ...allEstateSearchObj });
+  };
+
+  const searchChangeHandler = (e) => {
+    console.log(e.target);
+    allEstateSearchObj.search = e.target.value;
+    setAllEstateSearchObj(allEstateSearchObj);
+  };
+
   return (
     <div className="all_property">
       <Container>
@@ -243,47 +223,36 @@ export function AllEstate(props: any) {
                 </Link>
               </Box>
 
-              {/* BASIC SEARCH TOP SELECTOR */}
               <Box>
-                <BasicSelect />
+                <BasicSelect
+                  value={allEstateSearchObj.order}
+                  options={[
+                    { value: "newest", label: "Default" },
+                    { value: "low_to_high", label: "Price-Low to High" },
+                    { value: "high_to_low", label: "Price-High to Low" },
+                  ]}
+                  onChange={orderChangeHandler}
+                />
               </Box>
             </Stack>
 
-            {/* Search BAR */}
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: "1 0", width: "85ch" },
-                display: "flex",
-                alignItems: "center",
-              }}
-              noValidate
-              autoComplete="off"
-              bgcolor={"#f2f6f7"}
+            <Stack
+              flexDirection={"row"}
+              width={"100%"}
+              justifyContent={"space-around"}
             >
-              <TextField
-                id="filled-search"
-                label="Search field"
-                type="search"
-              />
-              <IconButton type="button" sx={{ p: 2, m: 0 }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </Box>
-
-            <Stack flexDirection={"row"}>
               {/* ALL ESTATES CARD */}
               <Box>
                 <Grid
                   container
                   spacing={2}
-                  sx={{ flexGrow: 1, paddingTop: "20px" }}
+                  sx={{ flexGrow: 1, paddingTop: "20px", maxWidth: "820px" }}
                 >
                   {allEstates.map((estate: Estate, index) => {
                     const image_path = `${serverApi}/${estate.estate_images[0]}`;
                     return (
                       <Grid item xs={6}>
-                        <Card>
+                        <Card key={estate._id}>
                           <CardMedia
                             component="img"
                             alt="All Estate"
@@ -342,7 +311,7 @@ export function AllEstate(props: any) {
                             <Typography
                               sx={{ color: "#ff5a3c", marginBottom: "25px" }}
                             >
-                              {estate.estate_bed} Bedrooms /{estate.estate_bath}{" "}
+                              {estate.estate_bed} Bedrooms /{estate.estate_bath}
                               Bathrooms /{estate.estate_area} square Ft
                             </Typography>
                             <Stack
@@ -350,11 +319,13 @@ export function AllEstate(props: any) {
                               gap={1}
                               className="lates_frame_button_wrapper"
                             >
-                              <IconButton aria-label="delete">
+                              <IconButton
+                                aria-label="delete"
+                                onClick={(e) =>
+                                  targetLikeHandler(e, estate._id)
+                                }
+                              >
                                 <Favorite
-                                  onClick={(e) =>
-                                    targetLikeHandler(e, estate._id)
-                                  }
                                   style={{
                                     fill:
                                       estate.me_liked &&
@@ -424,7 +395,7 @@ export function AllEstate(props: any) {
                   component="div"
                   fontSize={24}
                   fontWeight={700}
-                  mt={2}
+                  mt={8}
                   mb={1}
                 >
                   Advanced Information
@@ -437,8 +408,14 @@ export function AllEstate(props: any) {
                 >
                   About 1,620 results (0.82 secund)
                 </Typography>
-                <Box mt={4}>
-                  <Card sx={{ width: "370px", paddingLeft: "35px" }}>
+                <Box mt={7}>
+                  <Card
+                    sx={{
+                      width: "370px",
+                      paddingLeft: "35px",
+                      paddingBottom: "20px",
+                    }}
+                  >
                     <Typography
                       gutterBottom
                       variant="h4"
@@ -455,6 +432,7 @@ export function AllEstate(props: any) {
                         return (
                           <FormControlLabel
                             control={<Checkbox />}
+                            key={ele}
                             value={ele}
                             label={ele}
                             onChange={searchCollectionHandler}
@@ -478,6 +456,7 @@ export function AllEstate(props: any) {
                         return (
                           <FormControlLabel
                             control={<Checkbox />}
+                            key={ele}
                             value={ele}
                             label={ele}
                             onChange={searchAmenitiesHandler}
@@ -500,6 +479,7 @@ export function AllEstate(props: any) {
                         return (
                           <FormControlLabel
                             control={<Checkbox />}
+                            key={ele}
                             value={ele}
                             label={ele}
                             onChange={searchPrice_rangeHandler}
@@ -517,7 +497,9 @@ export function AllEstate(props: any) {
                     >
                       Filter by Price
                     </Typography>
+
                     <RangeSlider />
+
                     <Typography
                       gutterBottom
                       variant="h4"
@@ -533,8 +515,12 @@ export function AllEstate(props: any) {
                         return (
                           <FormControlLabel
                             control={<Checkbox />}
+                            key={ele}
                             value={ele}
                             label={ele}
+                            checked={
+                              allEstateSearchObj.estate_bed_bath_count === ele
+                            }
                             onChange={searchBed_bath_countHandler}
                           />
                         );
@@ -555,6 +541,7 @@ export function AllEstate(props: any) {
                         return (
                           <FormControlLabel
                             control={<Checkbox />}
+                            key={ele}
                             value={ele}
                             label={ele}
                             onChange={searchCategoryHandler}

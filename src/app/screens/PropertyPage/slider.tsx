@@ -7,6 +7,13 @@ function valuetext(value: number) {
 }
 
 export function RangeSlider() {
+  // 1 parentdan prop value olasiz
+  // 2 handleChange ni ichida yangi value ni parent ga jonatasiz
+  // 3 parentda yangi valueni olib filter
+
+  // 4 debouncing
+
+
   const [value, setValue] = React.useState<number[]>([20, 37]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
