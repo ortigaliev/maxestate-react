@@ -242,7 +242,7 @@ export function AllEstate(props: any) {
               justifyContent={"space-around"}
             >
               {/* ALL ESTATES CARD */}
-              <Box>
+              <Box sx={{ position: "relative", width: "100%", height: "auto" }}>
                 <Grid
                   container
                   spacing={2}
@@ -389,7 +389,7 @@ export function AllEstate(props: any) {
               </Box>
 
               {/* ADVANCED INFO */}
-              <Box ml={2} mt={-21}>
+              <Box ml={2} mt={-21} sx={{ position: "relative" }}>
                 <Typography
                   gutterBottom
                   component="div"
