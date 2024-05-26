@@ -1,9 +1,8 @@
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { ChosenProperty } from "../PropertyPage/chosenProperty";
-import { AllProperty } from "./allProprty";
-import "../../../css/property.css";
 import { AllEstate } from "./allEstate";
+import "../../../css/property.css";
 
 export function PropertyPage(props: any) {
   let estate = useRouteMatch();
@@ -18,7 +17,7 @@ export function PropertyPage(props: any) {
         </Route>
         <Route path={`${estate.path}`}>
           {/* <AllProperty onAdd={props.onAdd} /> */}
-          <AllEstate />
+          <AllEstate onAdd={props.onAdd} />
         </Route>
       </Switch>
     </div>

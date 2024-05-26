@@ -69,7 +69,6 @@ import { retrieveChosenAgency } from "../AgencyPage/selector";
 import { Agency } from "../../../types/user";
 import AgencyApiServer from "../../apiServer/agencyApiServer";
 import { serverApi } from "../../lib/config";
-import { EstateSearchObj } from "../../../types/others";
 import { setChosenEstate } from "./slice";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -77,7 +76,6 @@ import { useHistory, useParams } from "react-router-dom";
 const actionDispatch = (dispach: Dispatch) => ({
   setChosenEstate: (data: Estate) => dispach(setChosenEstate(data)),
   setChosenAgency: (data: Agency) => dispach(setChosenAgency(data)),
-
 });
 // REDUX SELECTOR
 const chosenEstateRetriever = createSelector(
@@ -104,10 +102,6 @@ export function ChosenProperty(props: any) {
   const { setChosenEstate, setChosenAgency } = actionDispatch(useDispatch());
   const { chosenEstate } = useSelector(chosenEstateRetriever);
   const { chosenAgency } = useSelector(chosenAgencyRetriever);
-
-  const [randomEstateId, setRandomEstateId] = useState<string>(estate_id);
-
-  const refs: any = useRef([]);
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -993,7 +987,7 @@ export function ChosenProperty(props: any) {
                   borderLeft: "5px solid #ff5a3c",
                 }}
               >
-                Popular Proerties
+                Popular Properties
               </Typography>
 
               <Swiper

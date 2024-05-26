@@ -8,11 +8,6 @@ import typography from "../../../src/app/MaterialTheme/typography";
  */
 const light = {
   palette: {
-    type: "light",
-    background: {
-      default: "#f4f6f8",
-      paper: common.white,
-    },
     primary: {
       contrastText: "#ffffff",
       main: "#ff5a3c",
