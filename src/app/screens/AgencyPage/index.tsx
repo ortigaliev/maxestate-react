@@ -6,9 +6,7 @@ import "../../../css/agency.css";
 import { ChosenAgency } from "./chosenAgency";
 import { Agency } from "../../../types/user";
 
-
-
-export function AgencyPage() {
+export function AgencyPage(props: any) {
   /* INITIALIZATION */
 
   let agency = useRouteMatch();
@@ -17,7 +15,7 @@ export function AgencyPage() {
     <div className="agency_page">
       <Switch>
         <Route path={`${agency.path}/:agency_id`}>
-          <ChosenAgency />
+          <ChosenAgency onAdd={props.onAdd} />
         </Route>
         <Route path={`${agency.path}`}>
           <AllAgency />

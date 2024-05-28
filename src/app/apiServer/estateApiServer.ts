@@ -14,7 +14,6 @@ class EstateApiServer {
   }
 
   async getTargetEstates(data: EstateSearchObj) {
-    console.log('*****************************************************')
     try {
       const url = "/estate",
         result = await axios.post(this.path + url, data, {

@@ -52,7 +52,7 @@ export default function Basket(props: any) {
 
       onDeleteAll();
       handleClose();
-      props.setOrderRebuild(new Date());
+
       history.push("/orders");
     } catch (err: any) {
       console.log(err);
@@ -70,7 +70,7 @@ export default function Basket(props: any) {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <Badge badgeContent={1} color="secondary">
+        <Badge badgeContent={cartItems.length} color="secondary">
           <AddShoppingCartIcon sx={{ color: "#fff" }} />
         </Badge>
       </IconButton>

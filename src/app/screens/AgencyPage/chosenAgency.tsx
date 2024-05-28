@@ -81,7 +81,7 @@ const targetEstatesRetriever = createSelector(
   })
 );
 
-export function ChosenAgency() {
+export function ChosenAgency(props: any) {
   /* INITIALIZATION */
   const history = useHistory();
   let { agency_id } = useParams<{ agency_id: string }>();
@@ -311,7 +311,10 @@ export function ChosenAgency() {
                                 }}
                               />
                             </Stack>
-                            <Typography sx={{ color: "#5c727d" }} level="body-sm">
+                            <Typography
+                              sx={{ color: "#5c727d" }}
+                              level="body-sm"
+                            >
                               Bedrooms
                             </Typography>
                             <Divider
@@ -337,7 +340,10 @@ export function ChosenAgency() {
                                 }}
                               />
                             </Stack>
-                            <Typography sx={{ color: "#5c727d" }} level="body-sm">
+                            <Typography
+                              sx={{ color: "#5c727d" }}
+                              level="body-sm"
+                            >
                               Bedrooms
                             </Typography>
                             <Divider
@@ -363,7 +369,10 @@ export function ChosenAgency() {
                                 }}
                               />
                             </Stack>
-                            <Typography sx={{ color: "#5c727d" }} level="body-sm">
+                            <Typography
+                              sx={{ color: "#5c727d" }}
+                              level="body-sm"
+                            >
                               square kv
                             </Typography>
                           </Stack>

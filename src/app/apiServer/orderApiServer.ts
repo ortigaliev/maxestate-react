@@ -4,6 +4,7 @@ import { serverApi } from "../lib/config";
 import assert from "assert";
 import { Definer } from "../lib/Definer";
 import { Order } from "../../types/order";
+
 class OrderApiServer {
   private readonly path: string;
   constructor() {

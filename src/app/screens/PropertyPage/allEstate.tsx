@@ -364,7 +364,6 @@ export function AllEstate(props: any) {
                                       (refs.current[estate._id] = element)
                                     }
                                   >
-                                    {" "}
                                     {estate.estate_likes}
                                   </div>
                                   <Favorite sx={{ ml: 1 }} />

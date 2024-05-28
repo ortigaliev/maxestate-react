@@ -85,7 +85,7 @@ export function NavbarOthers(props: any) {
             {verifyMemberData ? (
               <Box className="hover-line" onClick={props.setPath}>
                 <NavLink
-                  to="/order"
+                  to="/orders"
                   activeClassName="underline"
                   style={{ color: "#fff" }}
                 >
@@ -99,6 +99,7 @@ export function NavbarOthers(props: any) {
               onAdd={props.onAdd}
               onRemove={props.onRemove}
               onDelete={props.onDelete}
+              onDeleteAll={props.onDeleteAll}
             />
 
             {!verifyMemberData ? (
@@ -165,7 +166,7 @@ export function NavbarOthers(props: any) {
               </MenuItem>
             </Menu>
             <Box>
-              {verifyMemberData ? (
+              {!verifyMemberData ? (
                 <Button variant="contained" onClick={props.handleSignUpOpen}>
                   Sign Up
                 </Button>

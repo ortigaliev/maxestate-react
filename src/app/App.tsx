@@ -70,7 +70,6 @@ function App() {
   };
 
   const onAdd = async (estate: Estate) => {
-    console.log("estate::", estate);
     const exist: any = cartItems.find(
       (item: CartItem) => item._id === estate._id
     );
@@ -80,7 +79,7 @@ function App() {
           ? { ...exist, quantity: exist.quantity + 1 }
           : item
       );
-      await sweetTopSmallSuccessAlert("Estate succesfully added", 1200, false);
+      await sweetTopSmallSuccessAlert("Estate succesfully added", 700, false);
       setCartItems(cart_updated);
       localStorage.setItem("cart_data", JSON.stringify(cart_updated));
     } else {
@@ -125,7 +124,10 @@ function App() {
     setCartItems(cart_updated);
     localStorage.setItem("cart_data", JSON.stringify(cart_updated));
   };
-  const onDeleteAll = () => {};
+  const onDeleteAll = () => {
+    setCartItems([]);
+    localStorage.removeItem("cart_data");
+  };
 
   return (
     <Router>
@@ -143,6 +145,7 @@ function App() {
           onAdd={onAdd}
           onRemove={onRemove}
           onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
         />
       ) : main_path.includes("/agency") ? (
         <NavbarAgency
@@ -154,6 +157,11 @@ function App() {
           handleLogOutClick={handleLogOutClick}
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
+          cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
         />
       ) : (
         <NavbarOthers
@@ -169,11 +177,12 @@ function App() {
           onAdd={onAdd}
           onRemove={onRemove}
           onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
         />
       )}
       <Switch>
         <Route path="/agency">
-          <AgencyPage />
+          <AgencyPage onAdd={onAdd} />
         </Route>
         <Route path="/estate">
           <PropertyPage onAdd={onAdd} />
@@ -190,7 +199,7 @@ function App() {
         <Route path="/login">
           <LoginPage />
         </Route>
-        <Route path="/order">
+        <Route path="/orders">
           <OrderCard />
         </Route>
         <Route path="/">
