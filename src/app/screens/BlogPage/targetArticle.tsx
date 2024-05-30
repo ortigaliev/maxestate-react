@@ -30,7 +30,7 @@ export function TargetArticles(props: any) {
         group_type: "blog",
       });
       assert.ok(like_result, Definer.general_err1);
-      await sweetTopSmallSuccessAlert("success", 700, false);
+      await sweetTopSmallSuccessAlert("success", 1200, false);
       props.setBlogsRebuild(new Date());
     } catch (err: any) {
       console.log(err);
@@ -43,7 +43,7 @@ export function TargetArticles(props: any) {
       {props.targetBoBlogs?.map((blog: BoBlog) => {
         const blog_image_url = blog?.blog_image
           ? `${serverApi}/${blog?.blog_image}`
-          : "/images/blogs/blog_user1.jpg";
+          : "/images/blogs/default_blog.jpg";
 
         return (
           <Card
@@ -59,11 +59,12 @@ export function TargetArticles(props: any) {
                 <img
                   width="155px"
                   height="155px"
-                  src="/images/blogs/blog_img.jpg"
+                  src={blog_image_url}
                   alt="Blog main bg"
                   style={{
                     borderTopLeftRadius: "15px",
                     borderBottomLeftRadius: "15px",
+                    objectFit: "cover",
                   }}
                 />
               </Box>
@@ -80,7 +81,10 @@ export function TargetArticles(props: any) {
                     mt: 2,
                   }}
                 >
-                  <Avatar alt="Article Avatar" src={blog_image_url} />
+                  <Avatar
+                    alt="Article Avatar"
+                    src={"/images/default_user.png"}
+                  />
                   <Chip
                     label={blog?.member_data.mb_nick}
                     variant="outlined"
@@ -91,40 +95,6 @@ export function TargetArticles(props: any) {
                       },
                     }}
                   />
-                </Box>
-                <Typography
-                  variant="h4"
-                  component="h3"
-                  color="#ff5a3c"
-                  sx={{
-                    "&:hover": {
-                      color: "#ff5a3c",
-                    },
-                  }}
-                >
-                  {blog?.bo_id}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  component="h5"
-                  sx={{
-                    "&:hover": {
-                      color: "#ff5a3c",
-                    },
-                  }}
-                >
-                  {blog?.blog_subject}
-                </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    mt: 2,
-                  }}
-                >
-                  <Typography variant="h5" component="h1">
-                    {moment().format("YY-MM-DD HH-mm")}
-                  </Typography>
                   <Box
                     sx={{
                       display: "flex",
@@ -157,7 +127,40 @@ export function TargetArticles(props: any) {
                   >
                     <VisibilityIcon /> {blog?.blog_views}
                   </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography variant="h5" component="h1">
+                      {moment().format("YY-MM-DD HH-mm")}
+                    </Typography>
+                  </Box>
                 </Box>
+                <Typography
+                  variant="h4"
+                  component="h3"
+                  color="#ff5a3c"
+                  sx={{
+                    "&:hover": {
+                      color: "#ff5a3c",
+                    },
+                  }}
+                >
+                  {blog?.bo_id}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  component="h5"
+                  sx={{
+                    "&:hover": {
+                      color: "#ff5a3c",
+                    },
+                  }}
+                >
+                  {blog?.blog_subject}
+                </Typography>
               </Box>
             </Stack>
           </Card>

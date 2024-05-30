@@ -24,9 +24,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { retrievePausedOrders } from "../../screens/Card/selector";
 import { createSelector } from "reselect";
-import { serverApi } from "../../lib/config";
-import { Dispatch } from "@reduxjs/toolkit";
-import { useHistory, useParams } from "react-router-dom";
 
 // REDUX SELECTOR
 const pausedOrdersRetriever = createSelector(
@@ -38,28 +35,14 @@ const pausedOrdersRetriever = createSelector(
 
 const order_card_list = Array.from(Array(1).keys());
 
-export default function Paused() {
+export default function PausedOrders(props: any) {
   /**INITIALIZATIONS */
   //const { pausedOrders } = useSelector(pausedOrdersRetriever);
-  const [count, setCount] = useState(0);
-  const handleIncrement = () => setCount(count + 1);
-  const handleDecrement = () => setCount(count - 1);
 
   return (
     <div>
       <TabPanel value={"1"}>
         <Container>
-          <Box>
-            <Typography
-              variant="h2"
-              style={{
-                padding: "20px 25px",
-                borderLeft: "3px solid #ff5a3c",
-              }}
-            >
-              My Orders
-            </Typography>
-          </Box>
           <Stack flexDirection={"row"} gap={2} mt={3}>
             <Stack>
               <Card sx={{ maxWidth: "100%", padding: 4 }}>
@@ -74,7 +57,6 @@ export default function Paused() {
                           alignItems={"center"}
                         >
                           <Box style={{ padding: "5px 10px" }}>
-                            {" "}
                             <Checkbox
                               icon={<ClearIcon />}
                               checkedIcon={
@@ -112,45 +94,6 @@ export default function Paused() {
                           >
                             $650.550
                           </Typography>
-                          <Stack
-                            spacing={2}
-                            direction="row"
-                            alignItems={"center"}
-                          >
-                            <Button
-                              onClick={handleDecrement}
-                              className="decrement"
-                              style={{
-                                fontSize: "20px",
-                                height: "37px",
-                                borderColor: "#f2f6f7",
-                                backgroundColor: "#f2f6f7",
-                                color: "#000",
-                              }}
-                            >
-                              -
-                            </Button>
-                            <Box
-                              style={{
-                                fontSize: "24px",
-                              }}
-                            >
-                              {count}
-                            </Box>
-                            <Button
-                              onClick={handleIncrement}
-                              className="increment"
-                              style={{
-                                fontSize: "24px",
-                                height: "37px",
-                                borderColor: "#f2f6f7",
-                                backgroundColor: "#f2f6f7",
-                                color: "#000",
-                              }}
-                            >
-                              +
-                            </Button>
-                          </Stack>
                           <Typography
                             variant="h4"
                             style={{ padding: "5px 10px" }}

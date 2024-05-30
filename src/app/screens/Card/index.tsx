@@ -6,8 +6,8 @@ import TabList from "@material-ui/lab/TabList";
 
 import React, { useEffect, useState } from "react";
 import Paused from "../../components/card/paused";
-import Process from "../../components/card/process";
-import Finished from "../../components/card/finished";
+import Process from "../../components/card/processOrders";
+import Finished from "../../components/card/finishedOrders";
 
 //REDUX
 import { useDispatch } from "react-redux";
@@ -21,6 +21,7 @@ import {
 } from "../Card/slice";
 import { useHistory, useParams } from "react-router-dom";
 import { Order } from "../../../types/order";
+import OrderApiServer from "../../apiServer/orderApiServer";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -29,7 +30,7 @@ const actionDispatch = (dispach: Dispatch) => ({
   setFinishedOrders: (data: Order[]) => dispach(setFinishedOrders(data)),
 });
 
-export default function OrderCardExample(props: any) {
+export default function OrderCardPage(props: any) {
   // INITIALIZATIONS
   const [value, setValue] = useState("1");
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
@@ -37,7 +38,21 @@ export default function OrderCardExample(props: any) {
 
   const { cartItems } = props;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const orderServer = new OrderApiServer();
+    orderServer
+      .getMyOrders("paused")
+      .then((data) => setPausedOrders(data))
+      .catch((err) => console.log(err));
+    orderServer
+      .getMyOrders("process")
+      .then((data) => setProcessOrders(data))
+      .catch((err) => console.log(err));
+    orderServer
+      .getMyOrders("finished")
+      .then((data) => setFinishedOrders(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   // HANDLERS
   const handleChange = (event: any, newValue: string) => {
