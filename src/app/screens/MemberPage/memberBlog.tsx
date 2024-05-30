@@ -87,8 +87,8 @@ export function MemberBlog(props: any) {
                   alignItems={"center"}
                   gap={2}
                   sx={{ keys: "index" }}
-                  onClick={() => renderChosenBlogHandler(blog?._id)}
                   style={{ cursor: "pointer" }}
+                  onClick={() => renderChosenBlogHandler(blog?._id)}
                 >
                   <Box>
                     <Box>
@@ -109,7 +109,7 @@ export function MemberBlog(props: any) {
                         src={
                           blog?.member_data?.mb_image
                             ? `${serverApi}/${blog.member_data.mb_image}`
-                            : "/images/blogs/blog_user3.jpg"
+                            : "/images/default_user.png"
                         }
                         alt="blog_bg"
                       />

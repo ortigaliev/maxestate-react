@@ -42,7 +42,7 @@ export function BlogPage(props: any) {
   const [searchBlogsObj, setSearchBlogsObj] = useState<SearchBlogsObj>({
     bo_id: "all",
     page: 1,
-    limit: 5,
+    limit: 3,
   });
 
   const [blogsRebuild, setBlogsRebuild] = useState<Date>(new Date());
@@ -169,8 +169,8 @@ export function BlogPage(props: any) {
                   }}
                 >
                   <Pagination
-                    count={4}
-                    page={1}
+                    count={searchBlogsObj.limit}
+                    page={searchBlogsObj.page}
                     renderItem={(item) => (
                       <PaginationItem
                         components={{

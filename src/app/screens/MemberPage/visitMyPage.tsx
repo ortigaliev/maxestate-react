@@ -67,8 +67,7 @@ const actionDispatch = (dispach: Dispatch) => ({
   setChosenMember: (data: Member) => dispach(setChosenMember(data)),
   setChosenMemberBoBlogs: (data: BoBlog[]) =>
     dispach(setChosenMemberBoBlogs(data)),
-  setChosenSingleBoBlog: (data: BoBlog) =>
-    dispach(setChosenSingleBoBlog(data)),
+  setChosenSingleBoBlog: (data: BoBlog) => dispach(setChosenSingleBoBlog(data)),
 });
 // REDUX SELECTOR
 const chosenMemberRetriever = createSelector(
@@ -93,7 +92,7 @@ const chosenSingleBoBlogRetriever = createSelector(
 );
 
 export function VisitMyPage(props: any) {
-
+  const { verifyMemberData } = props;
   //INITIALIZIATION
 
   const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlog } =
