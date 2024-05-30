@@ -103,6 +103,7 @@ const chosenSingleBoBlogRetriever = createSelector(
 
 export function VisitOtherPage(props: any) {
   //INITIALIZIATION
+
   const history = useHistory();
   const { chosen_mb_id, chosen_bo_id } = props;
   const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlog } =

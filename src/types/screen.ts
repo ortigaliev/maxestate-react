@@ -6,12 +6,12 @@ import { Agency, Member } from "./user";
 
 /* React App State */
 export interface AppRootState {
-  memberPage: MemberPageState;
   homePage: HomePageState;
   agencyPage: AgencyPageState;
   propertyPage: PropertyPageState;
   ordersPage: OrdersPageState;
   blogPage: BlogPageState;
+  memberPage: MemberPageState;
 }
 
 /* HomePage */

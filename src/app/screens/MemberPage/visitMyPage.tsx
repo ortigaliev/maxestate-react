@@ -45,11 +45,6 @@ import { ChosenBlog } from "./chosenBlog";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { Member } from "../../../types/user";
-import { serverApi } from "../../lib/config";
-import assert from "assert";
-import { Definer } from "../../lib/Definer";
-import { useHistory } from "react-router-dom";
-import { Dispatch } from "@reduxjs/toolkit";
 import {
   setChosenMember,
   setChosenMemberBoBlogs,
@@ -65,13 +60,14 @@ import { sweetErrorHandling, sweetFailureProvider } from "../../lib/sweetAlert";
 import BlogApiServer from "../../apiServer/blogApiServer";
 import MemberApiServer from "../../apiServer/memberApiServer";
 import { verifyMemberData } from "../../apiServer/verify";
+import { Dispatch } from "@reduxjs/toolkit";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
   setChosenMember: (data: Member) => dispach(setChosenMember(data)),
   setChosenMemberBoBlogs: (data: BoBlog[]) =>
     dispach(setChosenMemberBoBlogs(data)),
-  setChosenSingleBoBlogs: (data: BoBlog) =>
+  setChosenSingleBoBlog: (data: BoBlog) =>
     dispach(setChosenSingleBoBlog(data)),
 });
 // REDUX SELECTOR
@@ -97,8 +93,10 @@ const chosenSingleBoBlogRetriever = createSelector(
 );
 
 export function VisitMyPage(props: any) {
+
   //INITIALIZIATION
-  const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlogs } =
+
+  const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlog } =
     actionDispatch(useDispatch());
   const { chosenMember } = useSelector(chosenMemberRetriever);
   const { chosenMemberBoBlogs } = useSelector(chosenMemberBoBlogsRetriever);

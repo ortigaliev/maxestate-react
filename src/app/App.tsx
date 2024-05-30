@@ -29,6 +29,7 @@ import "../app/apiServer/verify";
 import { CartItem } from "../types/others";
 import { Estate } from "../types/estate";
 import { AgencyPage } from "./screens/AgencyPage";
+import { verifyMemberData } from "../app/apiServer/verify";
 
 function App() {
   /* INITIALIZATION */
@@ -194,13 +195,13 @@ function App() {
           <ContactPage />
         </Route>
         <Route path="/member">
-          <MemberPage />
+          <MemberPage verifyMemberData={verifyMemberData} />
         </Route>
         <Route path="/login">
           <LoginPage />
         </Route>
         <Route path="/orders">
-          <OrderCard />
+          <OrderCard verifyMemberData={verifyMemberData} />
         </Route>
         <Route path="/">
           <HomePage />
