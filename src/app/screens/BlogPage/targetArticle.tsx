@@ -1,5 +1,13 @@
 import React from "react";
-import { Avatar, Box, Card, Chip, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  Chip,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -46,124 +54,132 @@ export function TargetArticles(props: any) {
           : "/images/blogs/default_blog.jpg";
 
         return (
-          <Card
-            sx={{
-              width: "100%",
-              borderRadius: "30px",
-              mb: 2,
-              display: "flex",
-            }}
+          <Link
+            sx={{ textDecoration: "none" }}
+            href={`/member/other?mb_id=${blog.mb_id}&bo_id=${blog._id}`}
           >
-            <Box>
+            {" "}
+            <Card
+              sx={{
+                width: "100%",
+                borderRadius: "30px",
+                mb: 2,
+                display: "flex",
+              }}
+            >
               <Box>
-                <img
-                  width="155px"
-                  height="155px"
-                  src={blog_image_url}
-                  alt="Blog main bg"
-                  style={{
-                    borderTopLeftRadius: "15px",
-                    borderBottomLeftRadius: "15px",
-                    objectFit: "cover",
-                  }}
-                />
-              </Box>
-            </Box>
-            <Stack flexDirection={"row"} ml={2} maxWidth="100%">
-              <Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 2,
-                    mb: 2,
-                    mt: 2,
-                  }}
-                >
-                  <Avatar
-                    alt="Article Avatar"
-                    src={"/images/default_user.png"}
+                <Box>
+                  <img
+                    width="155px"
+                    height="155px"
+                    src={blog_image_url}
+                    alt="Blog main bg"
+                    style={{
+                      borderTopLeftRadius: "15px",
+                      borderBottomLeftRadius: "15px",
+                      objectFit: "cover",
+                    }}
                   />
-                  <Chip
-                    label={blog?.member_data.mb_nick}
-                    variant="outlined"
+                </Box>
+              </Box>
+              <Stack flexDirection={"row"} ml={2} maxWidth="100%">
+                <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 2,
+                      mb: 2,
+                      mt: 2,
+                    }}
+                  >
+                    <Avatar
+                      alt="Article Avatar"
+                      src={"/images/default_user.png"}
+                    />
+                    <Chip
+                      label={blog?.member_data.mb_nick}
+                      variant="outlined"
+                      sx={{
+                        "&:hover": {
+                          color: "#fff",
+                          bgcolor: "#ff5a3c",
+                        },
+                      }}
+                    />
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        mr: 2,
+                      }}
+                    >
+                      <Box>
+                        <Checkbox
+                          {...label}
+                          icon={<FavoriteIcon />}
+                          checkedIcon={
+                            <FavoriteIcon style={{ color: "red" }} />
+                          }
+                          id={blog?._id}
+                          onClick={targetLikeHandler}
+                          checked={
+                            blog?.me_liked && blog.me_liked[0]?.my_favorite
+                              ? true
+                              : false
+                          }
+                        />
+                      </Box>
+                      {blog?.blog_likes}
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                      }}
+                    >
+                      <VisibilityIcon /> {blog?.blog_views}
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography variant="h5" component="h1">
+                        {moment().format("YY-MM-DD HH-mm")}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Typography
+                    variant="h4"
+                    component="h3"
+                    color="#ff5a3c"
                     sx={{
                       "&:hover": {
-                        color: "#fff",
-                        bgcolor: "#ff5a3c",
+                        color: "#ff5a3c",
                       },
                     }}
-                  />
-                  <Box
+                  >
+                    {blog?.bo_id}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    component="h5"
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      mr: 2,
+                      "&:hover": {
+                        color: "#ff5a3c",
+                      },
                     }}
                   >
-                    <Box>
-                      <Checkbox
-                        {...label}
-                        icon={<FavoriteIcon />}
-                        checkedIcon={<FavoriteIcon style={{ color: "red" }} />}
-                        id={blog?._id}
-                        onClick={targetLikeHandler}
-                        checked={
-                          blog?.me_liked && blog.me_liked[0]?.my_favorite
-                            ? true
-                            : false
-                        }
-                      />
-                    </Box>
-                    {blog?.blog_likes}
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                    }}
-                  >
-                    <VisibilityIcon /> {blog?.blog_views}
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography variant="h5" component="h1">
-                      {moment().format("YY-MM-DD HH-mm")}
-                    </Typography>
-                  </Box>
+                    {blog?.blog_subject}
+                  </Typography>
                 </Box>
-                <Typography
-                  variant="h4"
-                  component="h3"
-                  color="#ff5a3c"
-                  sx={{
-                    "&:hover": {
-                      color: "#ff5a3c",
-                    },
-                  }}
-                >
-                  {blog?.bo_id}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  component="h5"
-                  sx={{
-                    "&:hover": {
-                      color: "#ff5a3c",
-                    },
-                  }}
-                >
-                  {blog?.blog_subject}
-                </Typography>
-              </Box>
-            </Stack>
-          </Card>
+              </Stack>
+            </Card>
+          </Link>
         );
       })}
     </Stack>
