@@ -105,7 +105,7 @@ export function VisitOtherPage(props: any) {
   //INITIALIZIATION
 
   const history = useHistory();
-  const { chosen_mb_id, chosen_bo_id } = props;
+  const { verifyMemberData, chosen_mb_id, chosen_bo_id } = props;
   const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlog } =
     actionDispatch(useDispatch());
   const { chosenMember } = useSelector(chosenMemberRetriever);
@@ -142,16 +142,17 @@ export function VisitOtherPage(props: any) {
   useEffect(() => {
     if (chosen_mb_id === verifyMemberData?._id) {
       history.push("/member");
-
-      const memberService = new MemberApiServer();
-
-      memberService
-        .getChosenMember(memberBlogSearchObj.mb_id)
-        .then((data) => setChosenMember(data))
-        .catch((err) => console.log(err));
     }
-  }, [chosen_mb_id, followRebuild]);
+
+    const memberService = new MemberApiServer();
+    memberService
+      .getChosenMember(memberBlogSearchObj.mb_id)
+      .then((data) => setChosenMember(data))
+      .catch((err) => console.log(err));
+  }, [verifyMemberData, chosen_mb_id, followRebuild]);
+
   // HANDLERS
+
   const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
   };
@@ -297,7 +298,7 @@ export function VisitOtherPage(props: any) {
                     <img
                       width="150"
                       height="150"
-                      src="/images/setting/author.jpg"
+                      src="/images/default_user.png"
                       alt="User Setting img"
                       style={{
                         borderRadius: "50%",
@@ -340,16 +341,27 @@ export function VisitOtherPage(props: any) {
                             Following: {chosenMember?.mb_follow_cnt}
                           </Typography>
                         </Box>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          style={{ fontStyle: "italic" }}
+                        >
+                          {chosenMember?.mb_description ??
+                            "There is no additional info"}
+                        </Typography>
+
                         <Box>
                           <TabList onChange={handleChange}>
                             {chosenMember?.me_followed &&
                             chosenMember?.me_followed[0]?.my_following ? (
                               <Tab
+                                style={{ flexDirection: "column" }}
                                 value={"4"}
                                 component={(e) => (
                                   <Button
                                     value={chosenMember?._id}
-                                    variant="contained"
+                                    variant={"contained"}
                                     style={{ backgroundColor: "#ff5a3c" }}
                                     onClick={unsubscribeHandler}
                                   >
@@ -401,22 +413,6 @@ export function VisitOtherPage(props: any) {
                   <ListItemText primary="Blogs" />
                 </ListItemButton>
 
-                {/* Favorite Property */}
-                {/*  <TabList>
-                  <Tab
-                    style={{ flexDirection: "column" }}
-                    value={"2"}
-                    component={() => (
-                      <ListItemButton onClick={() => setValue("2")}>
-                        <ListItemIcon>
-                          <FavoriteIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Favorite Properties" />
-                      </ListItemButton>
-                    )}
-                  />
-                </TabList> */}
-
                 {/* Followers */}
                 <TabList>
                   <Tab
@@ -448,16 +444,6 @@ export function VisitOtherPage(props: any) {
                     )}
                   />
                 </TabList>
-
-                {/* Chosen Blog */}
-                <TabPanel value={"4"}>
-                  <Box className={"menu_name"}>
-                    <ChosenBlog />
-                  </Box>
-                  <Box className={"menu_content"}>
-                    <TViewer chosenSingleBoBlog={chosenSingleBoBlog} />
-                  </Box>
-                </TabPanel>
               </List>
             </Stack>
           </TabContext>

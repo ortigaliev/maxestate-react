@@ -169,7 +169,7 @@ export function BlogPage(props: any) {
                   }}
                 >
                   <Pagination
-                    count={searchBlogsObj.limit}
+                    count={searchBlogsObj.page >= 3 ? searchBlogsObj.page + 1 : 3}
                     page={searchBlogsObj.page}
                     renderItem={(item) => (
                       <PaginationItem

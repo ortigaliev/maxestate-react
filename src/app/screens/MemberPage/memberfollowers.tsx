@@ -59,7 +59,7 @@ export function MemberFollowers(props: any) {
     {
       page: 1,
       limit: 5,
-      mb_id: mb_id,
+      mb_id: props?.mb_id,
     }
   );
 
@@ -76,6 +76,7 @@ export function MemberFollowers(props: any) {
     followersSearchObj.page = value;
     setFollowersSearchObj({ ...followersSearchObj });
   };
+
   const subscribeHandler = async (e: any, id: string) => {
     try {
       e.stopPropagation();
@@ -123,7 +124,7 @@ export function MemberFollowers(props: any) {
           {memberFollowers.map((follower: Follower) => {
             const image_url = follower?.subscriber_member_data?.mb_image
               ? `${serverApi}/${follower.subscriber_member_data.mb_image}`
-              : "/images/blogs/blog_user4.jpg";
+              : "/images/default_user.png";
             return (
               <Stack>
                 <Stack
@@ -138,7 +139,11 @@ export function MemberFollowers(props: any) {
                       height="150"
                       src={image_url}
                       alt="blog_bg"
-                      style={{ borderRadius: "50%", cursor: "pointer" }}
+                      style={{
+                        borderRadius: "50%",
+                        cursor: "pointer",
+                        objectFit: "cover",
+                      }}
                       onClick={() =>
                         visitMemberHandler(follower?.subscriber_id)
                       }

@@ -121,7 +121,7 @@ export function MemberFollowing(props: any) {
           {memberFollowings.map((following: Following) => {
             const image_url = following?.follow_member_data?.mb_image
               ? `${serverApi}/${following.follow_member_data.mb_image}`
-              : "/images/blogs/blog_user3.jpg";
+              : "/images/default_user.png";
             return (
               <Stack>
                 <Stack
