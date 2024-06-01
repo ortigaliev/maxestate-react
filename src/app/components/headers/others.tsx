@@ -118,6 +118,7 @@ export function NavbarOthers(props: any) {
                   width: "48px",
                   height: "48px",
                   borderRadius: "24px",
+                  objectFit: "cover",
                 }}
                 src={verifyMemberData.mb_image}
                 onClick={props.handleLogOutClick}

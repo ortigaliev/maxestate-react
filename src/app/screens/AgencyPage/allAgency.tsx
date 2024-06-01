@@ -38,6 +38,7 @@ import {
   sweetTopSmallSuccessAlert,
 } from "../../lib/sweetAlert";
 import { useHistory } from "react-router-dom";
+import { verifyMemberData } from "../../apiServer/verify";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -90,7 +91,7 @@ export function AllAgency() {
 
   const targetLikeHandler = async (e: any, id: string) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifyMemberData, Definer.auth_err1);
 
       const memberServer = new MemberApiServer(),
         like_result: any = await memberServer.memberLikeTarget({

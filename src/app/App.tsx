@@ -201,7 +201,7 @@ function App() {
           <LoginPage />
         </Route>
         <Route path="/orders">
-          <OrderCard verifyMemberData={verifyMemberData} />
+          <OrderCard />
         </Route>
         <Route path="/">
           <HomePage />

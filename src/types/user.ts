@@ -10,6 +10,7 @@ export interface Agency {
   mb_type: string;
   mb_status: string;
   mb_address: string;
+  mb_email: string;
   mb_description: string;
   mb_image: string;
   mb_point: number;
@@ -30,6 +31,7 @@ export interface Member {
   mb_type: string;
   mb_status: string;
   mb_address?: string;
+  mb_email?: string;
   mb_description?: string;
   mb_image?: string;
   mb_point?: number;
@@ -46,6 +48,7 @@ export interface MemberUpdateData {
   mb_nick?: string | null;
   mb_phone?: string | null;
   mb_address?: string | null;
+  mb_email?: string | null;
   mb_description?: string | null;
   mb_image?: string | null;
 }

@@ -37,6 +37,7 @@ export function MySetting() {
     mb_nick: "",
     mb_phone: "",
     mb_address: "",
+    mb_email: "",
     mb_description: "",
     mb_image: "",
   });
@@ -52,6 +53,10 @@ export function MySetting() {
   };
   const changeMemberAddressHandler = (e: any) => {
     memberUpdate.mb_address = e.target.value;
+    setMemberUpdate({ ...memberUpdate });
+  };
+  const changeMemberEmailAddressHandler = (e: any) => {
+    memberUpdate.mb_email = e.target.value;
     setMemberUpdate({ ...memberUpdate });
   };
   const changeMemberDescriptionHandler = (e: any) => {
@@ -131,6 +136,7 @@ export function MySetting() {
                       height="180"
                       src={file}
                       alt="Setting user"
+                      style={{ objectFit: "cover" }}
                     />
                     <Button
                       component="label"
@@ -151,14 +157,6 @@ export function MySetting() {
                     >
                       {verifyMemberData?.mb_nick}
                     </Typography>
-                    <Typography
-                      gutterBottom
-                      variant="h3"
-                      component="div"
-                      fontWeight={700}
-                    >
-                      {verifyMemberData?.mb_name}
-                    </Typography>
                     <Box
                       sx={{
                         display: "flex",
@@ -166,7 +164,7 @@ export function MySetting() {
                         gap: 1,
                         mb: 1,
                       }}
-                      onChange={changeMemberDescriptionHandler}
+                      onChange={changeMemberAddressHandler}
                     >
                       <LocationOnIcon sx={{ color: "#ff5a3c" }} />
                       {verifyMemberData?.mb_address ??
@@ -184,7 +182,10 @@ export function MySetting() {
                       <LocalPhoneIcon sx={{ color: "#ff5a3c" }} />
                       {verifyMemberData?.mb_phone}
                     </Box>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                      onChange={changeMemberEmailAddressHandler}
+                    >
                       <MailOutlineIcon sx={{ color: "#ff5a3c" }} />
                       {verifyMemberData?.mb_email ?? "No email adress"}
                     </Box>
@@ -217,23 +218,31 @@ export function MySetting() {
                       required
                       id="user-name"
                       label="Enter your name"
+                      placeholder={verifyMemberData?.mb_nick}
+                      onChange={changeMemberNickHandler}
                     />
                     <TextField
                       required
                       id="user-email"
                       label="Enter your email"
+                      placeholder={verifyMemberData?.mb_email}
+                      onChange={changeMemberEmailAddressHandler}
                     />
 
                     <TextField
                       required
                       id="user-address"
                       label="Enter your address"
+                      placeholder={verifyMemberData?.mb_address}
+                      onChange={changeMemberAddressHandler}
                     />
 
                     <TextField
                       id="outlined-number"
                       label="Number"
+                      placeholder={verifyMemberData?.mb_phone}
                       type="number"
+                      onChange={changeMemberPhoneHandler}
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -246,11 +255,12 @@ export function MySetting() {
                     }}
                     noValidate
                     autoComplete="off"
+                    onChange={changeMemberDescriptionHandler}
                   >
-                    {" "}
                     <TextField
                       id="outlined-multiline-static"
-                      label="Describtion"
+                      label="Description"
+                      placeholder={verifyMemberData?.mb_description}
                       multiline
                       rows={6}
                     />

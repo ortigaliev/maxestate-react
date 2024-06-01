@@ -50,6 +50,7 @@ import MemberApiServer from "../../apiServer/memberApiServer";
 import { useHistory } from "react-router-dom";
 import { EstateSearchObj } from "../../../types/others";
 import EstateApiServer from "../../apiServer/estateApiServer";
+import { verifyMemberData } from "../../apiServer/verify";
 
 /* REDUX SLICE */
 const actionDispatch = (dispach: Dispatch) => ({
@@ -126,7 +127,7 @@ export function AllProperty(props: any) {
 
   const targetLikeHandler = async (e: any, id: string) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifyMemberData, Definer.auth_err1);
 
       const memberServer = new MemberApiServer(),
         like_result = await memberServer.memberLikeTarget({

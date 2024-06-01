@@ -92,7 +92,6 @@ const chosenSingleBoBlogRetriever = createSelector(
 );
 
 export function VisitMyPage(props: any) {
-  const { verifyMemberData } = props;
   //INITIALIZIATION
 
   const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlog } =
@@ -131,6 +130,8 @@ export function VisitMyPage(props: any) {
     setValue(newValue);
   };
 
+  
+
   const handlePaginationChange = (event: any, value: number) => {
     memberBlogSearchObj.page = value;
     setMemberBlogSearchObj({ ...memberBlogSearchObj });
@@ -159,7 +160,7 @@ export function VisitMyPage(props: any) {
           <TabContext value={value}>
             <Stack className="my_page_left" width="880px">
               <Box>
-                <TabPanel value="1">
+                <TabPanel value={"1"}>
                   {/* <Box className="menu_name">My Blog</Box> */}
                   <Box className="menu_content">
                     <MemberBlog
@@ -219,7 +220,7 @@ export function VisitMyPage(props: any) {
                       actions_enabled={true}
                       followRebuild={followRebuild}
                       setFollowRebuild={setFollowRebuild}
-                      mb_id={props.verifyMemberData?._id}
+                      mb_id={verifyMemberData?._id}
                     />
                   </Box>
                 </TabPanel>
@@ -231,7 +232,7 @@ export function VisitMyPage(props: any) {
                       actions_enabled={true}
                       followRebuild={followRebuild}
                       setFollowRebuild={setFollowRebuild}
-                      mb_id={props.verifyMemberData?._id}
+                      mb_id={verifyMemberData?._id}
                     />
                   </Box>
                 </TabPanel>
@@ -346,7 +347,7 @@ export function VisitMyPage(props: any) {
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"2"}
+                    value={2}
                     component={() => (
                       <ListItemButton onClick={() => setValue("2")}>
                         <ListItemIcon>
@@ -362,7 +363,7 @@ export function VisitMyPage(props: any) {
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"3"}
+                    value={3}
                     component={() => (
                       <ListItemButton onClick={() => setValue("3")}>
                         <ListItemIcon>
@@ -378,7 +379,7 @@ export function VisitMyPage(props: any) {
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"4"}
+                    value={4}
                     component={() => (
                       <ListItemButton onClick={() => setValue("4")}>
                         <ListItemIcon>
@@ -394,7 +395,7 @@ export function VisitMyPage(props: any) {
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"5"}
+                    value={5}
                     component={() => (
                       <ListItemButton onClick={() => setValue("5")}>
                         <ListItemIcon>

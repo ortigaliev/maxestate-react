@@ -105,7 +105,7 @@ export function VisitOtherPage(props: any) {
   //INITIALIZIATION
 
   const history = useHistory();
-  const { verifyMemberData, chosen_mb_id, chosen_bo_id } = props;
+  const { chosen_mb_id, chosen_bo_id } = props;
   const { setChosenMember, setChosenMemberBoBlogs, setChosenSingleBoBlog } =
     actionDispatch(useDispatch());
   const { chosenMember } = useSelector(chosenMemberRetriever);
@@ -213,7 +213,7 @@ export function VisitOtherPage(props: any) {
           <TabContext value={value}>
             <Stack className="my_page_left" width="880px">
               <Box>
-                <TabPanel value="1">
+                <TabPanel value={"1"}>
                   {/* <Box className="menu_name">My Blog</Box> */}
                   <Box className="menu_content">
                     <MemberBlog
@@ -357,7 +357,7 @@ export function VisitOtherPage(props: any) {
                             chosenMember?.me_followed[0]?.my_following ? (
                               <Tab
                                 style={{ flexDirection: "column" }}
-                                value={"4"}
+                                value={4}
                                 component={(e) => (
                                   <Button
                                     value={chosenMember?._id}
@@ -371,7 +371,7 @@ export function VisitOtherPage(props: any) {
                               />
                             ) : (
                               <Tab
-                                value={"4"}
+                                value={4}
                                 component={(e) => (
                                   <Button
                                     value={chosenMember?._id}
@@ -417,7 +417,7 @@ export function VisitOtherPage(props: any) {
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"2"}
+                    value={2}
                     component={() => (
                       <ListItemButton onClick={() => setValue("2")}>
                         <ListItemIcon>
@@ -433,7 +433,7 @@ export function VisitOtherPage(props: any) {
                 <TabList>
                   <Tab
                     style={{ flexDirection: "column" }}
-                    value={"3"}
+                    value={3}
                     component={() => (
                       <ListItemButton onClick={() => setValue("3")}>
                         <ListItemIcon>
