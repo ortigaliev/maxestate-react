@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -11,10 +11,34 @@ import {
   Typography,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import { SocketContext } from "../../content/socket";
 
 export function BlogChat() {
   // INITIALIZATION
   const [messagesList, setMessagesList] = useState([]);
+  const socket = useContext(SocketContext);
+  const [onlineUsers, setOnlineUsers] = useState<number>(0);
+
+  useEffect(() => {
+    socket.connect();
+    console.log("PRINTED");
+    socket?.on("connect", function () {
+      console.log("CLIENT: connected");
+    });
+    socket?.on("newMsg", (new_mesage: any) => {
+      console.log("CLIENT: new message");
+    });
+    socket?.on("greetMsg", (new_mesage: any) => {
+      console.log("CLIENT: greet message");
+    });
+    socket?.on("infoMsg", (msg: any) => {
+      console.log("CLIENT: info message");
+      setOnlineUsers(msg.total);
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
 
   return (
     <Stack className="chat_frame" width="30%">
@@ -28,9 +52,23 @@ export function BlogChat() {
           }}
         >
           <CardContent>
-            <Box>
+            <Box
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
               <Typography gutterBottom variant="h2" component="div">
-                Online Chat
+                Chat
+              </Typography>
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                style={{ color: "#ff5a3c" }}
+              >
+                Online users: {onlineUsers}
               </Typography>
             </Box>
             <Divider sx={{ bgcolor: "#E4E4E4" }} />
