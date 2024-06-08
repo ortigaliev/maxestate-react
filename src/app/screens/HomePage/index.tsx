@@ -43,7 +43,8 @@ export function HomePage() {
       <AppartmentPlan />
       <Ads />
       <BuildingFacility />
-      <Feedback />
+      {/* <Feedback /> */}
       <LatestNews />
     </div>
-)};
+  );
+}

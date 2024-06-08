@@ -298,7 +298,11 @@ export function VisitOtherPage(props: any) {
                     <img
                       width="150"
                       height="150"
-                      src="/images/default_user.png"
+                      src={
+                        chosenMember?.mb_image
+                          ? `${serverApi}/${chosenMember.mb_image}`
+                          : "/images/default_user.png"
+                      }
                       alt="User Setting img"
                       style={{
                         borderRadius: "50%",

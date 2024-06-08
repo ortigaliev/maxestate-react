@@ -21,7 +21,7 @@ export interface SearchBlogsObj {
   bo_id: string;
   page: number;
   limit: number;
-  order?: number | null;
+  order?: string | null;
 }
 
 export interface SearchMemberBlogsObj {

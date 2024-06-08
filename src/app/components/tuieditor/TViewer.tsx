@@ -4,13 +4,13 @@ import { Box, Stack } from "@mui/material";
 import { Viewer } from "@toast-ui/react-editor";
 
 const TViewer = (props: any) => {
-  const editroRef = useRef();
+  const editorRef = useRef();
   return (
     <Stack sx={{ background: "white", mt: "30px", borderRadius: "10px" }}>
       <Box sx={{ m: "40px" }}>
         <Viewer
           //@ts-ignore
-          ref={editroRef}
+          ref={editorRef}
           initialValue={props.chosenSingleBoBlog?.blog_content}
           height={"600px"}
         />

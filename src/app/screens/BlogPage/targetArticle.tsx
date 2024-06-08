@@ -96,7 +96,11 @@ export function TargetArticles(props: any) {
                   >
                     <Avatar
                       alt="Article Avatar"
-                      src={"/images/default_user.png"}
+                      src={
+                        blog?.member_data?.mb_image
+                          ? `${serverApi}/${blog.member_data.mb_image}`
+                          : "/images/default_user.png"
+                      }
                     />
                     <Chip
                       label={blog?.member_data.mb_nick}
