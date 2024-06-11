@@ -15,7 +15,6 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import ClearIcon from "@mui/icons-material/Clear";
-import TabPanel from "@material-ui/lab/TabPanel";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import React, { useState } from "react";
@@ -24,6 +23,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { retrievePausedOrders } from "../../screens/Card/selector";
 import { createSelector } from "reselect";
+import TabPanel from "@mui/lab/TabPanel";
 
 // REDUX SELECTOR
 const pausedOrdersRetriever = createSelector(

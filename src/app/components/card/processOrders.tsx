@@ -10,13 +10,13 @@ import {
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import TabPanel from "@material-ui/lab/TabPanel";
 
 import React from "react";
 //REDUX
 import { useSelector } from "react-redux";
 import { retrieveProcessOrders } from "../../screens/Card/selector";
 import { createSelector } from "reselect";
+import TabPanel from "@mui/lab/TabPanel";
 
 // REDUX SELECTOR
 const processOrdersRetriever = createSelector(

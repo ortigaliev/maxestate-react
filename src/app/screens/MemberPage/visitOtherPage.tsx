@@ -25,9 +25,6 @@ import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-import TabPanel from "@material-ui/lab/TabPanel";
-import TabContext from "@material-ui/lab/TabContext";
-import { TabList } from "@material-ui/lab";
 import Tab from "@mui/material/Tab";
 import { MemberBlog } from "./memberBlog";
 import { MemberFollowers } from "./memberfollowers";
@@ -71,6 +68,7 @@ import {
 } from "../../lib/sweetAlert";
 import FollowApiServer from "../../apiServer/followApiServer";
 import { verifyMemberData } from "../../apiServer/verify";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({

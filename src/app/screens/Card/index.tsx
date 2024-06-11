@@ -1,8 +1,6 @@
 import { Box, Container, Stack } from "@mui/material";
 
 import Tab from "@mui/material/Tab";
-import TabContext from "@material-ui/lab/TabContext";
-import TabList from "@material-ui/lab/TabList";
 
 import React, { useEffect, useState } from "react";
 import Paused from "../../components/card/paused";
@@ -22,6 +20,8 @@ import {
 import { useHistory, useParams } from "react-router-dom";
 import { Order } from "../../../types/order";
 import OrderApiServer from "../../apiServer/orderApiServer";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({

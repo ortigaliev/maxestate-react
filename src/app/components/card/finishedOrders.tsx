@@ -1,13 +1,13 @@
 import { Box, Button, Container, Divider, Stack } from "@mui/material";
 
 import Typography from "@mui/material/Typography";
-import TabPanel from "@material-ui/lab/TabPanel";
 
 import React from "react";
 //REDUX
 import { useSelector } from "react-redux";
 import { retrieveFinishedOrders } from "../../screens/Card/selector";
 import { createSelector } from "reselect";
+import TabPanel from "@mui/lab/TabPanel";
 
 // REDUX SELECTOR
 const finishedOrdersRetriever = createSelector(
