@@ -25,7 +25,9 @@ export function NavbarOthers(props: any) {
           justifyContent={"space-between"}
         >
           <Box display={"flex"} alignItems={"center"}>
-            <img src="/images/home/logo.png" alt="Logo" />
+            <a href="/">
+              <img src="/images/home/logo.png" alt="Logo" />
+            </a>
           </Box>
           <Stack
             className="navbar_links"

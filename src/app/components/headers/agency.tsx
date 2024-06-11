@@ -1,18 +1,14 @@
 import {
-  Badge,
   Box,
   Button,
   Container,
-  IconButton,
   Stack,
   Menu,
   MenuItem,
   ListItemIcon,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Basket from "./basket";
 import { verifyMemberData } from "../../apiServer/verify";
 
@@ -27,7 +23,9 @@ export function NavbarAgency(props: any) {
             justifyContent={"space-between"}
           >
             <Box>
-              <img src="/images/home/logo.png" alt="Logo" />
+              <a href="/">
+                <img src="/images/home/logo.png" alt="Logo" />
+              </a>
             </Box>
             <Stack
               className="navbar_links"

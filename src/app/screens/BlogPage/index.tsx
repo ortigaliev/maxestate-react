@@ -18,9 +18,7 @@ import { setTargetBoBlogs } from "./slice";
 import { BoBlog, SearchBlogsObj } from "../../../types/boBlog";
 import { retrieveTargetBoBlogs } from "./selector";
 import BlogApiServer from "../../apiServer/blogApiServer";
-import TabContext from "@mui/lab/TabContext";
-import TabPanel from "@mui/joy/TabPanel";
-import TabList from "@mui/lab/TabList/TabList";
+import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -171,7 +169,9 @@ export function BlogPage(props: any) {
                   }}
                 >
                   <Pagination
-                    count={searchBlogsObj.page >= 3 ? searchBlogsObj.page + 1 : 3}
+                    count={
+                      searchBlogsObj.page >= 3 ? searchBlogsObj.page + 1 : 3
+                    }
                     page={searchBlogsObj.page}
                     renderItem={(item) => (
                       <PaginationItem

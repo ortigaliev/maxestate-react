@@ -29,7 +29,9 @@ export function NavbarHome(props: any) {
             justifyContent={"space-between"}
           >
             <Box>
-              <img src="/images/home/logo.png" alt="Logo" />
+              <a href="/">
+                <img src="/images/home/logo.png" alt="Logo" />
+              </a>
             </Box>
             <Stack
               className="navbar_links"

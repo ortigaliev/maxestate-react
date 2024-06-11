@@ -37,7 +37,7 @@ export function HomePage() {
 
   return (
     <div className="homepage">
-      <LatestList />
+      <LatestList  />
       <BestAgency />
       <FeaturedList />
       <AppartmentPlan />

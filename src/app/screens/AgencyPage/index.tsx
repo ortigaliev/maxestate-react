@@ -15,10 +15,10 @@ export function AgencyPage(props: any) {
     <div className="agency_page">
       <Switch>
         <Route path={`${agency.path}/:agency_id`}>
-          <ChosenAgency onAdd={props.onAdd} />
+          <ChosenAgency onAdd={props.onAdd} onClick={props.setPath} />
         </Route>
         <Route path={`${agency.path}`}>
-          <AllAgency />
+          <AllAgency  />
         </Route>
       </Switch>
     </div>
